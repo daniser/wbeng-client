@@ -10,19 +10,19 @@ use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;
 use Psr\Http\Client\ClientExceptionInterface;
-use Psr\Http\Client\ClientInterface;
+use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use TTBooking\WBEngine\DTO\Air\Common\RequestContext;
 use TTBooking\WBEngine\DTO\Air\FlightFares;
 use TTBooking\WBEngine\DTO\Air\SearchFlights;
 
-class Client
+class Client implements ClientInterface
 {
     public function __construct(
         protected string $baseUri,
         protected RequestContext $context,
-        protected ?ClientInterface $httpClient = null,
+        protected ?HttpClientInterface $httpClient = null,
         protected ?RequestFactoryInterface $requestFactory = null,
         protected ?StreamFactoryInterface $streamFactory = null,
         protected ?SerializerInterface $serializer = null,
@@ -37,9 +37,9 @@ class Client
             ->build();
     }
 
-    public function searchFlights(SearchFlights\Request\Parameters $parameters): SearchFlights\Response
+    public function searchFlights(SearchFlights\Request\Parameters $query): SearchFlights\Response
     {
-        $request = new SearchFlights\Request($this->context, $parameters);
+        $request = new SearchFlights\Request($this->context, $query);
 
         $body = $this->serializer->serialize($request, 'json');
 
@@ -48,9 +48,9 @@ class Client
         return $this->serializer->deserialize($response, SearchFlights\Response::class, 'json');
     }
 
-    public function flightFares(FlightFares\Request\Parameters $parameters, string $provider, string $gds): FlightFares\Response
+    public function flightFares(FlightFares\Request\Parameters $query, string $provider, string $gds): FlightFares\Response
     {
-        $request = new FlightFares\Request($this->context, $parameters, $provider, $gds);
+        $request = new FlightFares\Request($this->context, $query, $provider, $gds);
 
         $body = $this->serializer->serialize($request, 'json');
 

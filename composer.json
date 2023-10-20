@@ -4,6 +4,10 @@
     "description": "WBEngine interface library.",
     "keywords": ["wbeng", "wbengine", "booking", "web booking engine"],
     "license": "MIT",
+    "support": {
+        "issues": "https://github.com/daniser/wbeng-client/issues",
+        "source": "https://github.com/daniser/wbeng-client"
+    },
     "authors": [
         {
             "name": "Sergey Danilchenko",
@@ -46,7 +50,7 @@
     },
     "config": {
         "allow-plugins": {
-            "php-http/discovery": false
+            "php-http/discovery": true
         },
         "sort-packages": true
     },
