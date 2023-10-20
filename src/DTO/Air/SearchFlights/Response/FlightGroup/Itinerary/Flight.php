@@ -13,7 +13,7 @@ class Flight
         public string $token,
 
         /** @var list<Flight\Segment> */
-        #[Type('list<App\DataTransferObjects\Air\SearchFlights\Response\FlightGroup\Itinerary\Flight\Segment>')]
+        #[Type('list<TTBooking\WBEngine\DTO\Air\SearchFlights\Response\FlightGroup\Itinerary\Flight\Segment>')]
         public array $segments,
 
         public int $travelDuration,

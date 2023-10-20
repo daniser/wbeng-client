@@ -11,7 +11,7 @@ class Itinerary
     public function __construct(
 
         /** @var list<Itinerary\Flight> */
-        #[Type('list<App\DataTransferObjects\Air\SearchFlights\Response\FlightGroup\Itinerary\Flight>')]
+        #[Type('list<TTBooking\WBEngine\DTO\Air\SearchFlights\Response\FlightGroup\Itinerary\Flight>')]
         public array $flights,
 
     ) {

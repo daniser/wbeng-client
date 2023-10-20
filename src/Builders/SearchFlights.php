@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\Builders;
 
+use DateTimeImmutable;
 use DateTimeInterface;
 use ReflectionClass;
 use TTBooking\WBEngine\DTO\Air\Common\Location;
@@ -15,11 +16,22 @@ class SearchFlights extends Parameters
 {
     public static function new(): static
     {
-        return (new ReflectionClass(static::class))->newInstanceWithoutConstructor();
+        return new static; //(new ReflectionClass(static::class))->newInstanceWithoutConstructor();
+    }
+
+    /**
+     * @template T ob object
+     * @param class-string<T> $class
+     * @return T
+     */
+    protected static function newDTO(string $class): object
+    {
+        return (new ReflectionClass($class))->newInstanceWithoutConstructor();
     }
 
     public function from(string $code, string $name = ''): static
     {
+        $this->route[0] ??= static::newDTO(Parameters\RouteSegment::class);
         $this->route[0]->locationBegin = new Location($code, $name);
 
         return $this;
@@ -27,14 +39,16 @@ class SearchFlights extends Parameters
 
     public function to(string $code, string $name = ''): static
     {
+        $this->route[0] ??= static::newDTO(Parameters\RouteSegment::class);
         $this->route[0]->locationEnd = new Location($code, $name);
 
         return $this;
     }
 
-    public function at(DateTimeInterface $date): static
+    public function at(DateTimeInterface|string $date): static
     {
-        $this->route[0]->date = $date;
+        $this->route[0] ??= static::newDTO(Parameters\RouteSegment::class);
+        $this->route[0]->date = is_string($date) ? new DateTimeImmutable($date) : $date;
 
         return $this;
     }

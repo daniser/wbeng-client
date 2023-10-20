@@ -14,13 +14,13 @@ class Response
         public string $token,
 
         /** @var list<Response\Message> */
-        #[Type('list<App\DataTransferObjects\Air\SearchFlights\Response\Message>')]
+        #[Type('list<TTBooking\WBEngine\DTO\Air\SearchFlights\Response\Message>')]
         public array $messages,
 
         public ResponseContext $context,
 
         /** @var list<Response\FlightGroup> */
-        #[Type('list<App\DataTransferObjects\Air\SearchFlights\Response\FlightGroup>')]
+        #[Type('list<TTBooking\WBEngine\DTO\Air\SearchFlights\Response\FlightGroup>')]
         public array $flightGroups,
 
     ) {
