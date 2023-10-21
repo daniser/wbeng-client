@@ -8,7 +8,7 @@ class FareTotalOriginal
 {
     public function __construct(
 
-        public string $elementType,
+        public ?string $elementType,
 
         public int $amount,
 

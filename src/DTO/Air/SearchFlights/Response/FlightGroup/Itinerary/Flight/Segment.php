@@ -68,13 +68,13 @@ class Segment
 
         public string $regLocator,
 
-        /** @var list<string> */
-        #[Type('list<string>')]
+        /** @var list<Segment\Landing> */
+        #[Type('list<TTBooking\WBEngine\DTO\Air\SearchFlights\Response\FlightGroup\Itinerary\Flight\Segment\Landing>')]
         public array $landings,
 
-        public string $seatsLeft,
+        public ?string $seatsLeft,
 
-        public Segment\DateSplit $dateSplit,
+        public ?Segment\DateSplit $dateSplit,
 
     ) {
     }
