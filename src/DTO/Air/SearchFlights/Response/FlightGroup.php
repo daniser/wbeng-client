@@ -36,7 +36,7 @@ class FlightGroup
         public bool $allowBookWithAccompany,
 
         /** @var list<FlightGroup\Itinerary> */
-        #[Type('list<TTBooking\WBEngine\DTO\Air\SearchFlights\Response\FlightGroup\Itinerary>')]
+        #[Type('list<'.FlightGroup\Itinerary::class.'>')]
         public array $itineraries,
 
         public FlightGroup\Fares $fares,

@@ -13,7 +13,7 @@ class Parameters
         public string $token,
 
         /** @var list<FlightGroup> */
-        #[Type('list<TTBooking\WBEngine\DTO\Air\FlightFares\Request\FlightGroup>')]
+        #[Type('list<'.FlightGroup::class.'>')]
         public array $flightsGroup,
 
     ) {

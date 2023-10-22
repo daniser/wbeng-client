@@ -16,7 +16,7 @@ class FareSeat
         public string $count,
 
         /** @var list<FareSeat\Price> */
-        #[Type('list<TTBooking\WBEngine\DTO\Air\SearchFlights\Response\FlightGroup\Fares\FareSeat\Price>')]
+        #[Type('list<'.FareSeat\Price::class.'>')]
         public array $prices,
 
         /** @var list<int> */

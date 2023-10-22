@@ -12,11 +12,11 @@ class Parameters
     public function __construct(
 
         /** @var list<Parameters\RouteSegment> */
-        #[Type('list<TTBooking\WBEngine\DTO\Air\SearchFlights\Request\Parameters\RouteSegment>')]
+        #[Type('list<'.Parameters\RouteSegment::class.'>')]
         public array $route = [],
 
         /** @var list<Parameters\Seat> */
-        #[Type('list<TTBooking\WBEngine\DTO\Air\SearchFlights\Request\Parameters\Seat>')]
+        #[Type('list<'.Parameters\Seat::class.'>')]
         public array $seats = [new Parameters\Seat],
 
         public ServiceClass $serviceClass = ServiceClass::Economy,

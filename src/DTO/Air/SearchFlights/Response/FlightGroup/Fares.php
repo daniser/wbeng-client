@@ -13,7 +13,7 @@ class Fares
         public Fares\FareDesc $fareDesc,
 
         /** @var list<Fares\FareSeat> */
-        #[Type('list<TTBooking\WBEngine\DTO\Air\SearchFlights\Response\FlightGroup\Fares\FareSeat>')]
+        #[Type('list<'.Fares\FareSeat::class.'>')]
         public array $fareSeats,
 
         public int $fareTotal,

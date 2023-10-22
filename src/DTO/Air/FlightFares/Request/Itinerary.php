@@ -13,7 +13,7 @@ class Itinerary
         public string $token,
 
         /** @var list<Flight> */
-        #[Type('list<TTBooking\WBEngine\DTO\Air\FlightFares\Request\Flight>')]
+        #[Type('list<'.Flight::class.'>')]
         public array $flights,
 
     ) {
