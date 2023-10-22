@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\DTO\Air\SearchFlights\Response;
 
+use TTBooking\WBEngine\DTO\Air\Enums\MessageSource;
+use TTBooking\WBEngine\DTO\Air\Enums\MessageType;
+
 class Message
 {
     public function __construct(
 
-        public string $type,
+        public MessageType $type,
 
-        public string $source,
+        public MessageSource $source,
 
         public string $message,
 
