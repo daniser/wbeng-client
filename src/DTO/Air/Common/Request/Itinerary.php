@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TTBooking\WBEngine\DTO\Air\FlightFares\Request;
+namespace TTBooking\WBEngine\DTO\Air\Common\Request;
 
 use JMS\Serializer\Annotation\Type;
 

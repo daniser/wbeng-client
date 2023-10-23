@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\DTO\Air\FlightFares;
 
-use TTBooking\WBEngine\DTO\Air\Common\RequestContext;
+use TTBooking\WBEngine\DTO\Air\Common\Request\Context;
+use TTBooking\WBEngine\DTO\Air\Common\Request\Parameters;
 
 class Request
 {
     public function __construct(
 
-        public RequestContext $context,
+        public Context $context,
 
-        public Request\Parameters $parameters,
+        public Parameters $parameters,
 
         public string $provider,
 

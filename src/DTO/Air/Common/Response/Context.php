@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace TTBooking\WBEngine\DTO\Air\Common;
+namespace TTBooking\WBEngine\DTO\Air\Common\Response;
 
 use JMS\Serializer\Annotation\Type;
 
-class ResponseContext
+class Context
 {
     public function __construct(
 

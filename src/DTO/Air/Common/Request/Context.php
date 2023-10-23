@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TTBooking\WBEngine\DTO\Air\Common;
+namespace TTBooking\WBEngine\DTO\Air\Common\Request;
 
 use JMS\Serializer\Annotation\Type;
 use TTBooking\WBEngine\DTO\Air\Enums\RespondType;
 
-class RequestContext
+class Context
 {
     public function __construct(
 

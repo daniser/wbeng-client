@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TTBooking\WBEngine\DTO\Air\SearchFlights;
+namespace TTBooking\WBEngine\DTO\Air\CreateBooking;
 
 use TTBooking\WBEngine\DTO\Air\Common\Request\Context;
 

@@ -13,15 +13,17 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use TTBooking\WBEngine\DTO\Air\Common\RequestContext;
+use TTBooking\WBEngine\DTO\Air\Common;
+use TTBooking\WBEngine\DTO\Air\CreateBooking;
 use TTBooking\WBEngine\DTO\Air\FlightFares;
 use TTBooking\WBEngine\DTO\Air\SearchFlights;
+use TTBooking\WBEngine\DTO\Air\SelectFlight;
 
 class Client implements ClientInterface
 {
     public function __construct(
         protected string $baseUri,
-        protected RequestContext $context,
+        protected Common\Request\Context $context,
         protected ?HttpClientInterface $httpClient = null,
         protected ?RequestFactoryInterface $requestFactory = null,
         protected ?StreamFactoryInterface $streamFactory = null,
@@ -48,7 +50,29 @@ class Client implements ClientInterface
         return $this->serializer->deserialize($response, SearchFlights\Response::class, 'json');
     }
 
-    public function flightFares(FlightFares\Request\Parameters $query, string $provider, string $gds): FlightFares\Response
+    public function selectFlight(Common\Request\Parameters $query): SelectFlight\Response
+    {
+        $request = new Common\Request($this->context, $query);
+
+        $body = $this->serializer->serialize($request, 'json');
+
+        $response = $this->request('price', method: 'POST', body: $body);
+
+        return $this->serializer->deserialize($response, SelectFlight\Response::class, 'json');
+    }
+
+    public function createBooking(CreateBooking\Request\Parameters $query): CreateBooking\Response
+    {
+        $request = new CreateBooking\Request($this->context, $query);
+
+        $body = $this->serializer->serialize($request, 'json');
+
+        $response = $this->request('book', method: 'POST', body: $body);
+
+        return $this->serializer->deserialize($response, CreateBooking\Response::class, 'json');
+    }
+
+    public function flightFares(Common\Request\Parameters $query, string $provider, string $gds): FlightFares\Response
     {
         $request = new FlightFares\Request($this->context, $query, $provider, $gds);
 

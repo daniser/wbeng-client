@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\Air\SearchFlights;
 
 use JMS\Serializer\Annotation\Type;
-use TTBooking\WBEngine\DTO\Air\Common\ResponseContext;
+use TTBooking\WBEngine\DTO\Air\Common\Response\Context;
 
 class Response
 {
@@ -17,7 +17,7 @@ class Response
         #[Type('list<'.Response\Message::class.'>')]
         public array $messages,
 
-        public ResponseContext $context,
+        public Context $context,
 
         /** @var list<Response\FlightGroup> */
         #[Type('list<'.Response\FlightGroup::class.'>')]
