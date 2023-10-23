@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\DTO\Air\SearchFlights\Response\FlightGroup\Itinerary\Flight;
 
+use JMS\Serializer\Annotation\Type;
 use TTBooking\WBEngine\DTO\Air\Common;
 use TTBooking\WBEngine\DTO\Air\Enums\ServiceClass;
-use JMS\Serializer\Annotation\Type;
 
 class Segment
 {

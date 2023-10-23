@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\DTO\Air\SearchFlights\Response\FlightGroup\Fares;
 
-use TTBooking\WBEngine\DTO\Air\Enums\PassengerType;
 use JMS\Serializer\Annotation\Type;
+use TTBooking\WBEngine\DTO\Air\Enums\PassengerType;
 
 class FareSeat
 {

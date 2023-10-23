@@ -13,6 +13,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use TTBooking\WBEngine\DTO\Air\Common;
@@ -80,7 +81,11 @@ class Client implements ClientInterface
 
     protected function query(Query $query, object $parameters, mixed ...$args): object
     {
-        $this->validator->validate($parameters);
+        $violations = $this->validator->validate($parameters);
+
+        if (count($violations)) {
+            throw new ValidationFailedException($parameters, $violations);
+        }
 
         $request = $query->newRequest($this->context, $parameters, ...$args);
 

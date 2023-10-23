@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\DTO\Air\SearchFlights\Response;
 
-use TTBooking\WBEngine\DTO\Air\Common;
 use JMS\Serializer\Annotation\Type;
+use TTBooking\WBEngine\DTO\Air\Common;
 
 class FlightGroup
 {

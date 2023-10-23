@@ -13,7 +13,7 @@ class Location
         #[Assert\Length(exactly: 3)]
         public string $code,
 
-        public string $name,
+        public string $name = '',
 
     ) {
     }

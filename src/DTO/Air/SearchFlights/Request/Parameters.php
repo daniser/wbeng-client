@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\DTO\Air\SearchFlights\Request;
 
-use TTBooking\WBEngine\DTO\Air\Enums\ServiceClass;
 use JMS\Serializer\Annotation\Type;
+use Symfony\Component\Validator\Constraints as Assert;
+use TTBooking\WBEngine\DTO\Air\Enums\ServiceClass;
 
 class Parameters
 {
     public function __construct(
 
         /** @var list<Parameters\RouteSegment> */
+        #[Assert\Valid]
         #[Type('list<'.Parameters\RouteSegment::class.'>')]
         public array $route = [],
 
