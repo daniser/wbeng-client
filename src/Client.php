@@ -48,7 +48,9 @@ class Client implements ClientInterface
         $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
         $this->streamFactory = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
-        $this->validator = $validator ?? Validation::createValidator();
+        $this->validator = $validator ?? Validation::createValidatorBuilder()
+            ->enableAnnotationMapping()
+            ->getValidator();
         $this->serializer = $serializer ?? SerializerBuilder::create()
             ->enableEnumSupport()
             ->setPropertyNamingStrategy(new IdenticalPropertyNamingStrategy)
