@@ -60,7 +60,7 @@ class Client implements ClientInterface
         return $this->query(Query::Fares, $parameters, $provider, $gds);
     }
 
-    protected function query(Query $query, object $parameters, ...$args)
+    protected function query(Query $query, object $parameters, ...$args): object
     {
         $request = $query->newRequest($this->context, $parameters, ...$args);
 
@@ -74,12 +74,8 @@ class Client implements ClientInterface
     /**
      * @throws ClientExceptionInterface
      */
-    protected function request(
-        string $endpoint,
-        array $headers = [],
-        string $method = 'GET',
-        string|array $body = '',
-    ): string {
+    protected function request(string $endpoint, array $headers = [], string $method = 'GET', string|array $body = ''): string
+    {
         $request = $this->requestFactory->createRequest($method, "$this->baseUri/$endpoint");
 
         $headers = array_merge($headers, [
