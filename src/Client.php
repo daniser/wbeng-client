@@ -13,6 +13,8 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\ValidatorBuilder;
 use TTBooking\WBEngine\DTO\Air\Common;
 use TTBooking\WBEngine\DTO\Air\CreateBooking;
 use TTBooking\WBEngine\DTO\Air\FlightFares;
@@ -28,6 +30,8 @@ class Client implements ClientInterface
 
     protected StreamFactoryInterface $streamFactory;
 
+    protected ValidatorInterface $validator;
+
     protected SerializerInterface $serializer;
 
     public function __construct(
@@ -36,12 +40,14 @@ class Client implements ClientInterface
         HttpClientInterface $httpClient = null,
         RequestFactoryInterface $requestFactory = null,
         StreamFactoryInterface $streamFactory = null,
+        ValidatorInterface $validator = null,
         SerializerInterface $serializer = null,
     ) {
         $this->baseUri = rtrim($baseUri, '/');
         $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
         $this->streamFactory = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
+        $this->validator = $validator ?? (new ValidatorBuilder)->getValidator();
         $this->serializer = $serializer ?? SerializerBuilder::create()
             ->enableEnumSupport()
             ->setPropertyNamingStrategy(new IdenticalPropertyNamingStrategy)
@@ -74,6 +80,8 @@ class Client implements ClientInterface
 
     protected function query(Query $query, object $parameters, mixed ...$args): object
     {
+        $this->validator->validate($parameters);
+
         $request = $query->newRequest($this->context, $parameters, ...$args);
 
         $body = $this->serializer->serialize($request, 'json');
