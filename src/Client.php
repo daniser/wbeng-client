@@ -18,6 +18,7 @@ use TTBooking\WBEngine\DTO\Air\CreateBooking;
 use TTBooking\WBEngine\DTO\Air\FlightFares;
 use TTBooking\WBEngine\DTO\Air\SearchFlights;
 use TTBooking\WBEngine\DTO\Air\SelectFlight;
+use TTBooking\WBEngine\Enums\Query;
 
 class Client implements ClientInterface
 {
@@ -39,48 +40,35 @@ class Client implements ClientInterface
             ->build();
     }
 
-    public function searchFlights(SearchFlights\Request\Parameters $query): SearchFlights\Response
+    public function searchFlights(SearchFlights\Request\Parameters $parameters): SearchFlights\Response
     {
-        $request = new SearchFlights\Request($this->context, $query);
-
-        $body = $this->serializer->serialize($request, 'json');
-
-        $response = $this->request('flights', method: 'POST', body: $body);
-
-        return $this->serializer->deserialize($response, SearchFlights\Response::class, 'json');
+        return $this->query(Query::Flights, $parameters);
     }
 
-    public function selectFlight(Common\Request\Parameters $query): SelectFlight\Response
+    public function selectFlight(Common\Request\Parameters $parameters): SelectFlight\Response
     {
-        $request = new Common\Request($this->context, $query);
-
-        $body = $this->serializer->serialize($request, 'json');
-
-        $response = $this->request('price', method: 'POST', body: $body);
-
-        return $this->serializer->deserialize($response, SelectFlight\Response::class, 'json');
+        return $this->query(Query::Price, $parameters);
     }
 
-    public function createBooking(CreateBooking\Request\Parameters $query): CreateBooking\Response
+    public function createBooking(CreateBooking\Request\Parameters $parameters): CreateBooking\Response
     {
-        $request = new CreateBooking\Request($this->context, $query);
-
-        $body = $this->serializer->serialize($request, 'json');
-
-        $response = $this->request('book', method: 'POST', body: $body);
-
-        return $this->serializer->deserialize($response, CreateBooking\Response::class, 'json');
+        return $this->query(Query::Book, $parameters);
     }
 
-    public function flightFares(Common\Request\Parameters $query, string $provider, string $gds): FlightFares\Response
+    public function flightFares(Common\Request\Parameters $parameters, string $provider, string $gds): FlightFares\Response
     {
-        $request = new FlightFares\Request($this->context, $query, $provider, $gds);
+        return $this->query(Query::Fares, $parameters, $provider, $gds);
+    }
+
+    protected function query(Query $query, object $parameters, ...$args)
+    {
+        $request = $query->newRequest($this->context, $parameters, ...$args);
 
         $body = $this->serializer->serialize($request, 'json');
 
-        $response = $this->request('flightfares', method: 'POST', body: $body);
+        $response = $this->request($query->value, method: 'POST', body: $body);
 
-        return $this->serializer->deserialize($response, FlightFares\Response::class, 'json');
+        return $this->serializer->deserialize($response, $query->response(), 'json');
     }
 
     /**
