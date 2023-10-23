@@ -13,8 +13,8 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Validator\ValidatorBuilder;
 use TTBooking\WBEngine\DTO\Air\Common;
 use TTBooking\WBEngine\DTO\Air\CreateBooking;
 use TTBooking\WBEngine\DTO\Air\FlightFares;
@@ -47,7 +47,7 @@ class Client implements ClientInterface
         $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
         $this->streamFactory = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
-        $this->validator = $validator ?? (new ValidatorBuilder)->getValidator();
+        $this->validator = $validator ?? Validation::createValidator();
         $this->serializer = $serializer ?? SerializerBuilder::create()
             ->enableEnumSupport()
             ->setPropertyNamingStrategy(new IdenticalPropertyNamingStrategy)
