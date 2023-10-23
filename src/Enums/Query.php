@@ -18,7 +18,7 @@ enum Query: string
     case Book = 'book';
     case Fares = 'flightfares';
 
-    public function newRequest(Context $context, object $parameters, ...$args): object
+    public function newRequest(Context $context, object $parameters, mixed ...$args): object
     {
         return new ($this->request())($context, $parameters, ...$args);
     }

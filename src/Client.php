@@ -22,19 +22,27 @@ use TTBooking\WBEngine\Enums\Query;
 
 class Client implements ClientInterface
 {
+    protected HttpClientInterface $httpClient;
+
+    protected RequestFactoryInterface $requestFactory;
+
+    protected StreamFactoryInterface $streamFactory;
+
+    protected SerializerInterface $serializer;
+
     public function __construct(
         protected string $baseUri,
         protected Common\Request\Context $context,
-        protected ?HttpClientInterface $httpClient = null,
-        protected ?RequestFactoryInterface $requestFactory = null,
-        protected ?StreamFactoryInterface $streamFactory = null,
-        protected ?SerializerInterface $serializer = null,
+        HttpClientInterface $httpClient = null,
+        RequestFactoryInterface $requestFactory = null,
+        StreamFactoryInterface $streamFactory = null,
+        SerializerInterface $serializer = null,
     ) {
         $this->baseUri = rtrim($baseUri, '/');
-        $this->httpClient ??= Psr18ClientDiscovery::find();
-        $this->requestFactory ??= Psr17FactoryDiscovery::findRequestFactory();
-        $this->streamFactory ??= Psr17FactoryDiscovery::findStreamFactory();
-        $this->serializer ??= SerializerBuilder::create()
+        $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
+        $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
+        $this->streamFactory = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
+        $this->serializer = $serializer ?? SerializerBuilder::create()
             ->enableEnumSupport()
             ->setPropertyNamingStrategy(new IdenticalPropertyNamingStrategy)
             ->build();
@@ -42,25 +50,29 @@ class Client implements ClientInterface
 
     public function searchFlights(SearchFlights\Request\Parameters $parameters): SearchFlights\Response
     {
+        /** @var SearchFlights\Response */
         return $this->query(Query::Flights, $parameters);
     }
 
     public function selectFlight(Common\Request\Parameters $parameters): SelectFlight\Response
     {
+        /** @var SelectFlight\Response */
         return $this->query(Query::Price, $parameters);
     }
 
     public function createBooking(CreateBooking\Request\Parameters $parameters): CreateBooking\Response
     {
+        /** @var CreateBooking\Response */
         return $this->query(Query::Book, $parameters);
     }
 
     public function flightFares(Common\Request\Parameters $parameters, string $provider, string $gds): FlightFares\Response
     {
+        /** @var FlightFares\Response */
         return $this->query(Query::Fares, $parameters, $provider, $gds);
     }
 
-    protected function query(Query $query, object $parameters, ...$args): object
+    protected function query(Query $query, object $parameters, mixed ...$args): object
     {
         $request = $query->newRequest($this->context, $parameters, ...$args);
 
@@ -68,10 +80,14 @@ class Client implements ClientInterface
 
         $response = $this->request($query->value, method: 'POST', body: $body);
 
+        /** @var object */
         return $this->serializer->deserialize($response, $query->response(), 'json');
     }
 
     /**
+     * @param array<string, string> $headers
+     * @param string|array<string, string> $body
+     *
      * @throws ClientExceptionInterface
      */
     protected function request(string $endpoint, array $headers = [], string $method = 'GET', string|array $body = ''): string

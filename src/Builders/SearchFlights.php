@@ -20,7 +20,7 @@ class SearchFlights extends Parameters
     }
 
     /**
-     * @template T ob object
+     * @template T of object
      * @param class-string<T> $class
      * @return T
      */
@@ -95,7 +95,7 @@ class SearchFlights extends Parameters
 
     public function preferAirlines(string ...$airlines): static
     {
-        $this->preferredAirlines = $airlines;
+        $this->preferredAirlines = array_values($airlines);
 
         return $this;
     }
