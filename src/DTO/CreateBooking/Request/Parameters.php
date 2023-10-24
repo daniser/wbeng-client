@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\CreateBooking\Request;
 
 use JMS\Serializer\Annotation\Type;
+use TTBooking\WBEngine\DTO\Common;
 use TTBooking\WBEngine\DTO\Common\Request\FlightGroup;
-use TTBooking\WBEngine\DTO\CreateBooking\Request\Parameters\Code3D;
 
 class Parameters
 {
@@ -17,17 +17,17 @@ class Parameters
         #[Type('list<'.FlightGroup::class.'>')]
         public array $flightsGroup,
 
-        public Parameters\Customer $customer,
+        public Common\Customer $customer,
 
-        /** @var list<Parameters\Passenger> */
-        #[Type('list<'.Parameters\Passenger::class.'>')]
+        /** @var list<Common\Passenger> */
+        #[Type('list<'.Common\Passenger::class.'>')]
         public array $passengers,
 
-        public Parameters\TourCode $tourCode,
+        public Common\TourCode $tourCode,
 
-        public Parameters\BenefitCode $benefitCode,
+        public Common\BenefitCode $benefitCode,
 
-        public Parameters\Code3D $code3D = new Code3D,
+        public Common\Code3D $code3D = new Common\Code3D,
 
         public ?bool $isHealthChecked = null,
     ) {}

@@ -6,6 +6,8 @@ namespace TTBooking\WBEngine\DTO\SearchFlights\Response;
 
 use JMS\Serializer\Annotation\Type;
 use TTBooking\WBEngine\DTO\Common;
+use TTBooking\WBEngine\DTO\Common\Response\Fares;
+use TTBooking\WBEngine\DTO\Common\Response\Itinerary;
 
 class FlightGroup
 {
@@ -34,11 +36,11 @@ class FlightGroup
 
         public bool $allowBookWithAccompany,
 
-        /** @var list<FlightGroup\Itinerary> */
-        #[Type('list<'.FlightGroup\Itinerary::class.'>')]
+        /** @var list<Itinerary> */
+        #[Type('list<'.Itinerary::class.'>')]
         public array $itineraries,
 
-        public FlightGroup\Fares $fares,
+        public Fares $fares,
 
         public bool $isCharter,
 
@@ -52,8 +54,8 @@ class FlightGroup
 
         public bool $virtualInterlining,
 
-        /** @var list<string> */
-        #[Type('list<string>')]
+        /** @var list<Common\OfficeReference> */
+        #[Type('list<'.Common\OfficeReference::class.'>')]
         public array $officeReference,
 
         public string $provider,

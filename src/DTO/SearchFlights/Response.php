@@ -6,14 +6,15 @@ namespace TTBooking\WBEngine\DTO\SearchFlights;
 
 use JMS\Serializer\Annotation\Type;
 use TTBooking\WBEngine\DTO\Common\Response\Context;
+use TTBooking\WBEngine\DTO\Common\Response\Message;
 
 class Response
 {
     public function __construct(
         public string $token,
 
-        /** @var list<Response\Message> */
-        #[Type('list<'.Response\Message::class.'>')]
+        /** @var list<Message> */
+        #[Type('list<'.Message::class.'>')]
         public array $messages,
 
         public Context $context,
