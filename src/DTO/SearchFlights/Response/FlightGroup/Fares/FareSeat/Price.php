@@ -7,7 +7,6 @@ namespace TTBooking\WBEngine\DTO\SearchFlights\Response\FlightGroup\Fares\FareSe
 class Price
 {
     public function __construct(
-
         public int $amount,
 
         public string $currency,
@@ -21,7 +20,5 @@ class Price
         public string $elementType,
 
         public string $code,
-
-    ) {
-    }
+    ) {}
 }

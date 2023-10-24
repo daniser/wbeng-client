@@ -100,12 +100,12 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param array<string, string> $headers
-     * @param string|array<string, string> $body
+     * @param array<string, string>        $headers
+     * @param array<string, string>|string $body
      *
      * @throws ClientExceptionInterface
      */
-    protected function request(string $endpoint, array $headers = [], string $method = 'GET', string|array $body = ''): string
+    protected function request(string $endpoint, array $headers = [], string $method = 'GET', array|string $body = ''): string
     {
         $request = $this->requestFactory->createRequest($method, "$this->baseUri/$endpoint");
 

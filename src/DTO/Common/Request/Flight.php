@@ -7,9 +7,6 @@ namespace TTBooking\WBEngine\DTO\Common\Request;
 class Flight
 {
     public function __construct(
-
         public string $token,
-
-    ) {
-    }
+    ) {}
 }

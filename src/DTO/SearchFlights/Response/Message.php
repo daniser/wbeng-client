@@ -10,13 +10,10 @@ use TTBooking\WBEngine\DTO\Enums\MessageType;
 class Message
 {
     public function __construct(
-
         public MessageType $type,
 
         public MessageSource $source,
 
         public string $message,
-
-    ) {
-    }
+    ) {}
 }

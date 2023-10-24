@@ -7,7 +7,6 @@ namespace TTBooking\WBEngine\DTO\CreateBooking\Request\Parameters;
 class Customer
 {
     public function __construct(
-
         public string $name,
 
         public string $email,
@@ -17,7 +16,5 @@ class Customer
         public string $areaCode,
 
         public string $phoneNumber,
-
-    ) {
-    }
+    ) {}
 }

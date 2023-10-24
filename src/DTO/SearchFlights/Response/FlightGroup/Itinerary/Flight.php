@@ -9,7 +9,6 @@ use JMS\Serializer\Annotation\Type;
 class Flight
 {
     public function __construct(
-
         public string $token,
 
         /** @var list<Flight\Segment> */
@@ -19,7 +18,5 @@ class Flight
         public int $travelDuration,
 
         public string $seatsAvailable,
-
-    ) {
-    }
+    ) {}
 }

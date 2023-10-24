@@ -10,12 +10,11 @@ use TTBooking\WBEngine\DTO\Enums\RespondType;
 class Context
 {
     public function __construct(
-
         public string $login,
 
         public string $password,
 
-        /** @var list<int>|null */
+        /** @var null|list<int> */
         #[Type('list<int>')]
         public ?array $salepoint,
 
@@ -30,7 +29,5 @@ class Context
         public string $provider,
 
         public ?int $context_id,
-
-    ) {
-    }
+    ) {}
 }

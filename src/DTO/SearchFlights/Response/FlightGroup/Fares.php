@@ -9,7 +9,6 @@ use JMS\Serializer\Annotation\Type;
 class Fares
 {
     public function __construct(
-
         public Fares\FareDesc $fareDesc,
 
         /** @var list<Fares\FareSeat> */
@@ -19,7 +18,5 @@ class Fares
         public int $fareTotal,
 
         public Fares\FareTotalOriginal $fareTotalOriginal,
-
-    ) {
-    }
+    ) {}
 }

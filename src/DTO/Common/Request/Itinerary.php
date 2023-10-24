@@ -9,13 +9,10 @@ use JMS\Serializer\Annotation\Type;
 class Itinerary
 {
     public function __construct(
-
         public string $token,
 
         /** @var list<Flight> */
         #[Type('list<'.Flight::class.'>')]
         public array $flights,
-
-    ) {
-    }
+    ) {}
 }

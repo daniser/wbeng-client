@@ -9,12 +9,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Location
 {
     public function __construct(
-
         #[Assert\Length(exactly: 3)]
         public string $code,
 
         public string $name = '',
-
-    ) {
-    }
+    ) {}
 }

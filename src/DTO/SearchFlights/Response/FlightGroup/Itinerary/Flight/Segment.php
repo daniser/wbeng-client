@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\DTO\SearchFlights\Response\FlightGroup\Itinerary\Flight;
 
+use DateTimeInterface;
 use JMS\Serializer\Annotation\Type;
 use TTBooking\WBEngine\DTO\Common;
 use TTBooking\WBEngine\DTO\Enums\ServiceClass;
@@ -11,7 +12,6 @@ use TTBooking\WBEngine\DTO\Enums\ServiceClass;
 class Segment
 {
     public function __construct(
-
         public string $token,
 
         public ServiceClass $serviceClass,
@@ -33,10 +33,10 @@ class Segment
         public string $methLocomotion,
 
         #[Type('DateTimeInterface<"Y-m-d\TH:i:s">')]
-        public \DateTimeInterface $dateBegin,
+        public DateTimeInterface $dateBegin,
 
         #[Type('DateTimeInterface<"Y-m-d\TH:i:s">')]
-        public \DateTimeInterface $dateEnd,
+        public DateTimeInterface $dateEnd,
 
         public string $flightNumber,
 
@@ -75,7 +75,5 @@ class Segment
         public ?string $seatsLeft,
 
         public ?Segment\DateSplit $dateSplit,
-
-    ) {
-    }
+    ) {}
 }

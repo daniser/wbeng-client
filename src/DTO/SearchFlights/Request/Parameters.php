@@ -11,7 +11,6 @@ use TTBooking\WBEngine\DTO\Enums\ServiceClass;
 class Parameters
 {
     public function __construct(
-
         /** @var list<Parameters\RouteSegment> */
         #[Assert\Valid]
         #[Type('list<'.Parameters\RouteSegment::class.'>')]
@@ -32,7 +31,5 @@ class Parameters
         /** @var list<string> */
         #[Type('list<string>')]
         public array $preferredAirlines = [],
-
-    ) {
-    }
+    ) {}
 }

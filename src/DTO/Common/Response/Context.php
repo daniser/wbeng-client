@@ -9,7 +9,6 @@ use JMS\Serializer\Annotation\Type;
 class Context
 {
     public function __construct(
-
         public string $version,
 
         public string $environment,
@@ -23,7 +22,5 @@ class Context
         /** @var array<string, string> */
         #[Type('array<string, string>')]
         public array $executionTimeReport,
-
-    ) {
-    }
+    ) {}
 }

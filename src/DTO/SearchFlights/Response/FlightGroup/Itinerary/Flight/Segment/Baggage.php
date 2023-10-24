@@ -9,7 +9,6 @@ use JMS\Serializer\Annotation\Type;
 class Baggage
 {
     public function __construct(
-
         public ?string $type,
 
         public ?string $allow,
@@ -19,7 +18,5 @@ class Baggage
         /** @var list<string> */
         #[Type('list<string>')]
         public array $descriptions,
-
-    ) {
-    }
+    ) {}
 }

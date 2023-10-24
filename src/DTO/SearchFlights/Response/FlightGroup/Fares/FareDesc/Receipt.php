@@ -9,7 +9,6 @@ use JMS\Serializer\Annotation\Type;
 class Receipt
 {
     public function __construct(
-
         public string $barcode,
 
         /** @var list<string> */
@@ -21,7 +20,5 @@ class Receipt
         public array $fareCalculations,
 
         public string $operatorReference,
-
-    ) {
-    }
+    ) {}
 }

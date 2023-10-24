@@ -16,17 +16,7 @@ class SearchFlights extends Parameters
 {
     public static function new(): static
     {
-        return new static; //(new ReflectionClass(static::class))->newInstanceWithoutConstructor();
-    }
-
-    /**
-     * @template T of object
-     * @param class-string<T> $class
-     * @return T
-     */
-    protected static function newDTO(string $class): object
-    {
-        return (new ReflectionClass($class))->newInstanceWithoutConstructor();
+        return new static; // (new ReflectionClass(static::class))->newInstanceWithoutConstructor();
     }
 
     public function from(string $code, string $name = ''): static
@@ -98,5 +88,17 @@ class SearchFlights extends Parameters
         $this->preferredAirlines = array_values($airlines);
 
         return $this;
+    }
+
+    /**
+     * @template T of object
+     *
+     * @param class-string<T> $class
+     *
+     * @return T
+     */
+    protected static function newDTO(string $class): object
+    {
+        return (new ReflectionClass($class))->newInstanceWithoutConstructor();
     }
 }

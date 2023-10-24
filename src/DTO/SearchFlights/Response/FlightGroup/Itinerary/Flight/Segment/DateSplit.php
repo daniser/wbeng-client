@@ -7,11 +7,8 @@ namespace TTBooking\WBEngine\DTO\SearchFlights\Response\FlightGroup\Itinerary\Fl
 class DateSplit
 {
     public function __construct(
-
         public DateAndTime $departure,
 
         public DateAndTime $arrival,
-
-    ) {
-    }
+    ) {}
 }

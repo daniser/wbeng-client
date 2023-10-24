@@ -9,11 +9,8 @@ use TTBooking\WBEngine\DTO\Common\Request\Context;
 class Request
 {
     public function __construct(
-
         public Context $context,
 
         public Request\Parameters $parameters,
-
-    ) {
-    }
+    ) {}
 }

@@ -10,7 +10,6 @@ use TTBooking\WBEngine\DTO\Common\Request\Parameters;
 class Request
 {
     public function __construct(
-
         public Context $context,
 
         public Parameters $parameters,
@@ -18,7 +17,5 @@ class Request
         public string $provider,
 
         public string $gds,
-
-    ) {
-    }
+    ) {}
 }

@@ -9,11 +9,8 @@ use TTBooking\WBEngine\DTO\Common\Carrier;
 class LoyaltyCard
 {
     public function __construct(
-
         public string $id,
 
         public Carrier $carrier,
-
-    ) {
-    }
+    ) {}
 }

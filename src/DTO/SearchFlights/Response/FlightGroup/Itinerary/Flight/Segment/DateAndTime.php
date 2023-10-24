@@ -7,11 +7,8 @@ namespace TTBooking\WBEngine\DTO\SearchFlights\Response\FlightGroup\Itinerary\Fl
 class DateAndTime
 {
     public function __construct(
-
         public string $date,
 
         public string $time,
-
-    ) {
-    }
+    ) {}
 }

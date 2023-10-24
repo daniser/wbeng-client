@@ -10,7 +10,6 @@ use TTBooking\WBEngine\DTO\Common\Response\Context;
 class Response
 {
     public function __construct(
-
         public string $token,
 
         /** @var list<Response\Message> */
@@ -22,7 +21,5 @@ class Response
         /** @var list<Response\FlightGroup> */
         #[Type('list<'.Response\FlightGroup::class.'>')]
         public array $flightGroups,
-
-    ) {
-    }
+    ) {}
 }

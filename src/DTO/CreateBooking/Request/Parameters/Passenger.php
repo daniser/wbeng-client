@@ -11,7 +11,6 @@ use TTBooking\WBEngine\DTO\Enums\PhoneType;
 class Passenger
 {
     public function __construct(
-
         public string $token,
 
         public Passenger\Passport $passport,
@@ -41,7 +40,5 @@ class Passenger
         /** @var list<string> */
         #[Type('list<string>')]
         public array $extraDocuments = [],
-
-    ) {
-    }
+    ) {}
 }

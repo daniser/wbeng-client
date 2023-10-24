@@ -10,7 +10,6 @@ use TTBooking\WBEngine\DTO\Common;
 class FlightGroup
 {
     public function __construct(
-
         public string $token,
 
         public string $aggregator,
@@ -60,7 +59,5 @@ class FlightGroup
         public string $provider,
 
         public string $localPriority,
-
-    ) {
-    }
+    ) {}
 }

@@ -9,7 +9,6 @@ use JMS\Serializer\Annotation\Type;
 class FareDesc
 {
     public function __construct(
-
         public FareDesc\Receipt $receipt,
 
         /** @var list<string> */
@@ -19,7 +18,5 @@ class FareDesc
         /** @var list<string> */
         #[Type('list<string>')]
         public array $rules,
-
-    ) {
-    }
+    ) {}
 }

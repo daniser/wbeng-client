@@ -10,7 +10,6 @@ use TTBooking\WBEngine\DTO\Enums\PassengerType;
 class FareSeat
 {
     public function __construct(
-
         public PassengerType $passengerType,
 
         public string $count,
@@ -24,7 +23,5 @@ class FareSeat
         public array $vat,
 
         public int $total,
-
-    ) {
-    }
+    ) {}
 }

@@ -7,11 +7,8 @@ namespace TTBooking\WBEngine\DTO\Common;
 class Request
 {
     public function __construct(
-
         public Request\Context $context,
 
         public Request\Parameters $parameters,
-
-    ) {
-    }
+    ) {}
 }

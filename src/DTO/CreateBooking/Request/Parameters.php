@@ -11,7 +11,6 @@ use TTBooking\WBEngine\DTO\CreateBooking\Request\Parameters\Code3D;
 class Parameters
 {
     public function __construct(
-
         public string $token,
 
         /** @var list<FlightGroup> */
@@ -31,7 +30,5 @@ class Parameters
         public Parameters\Code3D $code3D = new Code3D,
 
         public ?bool $isHealthChecked = null,
-
-    ) {
-    }
+    ) {}
 }

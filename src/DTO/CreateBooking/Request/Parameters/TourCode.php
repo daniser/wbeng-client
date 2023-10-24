@@ -9,11 +9,8 @@ use TTBooking\WBEngine\DTO\Common\Carrier;
 class TourCode
 {
     public function __construct(
-
         public string $code,
 
         public Carrier $carrier,
-
-    ) {
-    }
+    ) {}
 }
