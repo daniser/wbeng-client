@@ -7,10 +7,10 @@ namespace TTBooking\WBEngine\Builders;
 use DateTimeImmutable;
 use DateTimeInterface;
 use ReflectionClass;
-use TTBooking\WBEngine\DTO\Air\Common\Location;
-use TTBooking\WBEngine\DTO\Air\Enums\PassengerType;
-use TTBooking\WBEngine\DTO\Air\Enums\ServiceClass;
-use TTBooking\WBEngine\DTO\Air\SearchFlights\Request\Parameters;
+use TTBooking\WBEngine\DTO\Common\Location;
+use TTBooking\WBEngine\DTO\Enums\PassengerType;
+use TTBooking\WBEngine\DTO\Enums\ServiceClass;
+use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters;
 
 class SearchFlights extends Parameters
 {

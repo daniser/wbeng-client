@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\Enums;
 
-use TTBooking\WBEngine\DTO\Air\Common;
-use TTBooking\WBEngine\DTO\Air\Common\Request\Context;
-use TTBooking\WBEngine\DTO\Air\CreateBooking;
-use TTBooking\WBEngine\DTO\Air\FlightFares;
-use TTBooking\WBEngine\DTO\Air\SearchFlights;
-use TTBooking\WBEngine\DTO\Air\SelectFlight;
+use TTBooking\WBEngine\DTO\Common;
+use TTBooking\WBEngine\DTO\Common\Request\Context;
+use TTBooking\WBEngine\DTO\CreateBooking;
+use TTBooking\WBEngine\DTO\FlightFares;
+use TTBooking\WBEngine\DTO\SearchFlights;
+use TTBooking\WBEngine\DTO\SelectFlight;
 
 enum Query: string
 {

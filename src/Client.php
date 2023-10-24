@@ -16,11 +16,11 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use TTBooking\WBEngine\DTO\Air\Common;
-use TTBooking\WBEngine\DTO\Air\CreateBooking;
-use TTBooking\WBEngine\DTO\Air\FlightFares;
-use TTBooking\WBEngine\DTO\Air\SearchFlights;
-use TTBooking\WBEngine\DTO\Air\SelectFlight;
+use TTBooking\WBEngine\DTO\Common;
+use TTBooking\WBEngine\DTO\CreateBooking;
+use TTBooking\WBEngine\DTO\FlightFares;
+use TTBooking\WBEngine\DTO\SearchFlights;
+use TTBooking\WBEngine\DTO\SelectFlight;
 use TTBooking\WBEngine\Enums\Query;
 
 class Client implements ClientInterface
