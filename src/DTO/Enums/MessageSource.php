@@ -6,6 +6,7 @@ namespace TTBooking\WBEngine\DTO\Enums;
 
 enum MessageSource: string
 {
+    case Request = 'REQUEST';
     case Build = 'BUILD';
     case Provider = 'PROVIDER';
 }
