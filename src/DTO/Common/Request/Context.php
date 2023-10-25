@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\DTO\Common\Request;
 
-use JMS\Serializer\Annotation\Type;
 use TTBooking\WBEngine\DTO\Enums\RespondType;
 
 class Context
@@ -14,20 +13,22 @@ class Context
 
         public string $password,
 
-        /** @var null|list<int> */
-        #[Type('list<int>')]
-        public ?array $salepoint,
+        public string $provider = '',
 
-        public string $locale,
+        public ?string $salePoint = null,
 
-        public RespondType $respondType,
+        public string $currency = 'RUB',
 
-        public string $currency,
+        /** @deprecated */
+        public string $locale = 'ru',
 
-        public int $id,
+        /** @deprecated */
+        public RespondType $respondType = RespondType::JSON,
 
-        public string $provider,
+        /** @deprecated */
+        public int $id = -1,
 
-        public ?int $context_id,
+        /** @deprecated */
+        public ?int $context_id = null,
     ) {}
 }
