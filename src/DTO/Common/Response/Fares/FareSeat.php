@@ -12,7 +12,7 @@ class FareSeat
     public function __construct(
         public PassengerType $passengerType,
 
-        public int|string $count,
+        public string $count,
 
         /** @var list<FareSeat\Price> */
         #[Type('list<'.FareSeat\Price::class.'>')]
