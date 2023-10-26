@@ -96,11 +96,8 @@ use TTBooking\WBEngine\Functional\a;
 function entity(string $class): object
 {
     $refClass = new ReflectionClass($class);
+    $refParams = $refClass->getConstructor()?->getParameters() ?? [];
     $entity = $refClass->newInstanceWithoutConstructor();
-
-    if (!$refParams = $refClass->getConstructor()?->getParameters()) {
-        return $entity;
-    }
 
     foreach ($refParams as $refParam) {
         $refParam->isPromoted() && $refParam->isDefaultValueAvailable() && $refClass->hasProperty($refParam->name)
