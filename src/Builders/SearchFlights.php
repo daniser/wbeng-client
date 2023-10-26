@@ -4,55 +4,66 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\Builders;
 
-use DateTimeImmutable;
 use DateTimeInterface;
-use ReflectionClass;
 use TTBooking\WBEngine\DTO\Common\Location;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
 use TTBooking\WBEngine\DTO\Enums\ServiceClass;
 use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters;
+use TTBooking\WBEngine\Functional\{a, is};
 
 class SearchFlights extends Parameters
 {
-    public static function new(): static
+    public function from(Location|string $code, string $name = ''): static
     {
-        return new static; // (new ReflectionClass(static::class))->newInstanceWithoutConstructor();
-    }
-
-    public function from(string $code, string $name = ''): static
-    {
-        $this->route[0] ??= static::newDTO(Parameters\RouteSegment::class);
-        $this->route[0]->locationBegin = new Location($code, $name);
+        $this->route[0] ??= is\rollin();
+        $this->route[0]->from($code, $name);
 
         return $this;
     }
 
-    public function to(string $code, string $name = ''): static
+    public function to(Location|string $code, string $name = ''): static
     {
-        $this->route[0] ??= static::newDTO(Parameters\RouteSegment::class);
-        $this->route[0]->locationEnd = new Location($code, $name);
+        $this->route[0] ??= is\rollin();
+        $this->route[0]->to($code, $name);
 
         return $this;
     }
 
-    public function at(DateTimeInterface|string $date): static
+    public function on(DateTimeInterface|string $date): static
     {
-        $this->route[0] ??= static::newDTO(Parameters\RouteSegment::class);
-        $this->route[0]->date = is_string($date) ? new DateTimeImmutable($date) : $date;
+        $this->route[0] ??= is\rollin();
+        $this->route[0]->on($date);
 
         return $this;
     }
 
-    public function for(int $count = 1, PassengerType $passengerType = PassengerType::Adult): static
+    public function complex(Parameters\RouteSegment ...$segments): static
     {
-        $this->seats[] = new Parameters\Seat($count, $passengerType);
+        $this->route = array_values($segments);
 
         return $this;
     }
 
-    public function and(int $count = 1, PassengerType $passengerType = PassengerType::Adult): static
+    public function for(Parameters\Seat ...$seats): static
     {
-        return $this->for($count, $passengerType);
+        $cases = array_combine(
+            $cc = array_map(static fn (PassengerType $case) => $case->value, PassengerType::cases()),
+            array_fill(0, count($cc), 0)
+        );
+
+        $map = array_filter(
+            array_reduce([...$this->seats, ...$seats], static function (array $accum, Parameters\Seat $seat) {
+                $accum[$seat->passengerType->value] += $seat->count;
+
+                return $accum;
+            }, $cases)
+        );
+
+        $this->seats = array_map(static function (string $type, int $count) {
+            return a\seat(passengerType: PassengerType::from($type), count: $count);
+        }, array_keys($map), array_values($map));
+
+        return $this;
     }
 
     public function withServiceClass(ServiceClass $serviceClass): static
@@ -88,17 +99,5 @@ class SearchFlights extends Parameters
         $this->preferredAirlines = array_values($airlines);
 
         return $this;
-    }
-
-    /**
-     * @template T of object
-     *
-     * @param class-string<T> $class
-     *
-     * @return T
-     */
-    protected static function newDTO(string $class): object
-    {
-        return (new ReflectionClass($class))->newInstanceWithoutConstructor();
     }
 }

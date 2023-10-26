@@ -37,7 +37,8 @@
             "TTBooking\\WBEngine\\": "src/"
         },
         "files": [
-            "src/helpers.php"
+            "src/actions.php",
+            "src/entities.php"
         ]
     },
     "autoload-dev": {

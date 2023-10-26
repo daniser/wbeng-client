@@ -23,5 +23,8 @@ return (new PhpCsFixer\Config)
         'phpdoc_to_comment' => [
             'ignored_tags' => ['var'],
         ],
+        'single_import_per_statement' => [
+            'group_to_single_imports' => false,
+        ],
     ])
     ->setFinder($finder);
