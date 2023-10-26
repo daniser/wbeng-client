@@ -98,14 +98,13 @@ function entity(string $class): object
     $refClass = new ReflectionClass($class);
     $entity = $refClass->newInstanceWithoutConstructor();
 
-    if (! $refParams = $refClass->getConstructor()?->getParameters()) {
+    if (!$refParams = $refClass->getConstructor()?->getParameters()) {
         return $entity;
     }
 
     foreach ($refParams as $refParam) {
-        if ($refParam->isPromoted() && $refParam->isDefaultValueAvailable() && $refClass->hasProperty($refParam->name)) {
-            $refClass->getProperty($refParam->name)->setValue($entity, $refParam->getDefaultValue());
-        }
+        $refParam->isPromoted() && $refParam->isDefaultValueAvailable() && $refClass->hasProperty($refParam->name)
+        && $refClass->getProperty($refParam->name)->setValue($entity, $refParam->getDefaultValue());
     }
 
     return $entity;
