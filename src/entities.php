@@ -95,7 +95,20 @@ use TTBooking\WBEngine\Functional\a;
  */
 function entity(string $class): object
 {
-    return (new ReflectionClass($class))->newInstanceWithoutConstructor();
+    $refClass = new ReflectionClass($class);
+    $entity = $refClass->newInstanceWithoutConstructor();
+
+    if (! $refParams = $refClass->getConstructor()?->getParameters()) {
+        return $entity;
+    }
+
+    foreach ($refParams as $refParam) {
+        if ($refParam->isPromoted() && $refParam->isDefaultValueAvailable() && $refClass->hasProperty($refParam->name)) {
+            $refClass->getProperty($refParam->name)->setValue($entity, $refParam->getDefaultValue());
+        }
+    }
+
+    return $entity;
 }
 
 function adult(int $count = 1): Seat

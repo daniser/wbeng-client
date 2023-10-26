@@ -52,7 +52,7 @@ class SearchFlights extends Parameters
         );
 
         $map = array_filter(
-            array_reduce([...$this->seats, ...$seats], static function (array $accum, Parameters\Seat $seat) {
+            array_reduce($seats, static function (array $accum, Parameters\Seat $seat) {
                 $accum[$seat->passengerType->value] += $seat->count;
 
                 return $accum;
