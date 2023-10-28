@@ -6,6 +6,7 @@ namespace TTBooking\WBEngine\DTO\Common\Response;
 
 use JMS\Serializer\Annotation\Type;
 use TTBooking\WBEngine\DTO\Common;
+use TTBooking\WBEngine\DTO\Enums\BookingStatus;
 
 class BookingFile
 {
@@ -26,7 +27,7 @@ class BookingFile
 
         public string $createDate,
 
-        public string $status,
+        public BookingStatus $status,
 
         public string $paymentType,
 
@@ -36,7 +37,9 @@ class BookingFile
 
         public Common\Customer $customer,
 
-        //
+        /** @var list<string> */
+        #[Type('list<string>')]
+        public array $documents,
 
         /** @var list<string> */
         #[Type('list<string>')]

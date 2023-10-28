@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\DTO\Common\Response\Fares\FareSeat;
 
+use TTBooking\WBEngine\DTO\Enums\PriceType;
+
 class Price
 {
     public function __construct(
@@ -17,7 +19,7 @@ class Price
 
         public string $currencyBase,
 
-        public string $elementType,
+        public PriceType $elementType,
 
         public string $code,
     ) {}

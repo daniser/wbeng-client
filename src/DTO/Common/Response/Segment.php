@@ -7,6 +7,7 @@ namespace TTBooking\WBEngine\DTO\Common\Response;
 use DateTimeInterface;
 use JMS\Serializer\Annotation\Type;
 use TTBooking\WBEngine\DTO\Common;
+use TTBooking\WBEngine\DTO\Enums\LocomotionMethod;
 use TTBooking\WBEngine\DTO\Enums\ServiceClass;
 
 class Segment
@@ -30,7 +31,7 @@ class Segment
 
         public Common\Equipment $equipment,
 
-        public string $methLocomotion,
+        public LocomotionMethod $methLocomotion,
 
         #[Type('DateTimeInterface<"Y-m-d\TH:i:s">')]
         public DateTimeInterface $dateBegin,

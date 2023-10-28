@@ -7,6 +7,7 @@ namespace TTBooking\WBEngine\DTO\Common\Response;
 use DateTimeInterface;
 use JMS\Serializer\Annotation\Type;
 use TTBooking\WBEngine\DTO\Common;
+use TTBooking\WBEngine\DTO\Enums\TicketStatus;
 
 class AirTicket
 {
@@ -24,7 +25,7 @@ class AirTicket
 
         public string $regLocator,
 
-        public string $status,
+        public TicketStatus $status,
 
         public string $number,
 

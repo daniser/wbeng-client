@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\Common\Response\Fares\FareDesc;
 
 use JMS\Serializer\Annotation\Type;
+use TTBooking\WBEngine\DTO\Enums\RuleApplicability;
+use TTBooking\WBEngine\DTO\Enums\RuleType;
 
 class Rule
 {
     public function __construct(
-        public string $type,
+        public RuleType $type,
 
         public bool $allowed,
 
-        public string $applicability,
+        public RuleApplicability $applicability,
 
         public ?string $penalty,
 

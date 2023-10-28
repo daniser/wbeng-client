@@ -6,6 +6,7 @@ namespace TTBooking\WBEngine\DTO\Common;
 
 use DateTimeInterface;
 use JMS\Serializer\Annotation\Type;
+use TTBooking\WBEngine\DTO\Enums\DocumentType;
 use TTBooking\WBEngine\DTO\Enums\Gender;
 
 class Passport
@@ -29,7 +30,7 @@ class Passport
 
         public string $number,
 
-        public string $type,
+        public DocumentType $type,
 
         #[Type('DateTimeInterface<"Y-m-d">')]
         public DateTimeInterface $birthday,

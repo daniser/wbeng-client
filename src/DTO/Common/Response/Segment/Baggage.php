@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\Common\Response\Segment;
 
 use JMS\Serializer\Annotation\Type;
+use TTBooking\WBEngine\DTO\Enums\BaggageType;
 
 class Baggage
 {
     public function __construct(
-        public ?string $type,
+        public ?BaggageType $type,
 
         public ?string $allow,
 

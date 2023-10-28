@@ -7,5 +7,5 @@ namespace TTBooking\WBEngine\DTO\Enums;
 enum PhoneType: string
 {
     case Mobile = 'MOBILE';
-    case Home = 'HOME';
+    case Home = 'HOME_PHONE';
 }
