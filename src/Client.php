@@ -63,22 +63,22 @@ class Client implements ClientInterface
         return $this->query(Query::Flights, $parameters);
     }
 
-    public function selectFlight(Common\Request\Parameters $parameters): SelectFlight\Response
+    public function selectFlight(SelectFlight\Request\Parameters $parameters, string $provider = null, string $gds = null): SelectFlight\Response
     {
         /** @var SelectFlight\Response */
-        return $this->query(Query::Price, $parameters);
+        return $this->query(Query::Price, $parameters, $provider, $gds);
     }
 
-    public function createBooking(CreateBooking\Request\Parameters $parameters): CreateBooking\Response
+    public function createBooking(CreateBooking\Request\Parameters $parameters, string $provider = null, string $gds = null): CreateBooking\Response
     {
         /** @var CreateBooking\Response */
-        return $this->query(Query::Book, $parameters);
+        return $this->query(Query::Book, $parameters, $provider, $gds);
     }
 
-    public function flightFares(Common\Request\Parameters $parameters, string $provider, string $gds): FlightFares\Response
+    public function flightFares(Common\Request\Parameters $parameters, string $provider = null, string $gds = null): FlightFares\Response
     {
         /** @var FlightFares\Response */
-        return $this->query(Query::Fares, $parameters, $provider, $gds);
+        return $this->query(Query::FlightFares, $parameters, $provider, $gds);
     }
 
     protected function query(Query $query, object $parameters, mixed ...$args): object

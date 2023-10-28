@@ -14,8 +14,8 @@ class Request
 
         public Parameters $parameters,
 
-        public string $provider,
+        public ?string $provider = null,
 
-        public string $gds,
+        public ?string $gds = null,
     ) {}
 }
