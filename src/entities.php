@@ -38,6 +38,7 @@ namespace TTBooking\WBEngine\Functional\a;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Location;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
 use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters\RouteSegment;
@@ -47,6 +48,11 @@ use TTBooking\WBEngine\Functional\is\rollin;
 function location(string $code, string $name = ''): Location
 {
     return new Location($code, $name);
+}
+
+function carrier(string $code, string $name = ''): Carrier
+{
+    return new Carrier($code, $name);
 }
 
 function date(string $date = 'now'): DateTimeInterface

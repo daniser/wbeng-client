@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\DTO\SearchFlights\Response;
 
+use DateTimeInterface;
 use JMS\Serializer\Annotation\Type;
 use TTBooking\WBEngine\DTO\Common;
 use TTBooking\WBEngine\DTO\Common\Response\Fares;
@@ -14,27 +15,26 @@ class FlightGroup
     public function __construct(
         public string $token,
 
-        public string $aggregator,
+        /** @deprecated */
+        public ?string $aggregator,
 
         public Common\Carrier $carrier,
 
-        public bool $eticket,
+        /** @deprecated */
+        public ?bool $eticket,
 
         public bool $latinRegistration,
 
-        public string $timeLimit,
+        #[Type('DateTimeInterface<"Y-m-d">')]
+        public DateTimeInterface $timeLimit,
 
         public string $gds,
 
-        public string $terminal,
+        public ?string $terminal,
 
-        public ?bool $allowSSC,
+        public bool $allowSSC,
 
         public bool $allow3D,
-
-        public bool $allowBookWithAncillary,
-
-        public bool $allowBookWithAccompany,
 
         /** @var list<Itinerary> */
         #[Type('list<'.Itinerary::class.'>')]
@@ -42,23 +42,30 @@ class FlightGroup
 
         public Fares $fares,
 
+        public string $provider,
+
+        /** @deprecated */
+        public ?bool $untouchable,
+
         public bool $isCharter,
 
-        public bool $isLowcost,
-
         public bool $isSpecial,
+
+        public bool $isLowcost,
 
         public bool $isHealthCheckRequired,
 
         public bool $isTourOperator,
+
+        public bool $allowBookWithAccompany,
+
+        public bool $allowBookWithAncillary,
 
         public bool $virtualInterlining,
 
         /** @var list<Common\OfficeReference> */
         #[Type('list<'.Common\OfficeReference::class.'>')]
         public array $officeReference,
-
-        public string $provider,
 
         public string $localPriority,
     ) {}

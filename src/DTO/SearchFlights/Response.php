@@ -22,5 +22,8 @@ class Response
         /** @var list<Response\FlightGroup> */
         #[Type('list<'.Response\FlightGroup::class.'>')]
         public array $flightGroups,
+
+        /** @deprecated */
+        public ?string $initTime,
     ) {}
 }

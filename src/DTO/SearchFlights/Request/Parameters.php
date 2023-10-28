@@ -6,30 +6,55 @@ namespace TTBooking\WBEngine\DTO\SearchFlights\Request;
 
 use JMS\Serializer\Annotation\Type;
 use Symfony\Component\Validator\Constraints as Assert;
+use TTBooking\WBEngine\DTO\Common\Carrier;
+use TTBooking\WBEngine\DTO\Common\Code3D;
+use TTBooking\WBEngine\DTO\Enums\FlightSorting;
 use TTBooking\WBEngine\DTO\Enums\ServiceClass;
 
 class Parameters
 {
     public function __construct(
         /** @var list<Parameters\RouteSegment> */
+        #[Assert\NotBlank]
         #[Assert\Valid]
         #[Type('list<'.Parameters\RouteSegment::class.'>')]
-        public array $route = [],
+        public array $route,
 
         /** @var list<Parameters\Seat> */
+        #[Assert\Count(min: 1, max: 9)]
+        #[Assert\Valid]
         #[Type('list<'.Parameters\Seat::class.'>')]
         public array $seats = [new Parameters\Seat],
 
         public ServiceClass $serviceClass = ServiceClass::Economy,
 
-        public bool $skipConnected = false,
+        public ?bool $skipConnected = null,
 
-        public bool $eticketsOnly = true,
+        /** @deprecated */
+        public ?bool $eticketsOnly = null,
 
-        public bool $mixedVendors = true,
+        /** @deprecated */
+        public ?bool $mixedVendors = null,
 
-        /** @var list<string> */
+        /** @var null|list<Carrier> */
+        #[Assert\Valid]
+        #[Type('list<'.Carrier::class.'>')]
+        public ?array $preferredAirlines = null,
+
+        /** @var null|list<Carrier> */
+        #[Assert\Valid]
+        #[Type('list<'.Carrier::class.'>')]
+        public ?array $ignoredAirlines = null,
+
+        /** @var null|list<string> */
         #[Type('list<string>')]
-        public array $preferredAirlines = [],
+        public ?array $preferredFlights = null,
+
+        public ?Code3D $code3D = null,
+
+        public ?FlightSorting $sort = null,
+
+        #[Assert\Positive]
+        public ?int $limit = null,
     ) {}
 }

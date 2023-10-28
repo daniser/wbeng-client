@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\Builders;
 
 use DateTimeInterface;
+use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Location;
+use TTBooking\WBEngine\DTO\Enums\FlightSorting;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
 use TTBooking\WBEngine\DTO\Enums\ServiceClass;
 use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters;
@@ -60,7 +62,7 @@ class SearchFlights extends Parameters
         );
 
         $this->seats = array_map(static function (string $type, int $count) {
-            return a\seat(passengerType: PassengerType::from($type), count: $count);
+            return a\seat(PassengerType::from($type), $count);
         }, array_keys($map), array_values($map));
 
         return $this;
@@ -94,9 +96,44 @@ class SearchFlights extends Parameters
         return $this;
     }
 
-    public function preferAirlines(string ...$airlines): static
+    public function preferAirlines(Carrier|string ...$airlines): static
     {
-        $this->preferredAirlines = array_values($airlines);
+        $this->preferredAirlines = array_map(static function (Carrier|string $airline) {
+            return is_string($airline) ? a\carrier($airline) : $airline;
+        }, array_values($airlines));
+
+        return $this;
+    }
+
+    public function ignoreAirlines(Carrier|string ...$airlines): static
+    {
+        $this->ignoredAirlines = array_map(static function (Carrier|string $airline) {
+            return is_string($airline) ? a\carrier($airline) : $airline;
+        }, array_values($airlines));
+
+        return $this;
+    }
+
+    public function sort(FlightSorting $by): static
+    {
+        $this->sort = $by;
+
+        return $this;
+    }
+
+    public function sortByPrice(): static
+    {
+        return $this->sort(FlightSorting::Price);
+    }
+
+    public function sortByDuration(): static
+    {
+        return $this->sort(FlightSorting::Duration);
+    }
+
+    public function limit(int $to): static
+    {
+        $this->limit = $to;
 
         return $this;
     }
