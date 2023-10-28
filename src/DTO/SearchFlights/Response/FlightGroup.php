@@ -25,14 +25,13 @@ class FlightGroup
 
         public bool $latinRegistration,
 
-        #[Type('DateTimeInterface<"Y-m-d">')]
         public DateTimeInterface $timeLimit,
 
         public string $gds,
 
         public ?string $terminal,
 
-        public bool $allowSSC,
+        public ?bool $allowSSC,
 
         public bool $allow3D,
 
