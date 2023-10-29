@@ -6,10 +6,9 @@ namespace TTBooking\WBEngine\Builders;
 
 use DateTimeInterface;
 use TTBooking\WBEngine\DTO\Common\Location;
-use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters\RouteSegment;
 use TTBooking\WBEngine\Functional\a;
 
-class RouteSegmentBuilder extends RouteSegment
+trait RouteSegment
 {
     public function from(Location|string $code, string $name = ''): static
     {

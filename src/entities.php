@@ -4,32 +4,32 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\Functional\is;
 
-use TTBooking\WBEngine\Builders\RouteSegmentBuilder;
+use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters\RouteSegment;
 use TTBooking\WBEngine\Functional\an;
 
-function rollin(): RouteSegmentBuilder
+function rollin(): RouteSegment
 {
-    return an\entity(RouteSegmentBuilder::class);
+    return an\entity(RouteSegment::class);
 }
 
 namespace TTBooking\WBEngine\Functional\is\rollin;
 
 use DateTimeInterface;
-use TTBooking\WBEngine\Builders\RouteSegmentBuilder;
 use TTBooking\WBEngine\DTO\Common\Location;
+use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters\RouteSegment;
 use TTBooking\WBEngine\Functional\is;
 
-function from(Location|string $code, string $name = ''): RouteSegmentBuilder
+function from(Location|string $code, string $name = ''): RouteSegment
 {
     return is\rollin()->from($code, $name);
 }
 
-function to(Location|string $code, string $name = ''): RouteSegmentBuilder
+function to(Location|string $code, string $name = ''): RouteSegment
 {
     return is\rollin()->to($code, $name);
 }
 
-function on(DateTimeInterface|string $date): RouteSegmentBuilder
+function on(DateTimeInterface|string $date): RouteSegment
 {
     return is\rollin()->on($date);
 }

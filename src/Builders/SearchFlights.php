@@ -13,7 +13,7 @@ use TTBooking\WBEngine\DTO\Enums\ServiceClass;
 use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters;
 use TTBooking\WBEngine\Functional\{a, is};
 
-class SearchFlights extends Parameters
+trait SearchFlights
 {
     public function from(Location|string $code, string $name = ''): static
     {
