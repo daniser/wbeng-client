@@ -11,4 +11,15 @@ enum MessageType: string
     case Error = 'ERROR';
     case Debug = 'DEBUG';
     case ForUser = 'FORUSER';
+
+    public function style(): string
+    {
+        return match ($this) {
+            self::Notice => 'bg=green;fg=black',
+            self::Warning => 'bg=yellow;fg=black',
+            self::Error => 'error',
+            self::Debug => 'bg=magenta',
+            self::ForUser => 'bg=cyan;fg=black',
+        };
+    }
 }
