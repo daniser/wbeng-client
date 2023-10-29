@@ -44,7 +44,6 @@ class Client implements ClientInterface
         ValidatorInterface $validator = null,
         SerializerInterface $serializer = null,
     ) {
-        $this->validate($context);
         $this->baseUri = rtrim($baseUri, '/');
         $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
@@ -56,6 +55,7 @@ class Client implements ClientInterface
             ->enableEnumSupport()
             ->setPropertyNamingStrategy(new IdenticalPropertyNamingStrategy)
             ->build();
+        $this->validate($context);
     }
 
     public function searchFlights(SearchFlights\Request\Parameters $parameters): SearchFlights\Response
