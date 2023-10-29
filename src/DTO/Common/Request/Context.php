@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\DTO\Common\Request;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use TTBooking\WBEngine\DTO\Enums\RespondType;
 
 class Context
@@ -17,9 +18,11 @@ class Context
 
         public ?string $salePoint = null,
 
+        #[Assert\Currency]
         public string $currency = 'RUB',
 
         /** @deprecated */
+        #[Assert\Locale]
         public string $locale = 'ru',
 
         /** @deprecated */

@@ -44,6 +44,7 @@ class Client implements ClientInterface
         ValidatorInterface $validator = null,
         SerializerInterface $serializer = null,
     ) {
+        $this->validate($context);
         $this->baseUri = rtrim($baseUri, '/');
         $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
@@ -83,11 +84,7 @@ class Client implements ClientInterface
 
     protected function query(Query $query, object $parameters, mixed ...$args): object
     {
-        $violations = $this->validator->validate($parameters);
-
-        if (count($violations)) {
-            throw new ValidationFailedException($parameters, $violations);
-        }
+        $this->validate($parameters);
 
         $request = $query->newRequest($this->context, $parameters, ...$args);
 
@@ -97,6 +94,15 @@ class Client implements ClientInterface
 
         /** @var object */
         return $this->serializer->deserialize($response, $query->response(), 'json');
+    }
+
+    protected function validate(object $entity): void
+    {
+        $violations = $this->validator->validate($entity);
+
+        if (count($violations)) {
+            throw new ValidationFailedException($entity, $violations);
+        }
     }
 
     /**
