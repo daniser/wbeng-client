@@ -10,20 +10,18 @@ use TTBooking\WBEngine\DTO\Common\Response\Message;
 
 class Response
 {
-    public function __construct(
-        public string $token,
+    public string $token;
 
-        /** @var list<Message> */
-        #[Type('list<'.Message::class.'>')]
-        public array $messages,
+    /** @var list<Message> */
+    #[Type('list<'.Message::class.'>')]
+    public array $messages = [];
 
-        public Context $context,
+    public Context $context;
 
-        /** @var list<Response\FlightGroup> */
-        #[Type('list<'.Response\FlightGroup::class.'>')]
-        public array $flightGroups,
+    /** @var list<Response\FlightGroup> */
+    #[Type('list<'.Response\FlightGroup::class.'>')]
+    public array $flightGroups;
 
-        /** @deprecated */
-        public ?string $initTime,
-    ) {}
+    /** @deprecated */
+    public ?string $initTime;
 }
