@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\Functional\is;
 
-use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters\RouteSegment;
+use TTBooking\WBEngine\DTO\Common\RouteSegment;
 use TTBooking\WBEngine\Functional\an;
 
 function rollin(): RouteSegment
@@ -16,7 +16,7 @@ namespace TTBooking\WBEngine\Functional\is\rollin;
 
 use DateTimeInterface;
 use TTBooking\WBEngine\DTO\Common\Location;
-use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters\RouteSegment;
+use TTBooking\WBEngine\DTO\Common\RouteSegment;
 use TTBooking\WBEngine\Functional\is;
 
 function from(Location|string $code, string $name = ''): RouteSegment
@@ -40,9 +40,9 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Location;
+use TTBooking\WBEngine\DTO\Common\RouteSegment;
+use TTBooking\WBEngine\DTO\Common\Seat;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
-use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters\RouteSegment;
-use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters\Seat;
 use TTBooking\WBEngine\Functional\is\rollin;
 
 function location(string $code, string $name = ''): Location
@@ -88,8 +88,8 @@ function disabled(int $count = 1): Seat
 namespace TTBooking\WBEngine\Functional\an;
 
 use ReflectionClass;
+use TTBooking\WBEngine\DTO\Common\Seat;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
-use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters\Seat;
 use TTBooking\WBEngine\Functional\a;
 
 /**

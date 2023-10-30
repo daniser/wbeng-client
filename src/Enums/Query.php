@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\Enums;
 
 use InvalidArgumentException;
+use TTBooking\WBEngine\DTO\Common;
 use TTBooking\WBEngine\DTO\Common\Request\Context;
 use TTBooking\WBEngine\DTO\CreateBooking;
 use TTBooking\WBEngine\DTO\FlightFares;
@@ -102,8 +103,8 @@ enum Query: string
     public function response(): string
     {
         return match ($this) {
-            self::Flights => SearchFlights\Response::class,
-            self::Price => SelectFlight\Response::class,
+            self::Flights,
+            self::Price => Common\Response::class,
             self::Book => CreateBooking\Response::class,
             self::FlightFares => FlightFares\Response::class,
             default => throw new InvalidArgumentException('Response type not implemented.'),

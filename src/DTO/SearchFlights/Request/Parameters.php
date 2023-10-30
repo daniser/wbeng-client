@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use TTBooking\WBEngine\Builders;
 use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Code3D;
+use TTBooking\WBEngine\DTO\Common\RouteSegment;
+use TTBooking\WBEngine\DTO\Common\Seat;
 use TTBooking\WBEngine\DTO\Enums\FlightSorting;
 use TTBooking\WBEngine\DTO\Enums\ServiceClass;
 
@@ -17,17 +19,17 @@ class Parameters
     use Builders\SearchFlights;
 
     public function __construct(
-        /** @var list<Parameters\RouteSegment> */
+        /** @var list<RouteSegment> */
         #[Assert\NotBlank]
         #[Assert\Valid]
-        #[Type('list<'.Parameters\RouteSegment::class.'>')]
+        #[Type('list<'.RouteSegment::class.'>')]
         public array $route,
 
-        /** @var list<Parameters\Seat> */
+        /** @var list<Seat> */
         #[Assert\Count(min: 1, max: 9)]
         #[Assert\Valid]
-        #[Type('list<'.Parameters\Seat::class.'>')]
-        public array $seats = [new Parameters\Seat],
+        #[Type('list<'.Seat::class.'>')]
+        public array $seats = [new Seat],
 
         public ServiceClass $serviceClass = ServiceClass::Economy,
 

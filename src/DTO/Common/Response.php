@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TTBooking\WBEngine\DTO\SearchFlights;
+namespace TTBooking\WBEngine\DTO\Common;
 
 use JMS\Serializer\Annotation\Type;
 use TTBooking\WBEngine\DTO\Common\Response\Context;

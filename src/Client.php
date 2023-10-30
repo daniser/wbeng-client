@@ -58,15 +58,15 @@ class Client implements ClientInterface
         $this->validate($context);
     }
 
-    public function searchFlights(SearchFlights\Request\Parameters $parameters): SearchFlights\Response
+    public function searchFlights(SearchFlights\Request\Parameters $parameters): Common\Response
     {
-        /** @var SearchFlights\Response */
+        /** @var Common\Response */
         return $this->query(Query::Flights, $parameters);
     }
 
-    public function selectFlight(SelectFlight\Request\Parameters $parameters, string $provider = null, string $gds = null): SelectFlight\Response
+    public function selectFlight(SelectFlight\Request\Parameters $parameters, string $provider = null, string $gds = null): Common\Response
     {
-        /** @var SelectFlight\Response */
+        /** @var Common\Response */
         return $this->query(Query::Price, $parameters, $provider, $gds);
     }
 

@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace TTBooking\WBEngine\DTO\SearchFlights\Response;
+namespace TTBooking\WBEngine\DTO\Common\Response;
 
 use DateTimeInterface;
 use JMS\Serializer\Annotation\Type;
 use TTBooking\WBEngine\DTO\Common;
-use TTBooking\WBEngine\DTO\Common\Response\Fares;
-use TTBooking\WBEngine\DTO\Common\Response\Itinerary;
 
 class FlightGroup
 {
