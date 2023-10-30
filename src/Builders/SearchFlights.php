@@ -7,10 +7,11 @@ namespace TTBooking\WBEngine\Builders;
 use DateTimeInterface;
 use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Location;
+use TTBooking\WBEngine\DTO\Common\RouteSegment;
+use TTBooking\WBEngine\DTO\Common\Seat;
 use TTBooking\WBEngine\DTO\Enums\FlightSorting;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
 use TTBooking\WBEngine\DTO\Enums\ServiceClass;
-use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters;
 use TTBooking\WBEngine\Functional\{a, is};
 
 trait SearchFlights
@@ -39,14 +40,14 @@ trait SearchFlights
         return $this;
     }
 
-    public function complex(Parameters\RouteSegment ...$segments): static
+    public function complex(RouteSegment ...$segments): static
     {
         $this->route = array_values($segments);
 
         return $this;
     }
 
-    public function for(Parameters\Seat ...$seats): static
+    public function for(Seat ...$seats): static
     {
         $cases = array_combine(
             $cc = array_map(static fn (PassengerType $case) => $case->value, PassengerType::cases()),
@@ -54,7 +55,7 @@ trait SearchFlights
         );
 
         $map = array_filter(
-            array_reduce($seats, static function (array $accum, Parameters\Seat $seat) {
+            array_reduce($seats, static function (array $accum, Seat $seat) {
                 $accum[$seat->passengerType->value] += $seat->count;
 
                 return $accum;

@@ -7,7 +7,7 @@ namespace TTBooking\WBEngine\Builders;
 use TTBooking\WBEngine\DTO\Common\Request\Flight;
 use TTBooking\WBEngine\DTO\Common\Request\FlightGroup;
 use TTBooking\WBEngine\DTO\Common\Request\Itinerary;
-use TTBooking\WBEngine\DTO\SearchFlights\Response;
+use TTBooking\WBEngine\DTO\Common\Response;
 use TTBooking\WBEngine\Functional\an;
 
 trait SelectFlight
