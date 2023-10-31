@@ -16,7 +16,6 @@
     ],
     "require": {
         "php": "^8.1",
-        "jms/serializer": "^3.20",
         "php-http/client-implementation": "^1.0",
         "php-http/discovery": "^1.6",
         "php-http/httplug": "^1.0 || ^2.0",
@@ -28,11 +27,13 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.32",
+        "jms/serializer": "^3.20",
         "nyholm/psr7": "^1.0",
         "php-http/message": "^1.7",
         "php-http/mock-client": "^1.0",
         "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^9.5 || ^10.0"
+        "phpunit/phpunit": "^9.5 || ^10.0",
+        "symfony/serializer": "^6.0"
     },
     "autoload": {
         "psr-4": {
@@ -49,6 +50,8 @@
         }
     },
     "suggest": {
+        "jms/serializer": "Required to (de)serialize API entities",
+        "symfony/serializer": "Required to (de)serialize API entities",
         "php-http/message": "Required to use Guzzle for sending HTTP requests",
         "php-http/guzzle7-adapter": "Required to use Guzzle for sending HTTP requests"
     },
