@@ -4,26 +4,13 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine;
 
-use Exception;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
-use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
-use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface as JMSSerializerInterface;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
-use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
-use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
-use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
-use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
-use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
-use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validation;
@@ -63,7 +50,7 @@ class Client implements ClientInterface
         $this->validator = $validator ?? Validation::createValidatorBuilder()
             ->enableAnnotationMapping()
             ->getValidator();
-        $this->serializer = $serializer ?? static::createSerializer();
+        $this->serializer = $serializer ?? SerializerFactory::createSerializer();
         $this->validate($context);
     }
 
@@ -91,45 +78,18 @@ class Client implements ClientInterface
         return $this->query(Query::FlightFares, $parameters, $provider, $gds);
     }
 
-    protected static function createSerializer(): JMSSerializerInterface|SymfonySerializerInterface
-    {
-        if (interface_exists(SymfonySerializerInterface::class)) {
-            $propertyNormalizer = new PropertyNormalizer(
-                propertyTypeExtractor: new PropertyInfoExtractor(typeExtractors: [
-                    new PhpDocExtractor,
-                    new ReflectionExtractor,
-                ]),
-                defaultContext: [AbstractObjectNormalizer::SKIP_NULL_VALUES => true],
-            );
-
-            return new Serializer(
-                [new BackedEnumNormalizer, $propertyNormalizer, new ArrayDenormalizer, new DateTimeNormalizer],
-                [new JsonEncoder]
-            );
-        }
-
-        if (interface_exists(JMSSerializerInterface::class)) {
-            return SerializerBuilder::create()
-                ->enableEnumSupport()
-                ->setPropertyNamingStrategy(new IdenticalPropertyNamingStrategy)
-                ->build();
-        }
-
-        throw new Exception('Neither Symfony nor JMS serializer found.');
-    }
-
     protected function query(Query $query, object $parameters, mixed ...$args): object
     {
         $this->validate($parameters);
 
         $request = $query->newRequest($this->context, $parameters, ...$args);
 
-        $body = $this->serialize($request, 'json');
+        $body = $this->serializer->serialize($request, 'json');
 
         $response = $this->request($query->value, method: 'POST', body: $body);
 
         /** @var object */
-        return $this->deserialize($response, $query->response(), 'json');
+        return $this->serializer->deserialize($response, $query->response(), 'json');
     }
 
     protected function validate(object $entity): void
@@ -139,16 +99,6 @@ class Client implements ClientInterface
         if (count($violations)) {
             throw new ValidationFailedException($entity, $violations);
         }
-    }
-
-    protected function serialize(mixed $data, string $format): string
-    {
-        return $this->serializer->serialize($data, $format);
-    }
-
-    protected function deserialize(string $data, string $type, string $format): mixed
-    {
-        return $this->serializer->deserialize($data, $type, $format);
     }
 
     /**
