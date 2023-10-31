@@ -14,7 +14,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use Symfony\Component\PropertyInfo\Extractor\PhpStanExtractor;
+use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -96,7 +96,7 @@ class Client implements ClientInterface
         if (interface_exists(SymfonySerializerInterface::class)) {
             $propertyNormalizer = new PropertyNormalizer(
                 propertyTypeExtractor: new PropertyInfoExtractor(typeExtractors: [
-                    new PhpStanExtractor,
+                    new PhpDocExtractor,
                     new ReflectionExtractor,
                 ]),
                 defaultContext: [AbstractObjectNormalizer::SKIP_NULL_VALUES => true],

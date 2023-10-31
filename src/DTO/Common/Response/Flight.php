@@ -17,6 +17,6 @@ class Flight
 
         public int $travelDuration,
 
-        public string $seatsAvailable,
+        public int $seatsAvailable,
     ) {}
 }
