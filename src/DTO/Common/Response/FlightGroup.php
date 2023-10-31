@@ -10,60 +10,58 @@ use TTBooking\WBEngine\DTO\Common;
 
 class FlightGroup
 {
-    public function __construct(
-        public string $token,
+    public string $token;
 
-        /** @deprecated */
-        public ?string $aggregator,
+    /** @deprecated */
+    public ?string $aggregator;
 
-        public Common\Carrier $carrier,
+    public Common\Carrier $carrier;
 
-        /** @deprecated */
-        public ?bool $eticket,
+    /** @deprecated */
+    public ?bool $eticket;
 
-        public bool $latinRegistration,
+    public bool $latinRegistration;
 
-        public DateTimeInterface $timeLimit,
+    public DateTimeInterface $timeLimit;
 
-        public string $gds,
+    public string $gds;
 
-        public ?string $terminal,
+    public ?string $terminal;
 
-        public ?bool $allowSSC,
+    public ?bool $allowSSC;
 
-        public bool $allow3D,
+    public bool $allow3D;
 
-        /** @var list<Itinerary> */
-        #[Type('list<'.Itinerary::class.'>')]
-        public array $itineraries,
+    /** @var list<Itinerary> */
+    #[Type('list<'.Itinerary::class.'>')]
+    public array $itineraries;
 
-        public Fares $fares,
+    public Fares $fares;
 
-        public string $provider,
+    public string $provider;
 
-        /** @deprecated */
-        public ?bool $untouchable,
+    /** @deprecated */
+    public ?bool $untouchable;
 
-        public bool $isCharter,
+    public bool $isCharter;
 
-        public bool $isSpecial,
+    public bool $isSpecial;
 
-        public bool $isLowcost,
+    public bool $isLowcost;
 
-        public bool $isHealthCheckRequired,
+    public bool $isHealthCheckRequired;
 
-        public bool $isTourOperator,
+    public bool $isTourOperator;
 
-        public bool $allowBookWithAccompany,
+    public bool $allowBookWithAccompany;
 
-        public bool $allowBookWithAncillary,
+    public bool $allowBookWithAncillary;
 
-        public bool $virtualInterlining,
+    public bool $virtualInterlining;
 
-        /** @var list<Common\OfficeReference> */
-        #[Type('list<'.Common\OfficeReference::class.'>')]
-        public array $officeReference,
+    /** @var list<Common\OfficeReference> */
+    #[Type('list<'.Common\OfficeReference::class.'>')]
+    public array $officeReference;
 
-        public string $localPriority,
-    ) {}
+    public string $localPriority;
 }
