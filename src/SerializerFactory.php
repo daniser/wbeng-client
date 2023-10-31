@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine;
 
+use Doctrine\Common\Annotations\AnnotationReader;
 use Exception;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 use JMS\Serializer\SerializerBuilder;
@@ -12,6 +13,9 @@ use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
@@ -38,11 +42,11 @@ final class SerializerFactory
     public static function createSymfonySerializer(): SymfonySerializerInterface
     {
         $propertyNormalizer = new PropertyNormalizer(
-            propertyTypeExtractor: new PropertyInfoExtractor(typeExtractors: [
-                new PhpDocExtractor,
-                new ReflectionExtractor,
-            ]),
-            defaultContext: [AbstractObjectNormalizer::SKIP_NULL_VALUES => true],
+            $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader)),
+            new MetadataAwareNameConverter($classMetadataFactory),
+            new PropertyInfoExtractor([], [new PhpDocExtractor, new ReflectionExtractor]),
+            null, null,
+            [AbstractObjectNormalizer::SKIP_NULL_VALUES => true],
         );
 
         return new Serializer(
