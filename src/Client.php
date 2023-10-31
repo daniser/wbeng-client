@@ -14,11 +14,15 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Symfony\Component\PropertyInfo\Extractor\PhpStanExtractor;
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
@@ -90,8 +94,16 @@ class Client implements ClientInterface
     protected static function createSerializer(): JMSSerializerInterface|SymfonySerializerInterface
     {
         if (interface_exists(SymfonySerializerInterface::class)) {
+            $propertyNormalizer = new PropertyNormalizer(
+                propertyTypeExtractor: new PropertyInfoExtractor(typeExtractors: [
+                    new PhpStanExtractor,
+                    new ReflectionExtractor,
+                ]),
+                defaultContext: [AbstractObjectNormalizer::SKIP_NULL_VALUES => true],
+            );
+
             return new Serializer(
-                [new ArrayDenormalizer, new BackedEnumNormalizer, new DateTimeNormalizer, new ObjectNormalizer],
+                [new BackedEnumNormalizer, $propertyNormalizer, new ArrayDenormalizer, new DateTimeNormalizer],
                 [new JsonEncoder]
             );
         }

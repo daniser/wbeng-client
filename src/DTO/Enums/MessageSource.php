@@ -8,5 +8,6 @@ enum MessageSource: string
 {
     case Request = 'REQUEST';
     case Build = 'BUILD';
+    case Operation = 'OPERATION';
     case Provider = 'PROVIDER';
 }

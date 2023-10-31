@@ -33,6 +33,7 @@
         "php-http/mock-client": "^1.0",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^9.5 || ^10.0",
+        "symfony/property-access": "^6.0",
         "symfony/serializer": "^6.0"
     },
     "autoload": {
@@ -50,8 +51,9 @@
         }
     },
     "suggest": {
-        "jms/serializer": "Required to (de)serialize API entities",
-        "symfony/serializer": "Required to (de)serialize API entities",
+        "jms/serializer": "Required to (de)serialize API entities using JMS Serializer",
+        "symfony/serializer": "Required to (de)serialize API entities using Symfony Serializer",
+        "symfony/property-access": "Required to (de)serialize API entities using Symfony Serializer",
         "php-http/message": "Required to use Guzzle for sending HTTP requests",
         "php-http/guzzle7-adapter": "Required to use Guzzle for sending HTTP requests"
     },
