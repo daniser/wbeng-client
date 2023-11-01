@@ -27,7 +27,7 @@ use UnexpectedValueException;
 
 final class SerializerFactory
 {
-    public static function createSerializer(string $serializer = null, bool $legacy = false): JMSSerializerInterface|SymfonySerializerInterface
+    public static function createSerializer(string $serializer = null, bool $legacy = true): JMSSerializerInterface|SymfonySerializerInterface
     {
         return match ($serializer) {
             'default', null => self::discoverSerializer($legacy),
@@ -37,7 +37,7 @@ final class SerializerFactory
         };
     }
 
-    public static function discoverSerializer(bool $legacy = false): JMSSerializerInterface|SymfonySerializerInterface
+    public static function discoverSerializer(bool $legacy = true): JMSSerializerInterface|SymfonySerializerInterface
     {
         if (interface_exists(SymfonySerializerInterface::class)) {
             return self::createSymfonySerializer($legacy);
@@ -50,7 +50,7 @@ final class SerializerFactory
         throw new Exception('Neither Symfony nor JMS serializer found.');
     }
 
-    public static function createSymfonySerializer(bool $legacy = false): SymfonySerializerInterface
+    public static function createSymfonySerializer(bool $legacy = true): SymfonySerializerInterface
     {
         $propertyNormalizer = new PropertyNormalizer(
             $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader)),
@@ -66,7 +66,7 @@ final class SerializerFactory
         );
     }
 
-    public static function createJMSSerializer(bool $legacy = false): JMSSerializerInterface
+    public static function createJMSSerializer(bool $legacy = true): JMSSerializerInterface
     {
         return SerializerBuilder::create()
             ->enableEnumSupport()

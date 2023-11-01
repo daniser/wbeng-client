@@ -37,7 +37,7 @@ class Client implements ClientInterface
     public function __construct(
         protected string $baseUri,
         protected Common\Request\Context $context,
-        protected bool $legacy = false,
+        protected bool $legacy = true,
         HttpClientInterface $httpClient = null,
         RequestFactoryInterface $requestFactory = null,
         StreamFactoryInterface $streamFactory = null,
