@@ -57,7 +57,10 @@ final class SerializerFactory
             $legacy ? new MetadataAwareNameConverter($classMetadataFactory) : null,
             new PropertyInfoExtractor([], [new PhpDocExtractor, new ReflectionExtractor]),
             null, null,
-            [AbstractObjectNormalizer::SKIP_NULL_VALUES => true],
+            [
+                AbstractObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true,
+                AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
+            ],
         );
 
         return new Serializer(
