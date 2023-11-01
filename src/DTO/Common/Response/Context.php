@@ -15,9 +15,9 @@ class Context
 
         public string $profile,
 
-        /** @var null|list<string> */
-        #[Type('list<string>')]
-        public ?array $provider,
+        /** @var null|list<string>|string */
+        #[Type('list<string>|string')]
+        public null|array|string $provider,
 
         /** @var array<string, string> */
         #[Type('array<string, string>')]

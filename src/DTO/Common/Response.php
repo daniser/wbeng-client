@@ -21,6 +21,7 @@ class Response
     public Context $context;
 
     /** @var list<Response\FlightGroup> */
+    #[SerializedPath('[flightsGroup][flightGroup]')]
     #[Type('list<'.Response\FlightGroup::class.'>')]
     public array $flightGroups;
 

@@ -17,6 +17,7 @@ class Fares
         #[Type('list<'.Fares\FareSeat::class.'>')]
         public array $fareSeats,
 
+        #[SerializedPath('[fareTotal][total]')]
         public int $fareTotal,
 
         public Fares\FareTotalOriginal $fareTotalOriginal,

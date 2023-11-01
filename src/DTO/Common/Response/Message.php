@@ -11,7 +11,7 @@ class Message
 {
     public MessageType $type;
 
-    public MessageSource $source;
+    public ?MessageSource $source = null;
 
     public int $code;
 
