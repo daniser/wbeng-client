@@ -37,6 +37,7 @@ class Client implements ClientInterface
     public function __construct(
         protected string $baseUri,
         protected Common\Request\Context $context,
+        protected bool $legacy = false,
         HttpClientInterface $httpClient = null,
         RequestFactoryInterface $requestFactory = null,
         StreamFactoryInterface $streamFactory = null,
@@ -50,7 +51,7 @@ class Client implements ClientInterface
         $this->validator = $validator ?? Validation::createValidatorBuilder()
             ->enableAnnotationMapping()
             ->getValidator();
-        $this->serializer = $serializer ?? SerializerFactory::createSerializer();
+        $this->serializer = $serializer ?? SerializerFactory::createSerializer($legacy);
         $this->validate($context);
     }
 
@@ -109,6 +110,7 @@ class Client implements ClientInterface
      */
     protected function request(string $endpoint, array $headers = [], string $method = 'GET', array|string $body = ''): string
     {
+        $this->legacy && $endpoint .= '?legacy=on';
         $request = $this->requestFactory->createRequest($method, "$this->baseUri/$endpoint");
 
         $headers = array_merge($headers, [

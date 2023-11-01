@@ -26,24 +26,24 @@ use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterfa
 
 final class SerializerFactory
 {
-    public static function createSerializer(): JMSSerializerInterface|SymfonySerializerInterface
+    public static function createSerializer(bool $legacy = false): JMSSerializerInterface|SymfonySerializerInterface
     {
         if (interface_exists(SymfonySerializerInterface::class)) {
-            return self::createSymfonySerializer();
+            return self::createSymfonySerializer($legacy);
         }
 
         if (interface_exists(JMSSerializerInterface::class)) {
-            return self::createJMSSerializer();
+            return self::createJMSSerializer($legacy);
         }
 
         throw new Exception('Neither Symfony nor JMS serializer found.');
     }
 
-    public static function createSymfonySerializer(): SymfonySerializerInterface
+    public static function createSymfonySerializer(bool $legacy = false): SymfonySerializerInterface
     {
         $propertyNormalizer = new PropertyNormalizer(
             $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader)),
-            new MetadataAwareNameConverter($classMetadataFactory),
+            $legacy ? new MetadataAwareNameConverter($classMetadataFactory) : null,
             new PropertyInfoExtractor([], [new PhpDocExtractor, new ReflectionExtractor]),
             null, null,
             [AbstractObjectNormalizer::SKIP_NULL_VALUES => true],
@@ -55,7 +55,7 @@ final class SerializerFactory
         );
     }
 
-    public static function createJMSSerializer(): JMSSerializerInterface
+    public static function createJMSSerializer(bool $legacy = false): JMSSerializerInterface
     {
         return SerializerBuilder::create()
             ->enableEnumSupport()
