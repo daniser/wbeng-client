@@ -18,20 +18,20 @@ interface AsyncClientInterface
     /**
      * @return Promise<Response>
      */
-    public function searchFlights(SearchParams $parameters): Promise;
+    public function searchFlightsAsync(SearchParams $parameters): Promise;
 
     /**
      * @return Promise<Response>
      */
-    public function selectFlight(SelectParams $parameters, string $provider = null, string $gds = null): Promise;
+    public function selectFlightAsync(SelectParams $parameters, string $provider = null, string $gds = null): Promise;
 
     /**
      * @return Promise<BookingResponse>
      */
-    public function createBooking(BookingParams $parameters, string $provider = null, string $gds = null): Promise;
+    public function createBookingAsync(BookingParams $parameters, string $provider = null, string $gds = null): Promise;
 
     /**
      * @return Promise<FlightFaresResponse>
      */
-    public function flightFares(CommonParams $parameters, string $provider = null, string $gds = null): Promise;
+    public function flightFaresAsync(CommonParams $parameters, string $provider = null, string $gds = null): Promise;
 }

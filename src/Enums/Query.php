@@ -78,15 +78,15 @@ enum Query: string
     /** Обмен билетов */
     case ExchangeExecute = 'exchange/execute';
 
-    public function newRequest(Context $context, object $parameters, mixed ...$args): object
+    public function newRequestPayload(Context $context, object $parameters, mixed ...$args): object
     {
-        return new ($this->request())($context, $parameters, ...$args);
+        return new ($this->requestPayload())($context, $parameters, ...$args);
     }
 
     /**
      * @return class-string
      */
-    public function request(): string
+    public function requestPayload(): string
     {
         return match ($this) {
             self::Flights => SearchFlights\Request::class,
@@ -100,7 +100,7 @@ enum Query: string
     /**
      * @return class-string
      */
-    public function response(): string
+    public function responsePayload(): string
     {
         return match ($this) {
             self::Flights,
