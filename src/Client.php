@@ -51,7 +51,7 @@ class Client implements ClientInterface
         $this->validator = $validator ?? Validation::createValidatorBuilder()
             ->enableAnnotationMapping()
             ->getValidator();
-        $this->serializer = $serializer ?? SerializerFactory::createSerializer($legacy);
+        $this->serializer = $serializer ?? SerializerFactory::discoverSerializer($legacy);
         $this->validate($context);
     }
 

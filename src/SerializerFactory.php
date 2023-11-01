@@ -23,10 +23,21 @@ use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
+use UnexpectedValueException;
 
 final class SerializerFactory
 {
-    public static function createSerializer(bool $legacy = false): JMSSerializerInterface|SymfonySerializerInterface
+    public static function createSerializer(string $serializer = null, bool $legacy = false): JMSSerializerInterface|SymfonySerializerInterface
+    {
+        return match ($serializer) {
+            'default', null => self::discoverSerializer($legacy),
+            'symfony' => self::createSymfonySerializer($legacy),
+            'jms' => self::createJMSSerializer($legacy),
+            default => throw new UnexpectedValueException("Invalid serializer [$serializer]."),
+        };
+    }
+
+    public static function discoverSerializer(bool $legacy = false): JMSSerializerInterface|SymfonySerializerInterface
     {
         if (interface_exists(SymfonySerializerInterface::class)) {
             return self::createSymfonySerializer($legacy);
