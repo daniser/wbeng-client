@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\CreateBooking\Request;
 
 use JMS\Serializer\Annotation\Type;
+use Symfony\Component\Serializer\Annotation\SerializedPath;
 use TTBooking\WBEngine\DTO\Common;
 use TTBooking\WBEngine\DTO\Common\Request\FlightGroup;
 
@@ -14,8 +15,9 @@ class Parameters
         public string $token,
 
         /** @var list<FlightGroup> */
+        #[SerializedPath('[flightsGroup][flightGroup]')]
         #[Type('list<'.FlightGroup::class.'>')]
-        public array $flightsGroup,
+        public array $flightGroups,
 
         public Common\Customer $customer,
 
@@ -27,7 +29,7 @@ class Parameters
 
         public Common\BenefitCode $benefitCode,
 
-        public Common\Code3D $code3D = new Common\Code3D,
+        public Common\Code3D $code3D,
 
         public ?bool $isHealthChecked = null,
     ) {}

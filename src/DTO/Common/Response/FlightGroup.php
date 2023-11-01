@@ -6,6 +6,7 @@ namespace TTBooking\WBEngine\DTO\Common\Response;
 
 use DateTimeInterface;
 use JMS\Serializer\Annotation\Type;
+use Symfony\Component\Serializer\Annotation\SerializedPath;
 use TTBooking\WBEngine\DTO\Common;
 
 class FlightGroup
@@ -33,6 +34,7 @@ class FlightGroup
     public bool $allow3D;
 
     /** @var list<Itinerary> */
+    #[SerializedPath('[itineraries][itinerary]')]
     #[Type('list<'.Itinerary::class.'>')]
     public array $itineraries;
 

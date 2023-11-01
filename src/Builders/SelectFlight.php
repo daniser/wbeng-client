@@ -29,18 +29,18 @@ trait SelectFlight
 
     public function flightGroup(string $token): static
     {
-        $this->flightsGroup[0] ??= an\entity(FlightGroup::class);
-        $this->flightsGroup[0]->token = $token;
+        $this->flightGroups[0] ??= an\entity(FlightGroup::class);
+        $this->flightGroups[0]->token = $token;
 
         return $this;
     }
 
     public function flight(string $token): static
     {
-        $this->flightsGroup[0] ??= an\entity(FlightGroup::class);
-        $this->flightsGroup[0]->itineraries[0] ??= an\entity(Itinerary::class);
-        $this->flightsGroup[0]->itineraries[0]->flights[0] ??= an\entity(Flight::class);
-        $this->flightsGroup[0]->itineraries[0]->flights[0]->token = $token;
+        $this->flightGroups[0] ??= an\entity(FlightGroup::class);
+        $this->flightGroups[0]->itineraries[0] ??= an\entity(Itinerary::class);
+        $this->flightGroups[0]->itineraries[0]->flights[0] ??= an\entity(Flight::class);
+        $this->flightGroups[0]->itineraries[0]->flights[0]->token = $token;
 
         return $this;
     }

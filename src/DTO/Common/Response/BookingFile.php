@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\Common\Response;
 
 use JMS\Serializer\Annotation\Type;
+use Symfony\Component\Serializer\Annotation\SerializedPath;
 use TTBooking\WBEngine\DTO\Common;
 use TTBooking\WBEngine\DTO\Enums\BookingStatus;
 
@@ -32,6 +33,7 @@ class BookingFile
         public string $paymentType,
 
         /** @var list<Reservation> */
+        #[SerializedPath('[reservations][reservation]')]
         #[Type('list<'.Reservation::class.'>')]
         public array $reservations,
 
