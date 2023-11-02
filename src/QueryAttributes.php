@@ -7,7 +7,7 @@ namespace TTBooking\WBEngine;
 use Exception;
 use ReflectionAttribute;
 use ReflectionClass;
-use TTBooking\WBEngine\DTO\Common\Request\Context;
+use TTBooking\WBEngine\DTO\Common\Query\Context;
 
 trait QueryAttributes
 {

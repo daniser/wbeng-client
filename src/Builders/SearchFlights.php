@@ -12,7 +12,7 @@ use TTBooking\WBEngine\DTO\Common\Seat;
 use TTBooking\WBEngine\DTO\Enums\FlightSorting;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
 use TTBooking\WBEngine\DTO\Enums\ServiceClass;
-use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters;
+use TTBooking\WBEngine\DTO\SearchFlights\Query\Parameters;
 use TTBooking\WBEngine\Functional\{a, an, is};
 
 trait SearchFlights

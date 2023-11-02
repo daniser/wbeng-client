@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine;
 
-use TTBooking\WBEngine\DTO\Common\Request\Context;
+use TTBooking\WBEngine\DTO\Common\Query\Context;
 
 /**
  * @template TResult of ResultInterface

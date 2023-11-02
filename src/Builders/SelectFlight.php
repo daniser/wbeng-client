@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\Builders;
 
-use TTBooking\WBEngine\DTO\Common\Request\Flight;
-use TTBooking\WBEngine\DTO\Common\Request\FlightGroup;
-use TTBooking\WBEngine\DTO\Common\Request\Itinerary;
-use TTBooking\WBEngine\DTO\Common\Response;
-use TTBooking\WBEngine\DTO\SelectFlight\Request\Parameters;
+use TTBooking\WBEngine\DTO\Common\Query\Flight;
+use TTBooking\WBEngine\DTO\Common\Query\FlightGroup;
+use TTBooking\WBEngine\DTO\Common\Query\Itinerary;
+use TTBooking\WBEngine\DTO\Common\Result;
+use TTBooking\WBEngine\DTO\SelectFlight\Query\Parameters;
 use TTBooking\WBEngine\Functional\an;
 
 trait SelectFlight
 {
-    public function fromSearchResponse(Response $response, int $flightGroupId, int $flightId): static
+    public function fromSearchResult(Result $response, int $flightGroupId, int $flightId): static
     {
         return $this
             ->fromSearch($response->token)

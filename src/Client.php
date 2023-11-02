@@ -36,7 +36,7 @@ class Client implements ClientInterface, AsyncClientInterface
 
     public function __construct(
         protected string $baseUri,
-        protected Common\Request\Context $context,
+        protected Common\Query\Context $context,
         protected bool $legacy = true,
         HttpClientInterface $httpClient = null,
         protected ?HttpAsyncClient $httpAsyncClient = null,
