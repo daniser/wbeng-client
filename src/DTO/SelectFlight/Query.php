@@ -24,7 +24,7 @@ class Query implements QueryInterface
     public function __construct(
         public Context $context,
 
-        public Request\Parameters $parameters,
+        public Query\Parameters $parameters,
 
         public ?string $provider = null,
 
