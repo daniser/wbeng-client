@@ -6,7 +6,6 @@ namespace TTBooking\WBEngine\DTO\SearchFlights\Request;
 
 use JMS\Serializer\Annotation\Type;
 use Symfony\Component\Validator\Constraints as Assert;
-use TTBooking\WBEngine\Builders;
 use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Code3D;
 use TTBooking\WBEngine\DTO\Common\RouteSegment;
@@ -16,8 +15,6 @@ use TTBooking\WBEngine\DTO\Enums\ServiceClass;
 
 class Parameters
 {
-    use Builders\SearchFlights;
-
     public function __construct(
         /** @var list<RouteSegment> */
         #[Assert\NotBlank]

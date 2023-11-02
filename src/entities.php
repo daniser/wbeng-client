@@ -99,7 +99,7 @@ use TTBooking\WBEngine\Functional\a;
  *
  * @return T
  */
-function entity(string $class): object
+function entity(string $class)
 {
     $refClass = new ReflectionClass($class);
     $refParams = $refClass->getConstructor()?->getParameters() ?? [];

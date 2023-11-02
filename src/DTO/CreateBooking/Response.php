@@ -8,8 +8,9 @@ use JMS\Serializer\Annotation\Type;
 use TTBooking\WBEngine\DTO\Common\Response\BookingFile;
 use TTBooking\WBEngine\DTO\Common\Response\Context;
 use TTBooking\WBEngine\DTO\Common\Response\Message;
+use TTBooking\WBEngine\ResultInterface;
 
-class Response
+class Response implements ResultInterface
 {
     public function __construct(
         public string $token,

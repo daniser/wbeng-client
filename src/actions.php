@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\Functional\do;
 
-use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters as SearchFlights;
-use TTBooking\WBEngine\DTO\SelectFlight\Request\Parameters as SelectFlight;
+use TTBooking\WBEngine\DTO\SearchFlights\Request as SearchFlights;
+use TTBooking\WBEngine\DTO\SelectFlight\Request as SelectFlight;
 use TTBooking\WBEngine\Functional\an;
 
 function fly(): SearchFlights

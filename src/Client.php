@@ -11,7 +11,6 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Http\Promise\Promise;
 use JMS\Serializer\SerializerInterface as JMSSerializerInterface;
-use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -22,11 +21,6 @@ use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use TTBooking\WBEngine\DTO\Common;
-use TTBooking\WBEngine\DTO\CreateBooking;
-use TTBooking\WBEngine\DTO\FlightFares;
-use TTBooking\WBEngine\DTO\SearchFlights;
-use TTBooking\WBEngine\DTO\SelectFlight;
-use TTBooking\WBEngine\Enums\Query;
 
 class Client implements ClientInterface, AsyncClientInterface
 {
@@ -62,84 +56,33 @@ class Client implements ClientInterface, AsyncClientInterface
         $this->validate($context);
     }
 
-    public function searchFlights(SearchFlights\Request\Parameters $parameters): Common\Response
-    {
-        /** @var Common\Response */
-        return $this->query(Query::Flights, $parameters);
-    }
-
-    public function selectFlight(SelectFlight\Request\Parameters $parameters, string $provider = null, string $gds = null): Common\Response
-    {
-        /** @var Common\Response */
-        return $this->query(Query::Price, $parameters, $provider, $gds);
-    }
-
-    public function createBooking(CreateBooking\Request\Parameters $parameters, string $provider = null, string $gds = null): CreateBooking\Response
-    {
-        /** @var CreateBooking\Response */
-        return $this->query(Query::Book, $parameters, $provider, $gds);
-    }
-
-    public function flightFares(Common\Request\Parameters $parameters, string $provider = null, string $gds = null): FlightFares\Response
-    {
-        /** @var FlightFares\Response */
-        return $this->query(Query::FlightFares, $parameters, $provider, $gds);
-    }
-
-    public function searchFlightsAsync(SearchFlights\Request\Parameters $parameters): Promise
-    {
-        /** @var Promise<Common\Response> */
-        return $this->asyncQuery(Query::Flights, $parameters);
-    }
-
-    public function selectFlightAsync(SelectFlight\Request\Parameters $parameters, string $provider = null, string $gds = null): Promise
-    {
-        /** @var Promise<Common\Response> */
-        return $this->asyncQuery(Query::Price, $parameters, $provider, $gds);
-    }
-
-    public function createBookingAsync(CreateBooking\Request\Parameters $parameters, string $provider = null, string $gds = null): Promise
-    {
-        /** @var Promise<CreateBooking\Response> */
-        return $this->asyncQuery(Query::Book, $parameters, $provider, $gds);
-    }
-
-    public function flightFaresAsync(Common\Request\Parameters $parameters, string $provider = null, string $gds = null): Promise
-    {
-        /** @var Promise<FlightFares\Response> */
-        return $this->asyncQuery(Query::FlightFares, $parameters, $provider, $gds);
-    }
-
-    /**
-     * @throws ClientExceptionInterface
-     */
-    protected function query(Query $query, object $parameters, mixed ...$args): object
+    public function query(QueryInterface $query): object
     {
         return $this->deserialize(
-            (string) $this->httpClient->sendRequest($this->makeRequest($query, $parameters, ...$args))->getBody(),
-            $query->responsePayload()
+            (string) $this->httpClient->sendRequest($this->makeRequest($query))->getBody(),
+            $query->getResultType()
         );
     }
 
-    /**
-     * @return Promise<object>
-     *
-     * @throws Exception
-     */
-    protected function asyncQuery(Query $query, object $parameters, mixed ...$args): Promise
+    public function asyncQuery(QueryInterface $query): Promise
     {
-        return $this->sendAsyncRequest($this->makeRequest($query, $parameters, ...$args))->then(
+        return $this->sendAsyncRequest($this->makeRequest($query))->then(
             fn (ResponseInterface $response) => $this->deserialize(
                 (string) $response->getBody(),
-                $query->responsePayload()
+                $query->getResultType()
             )
         );
     }
 
-    protected function makeRequest(Query $query, object $parameters, mixed ...$args): RequestInterface
+    /**
+     * @template TResult of ResultInterface
+     *
+     * @param QueryInterface<TResult> $query
+     */
+    protected function makeRequest(QueryInterface $query): RequestInterface
     {
-        return $this->prepareRequest($query->value, method: 'POST', body: $this->serialize(
-            $query->newRequestPayload($this->context, $this->validate($parameters), ...$args)
+        return $this->prepareRequest($query->getEndpoint(), method: 'POST', body: $this->serialize(
+            $this->validate($query)->withContext($this->context)
         ));
     }
 

@@ -26,5 +26,6 @@ return (new PhpCsFixer\Config)
         'single_import_per_statement' => [
             'group_to_single_imports' => false,
         ],
+        'single_trait_insert_per_statement' => false,
     ])
     ->setFinder($finder);

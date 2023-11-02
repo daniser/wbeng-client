@@ -4,4 +4,6 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\DTO\FlightFares;
 
-class Response {}
+use TTBooking\WBEngine\ResultInterface;
+
+class Response implements ResultInterface {}

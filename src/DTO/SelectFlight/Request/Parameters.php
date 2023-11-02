@@ -6,14 +6,11 @@ namespace TTBooking\WBEngine\DTO\SelectFlight\Request;
 
 use JMS\Serializer\Annotation\Type;
 use Symfony\Component\Serializer\Annotation\SerializedPath;
-use TTBooking\WBEngine\Builders;
 use TTBooking\WBEngine\DTO\Common\CorporateID;
 use TTBooking\WBEngine\DTO\Common\Request\FlightGroup;
 
 class Parameters
 {
-    use Builders\SelectFlight;
-
     public function __construct(
         public string $token,
 

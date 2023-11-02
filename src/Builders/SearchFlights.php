@@ -12,37 +12,42 @@ use TTBooking\WBEngine\DTO\Common\Seat;
 use TTBooking\WBEngine\DTO\Enums\FlightSorting;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
 use TTBooking\WBEngine\DTO\Enums\ServiceClass;
-use TTBooking\WBEngine\Functional\{a, is};
+use TTBooking\WBEngine\DTO\SearchFlights\Request\Parameters;
+use TTBooking\WBEngine\Functional\{a, an, is};
 
 trait SearchFlights
 {
     public function from(Location|string $code, string $name = ''): static
     {
-        $this->route[0] ??= is\rollin();
-        $this->route[0]->from($code, $name);
+        $this->parameters ??= an\entity(Parameters::class);
+        $this->parameters->route[0] ??= is\rollin();
+        $this->parameters->route[0]->from($code, $name);
 
         return $this;
     }
 
     public function to(Location|string $code, string $name = ''): static
     {
-        $this->route[0] ??= is\rollin();
-        $this->route[0]->to($code, $name);
+        $this->parameters ??= an\entity(Parameters::class);
+        $this->parameters->route[0] ??= is\rollin();
+        $this->parameters->route[0]->to($code, $name);
 
         return $this;
     }
 
     public function on(DateTimeInterface|string $date): static
     {
-        $this->route[0] ??= is\rollin();
-        $this->route[0]->on($date);
+        $this->parameters ??= an\entity(Parameters::class);
+        $this->parameters->route[0] ??= is\rollin();
+        $this->parameters->route[0]->on($date);
 
         return $this;
     }
 
     public function complex(RouteSegment ...$segments): static
     {
-        $this->route = array_values($segments);
+        $this->parameters ??= an\entity(Parameters::class);
+        $this->parameters->route = array_values($segments);
 
         return $this;
     }
@@ -62,7 +67,8 @@ trait SearchFlights
             }, $cases)
         );
 
-        $this->seats = array_map(static function (string $type, int $count) {
+        $this->parameters ??= an\entity(Parameters::class);
+        $this->parameters->seats = array_map(static function (string $type, int $count) {
             return a\seat(PassengerType::from($type), $count);
         }, array_keys($map), array_values($map));
 
@@ -71,35 +77,40 @@ trait SearchFlights
 
     public function withServiceClass(ServiceClass $serviceClass): static
     {
-        $this->serviceClass = $serviceClass;
+        $this->parameters ??= an\entity(Parameters::class);
+        $this->parameters->serviceClass = $serviceClass;
 
         return $this;
     }
 
     public function skipConnected(bool $skipConnected = true): static
     {
-        $this->skipConnected = $skipConnected;
+        $this->parameters ??= an\entity(Parameters::class);
+        $this->parameters->skipConnected = $skipConnected;
 
         return $this;
     }
 
     public function eticketsOnly(bool $eticketsOnly = true): static
     {
-        $this->eticketsOnly = $eticketsOnly;
+        $this->parameters ??= an\entity(Parameters::class);
+        $this->parameters->eticketsOnly = $eticketsOnly;
 
         return $this;
     }
 
     public function mixedVendors(bool $mixedVendors = true): static
     {
-        $this->mixedVendors = $mixedVendors;
+        $this->parameters ??= an\entity(Parameters::class);
+        $this->parameters->mixedVendors = $mixedVendors;
 
         return $this;
     }
 
     public function preferAirlines(Carrier|string ...$airlines): static
     {
-        $this->preferredAirlines = array_map(static function (Carrier|string $airline) {
+        $this->parameters ??= an\entity(Parameters::class);
+        $this->parameters->preferredAirlines = array_map(static function (Carrier|string $airline) {
             return is_string($airline) ? a\carrier($airline) : $airline;
         }, array_values($airlines));
 
@@ -108,7 +119,8 @@ trait SearchFlights
 
     public function ignoreAirlines(Carrier|string ...$airlines): static
     {
-        $this->ignoredAirlines = array_map(static function (Carrier|string $airline) {
+        $this->parameters ??= an\entity(Parameters::class);
+        $this->parameters->ignoredAirlines = array_map(static function (Carrier|string $airline) {
             return is_string($airline) ? a\carrier($airline) : $airline;
         }, array_values($airlines));
 
@@ -117,7 +129,8 @@ trait SearchFlights
 
     public function sort(FlightSorting $by): static
     {
-        $this->sort = $by;
+        $this->parameters ??= an\entity(Parameters::class);
+        $this->parameters->sort = $by;
 
         return $this;
     }
@@ -134,7 +147,8 @@ trait SearchFlights
 
     public function limit(int $to): static
     {
-        $this->limit = $to;
+        $this->parameters ??= an\entity(Parameters::class);
+        $this->parameters->limit = $to;
 
         return $this;
     }
