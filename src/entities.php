@@ -97,9 +97,9 @@ use TTBooking\WBEngine\Functional\a;
  *
  * @param class-string<T> $class
  *
- * @return T
+ * @phpstan-return T
  */
-function entity(string $class)
+function entity(string $class): object
 {
     $refClass = new ReflectionClass($class);
     $refParams = $refClass->getConstructor()?->getParameters() ?? [];
@@ -110,6 +110,7 @@ function entity(string $class)
         && $refClass->getProperty($refParam->name)->setValue($entity, $refParam->getDefaultValue());
     }
 
+    /** @var T */
     return $entity;
 }
 

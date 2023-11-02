@@ -13,9 +13,9 @@ interface ClientInterface
      *
      * @param QueryInterface<TResult> $query
      *
-     * @return TResult
+     * @phpstan-return TResult
      *
      * @throws ClientExceptionInterface
      */
-    public function query(QueryInterface $query);
+    public function query(QueryInterface $query): ResultInterface;
 }

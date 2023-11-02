@@ -56,7 +56,7 @@ class Client implements ClientInterface, AsyncClientInterface
         $this->validate($context);
     }
 
-    public function query(QueryInterface $query): object
+    public function query(QueryInterface $query): ResultInterface
     {
         return $this->deserialize(
             (string) $this->httpClient->sendRequest($this->makeRequest($query))->getBody(),
