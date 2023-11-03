@@ -41,7 +41,7 @@ class Segment
 
         public string $flightNumber,
 
-        public string $terminalBegin,
+        public ?string $terminalBegin,
 
         public Common\Location $locationBegin,
 
@@ -49,7 +49,7 @@ class Segment
 
         public Common\Country $countryBegin,
 
-        public string $terminalEnd,
+        public ?string $terminalEnd,
 
         public Common\Location $locationEnd,
 
