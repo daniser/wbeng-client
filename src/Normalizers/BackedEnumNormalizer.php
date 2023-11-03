@@ -34,7 +34,7 @@ class BackedEnumNormalizer implements NormalizerInterface, DenormalizerInterface
      */
     public function denormalize(mixed $data, string $type, string $format = null, array $context = []): mixed
     {
-        $this->normalizer->denormalize(is_string($data) ? strtoupper($data) : $data, $type, $format, $context);
+        return $this->normalizer->denormalize(is_string($data) ? strtoupper($data) : $data, $type, $format, $context);
     }
 
     public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
