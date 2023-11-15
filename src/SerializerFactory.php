@@ -57,8 +57,8 @@ final class SerializerFactory
         $propertyNormalizer = new PropertyNormalizer(
             $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader)),
             $legacy ? new MetadataAwareNameConverter($classMetadataFactory) : null,
-            new PropertyInfoExtractor([], [new PhpDocExtractor, new ReflectionExtractor]),
-            null, null, (new PropertyNormalizerContextBuilder)
+            new PropertyInfoExtractor([], [new PhpDocExtractor, new ReflectionExtractor]), null, null,
+            (new PropertyNormalizerContextBuilder)
                 ->withDisableTypeEnforcement(true)
                 ->withSkipNullValues(true)
                 ->toArray(),
@@ -66,12 +66,12 @@ final class SerializerFactory
 
         return new Serializer(
             [
-                new BackedEnumNormalizer,
                 new CaseInsensitiveBackedEnumDenormalizer,
+                new BackedEnumNormalizer,
                 $propertyNormalizer,
                 new ArrayDenormalizer,
-                new DateTimeNormalizer,
                 new EmptyDateTimeDenormalizer,
+                new DateTimeNormalizer,
             ],
             [new JsonEncoder]
         );
