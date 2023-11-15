@@ -12,17 +12,19 @@ use JMS\Serializer\SerializerInterface as JMSSerializerInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+use Symfony\Component\Serializer\Context\Normalizer\PropertyNormalizerContextBuilder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
-use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
-use TTBooking\WBEngine\Normalizers\BackedEnumNormalizer;
+use TTBooking\WBEngine\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
+use TTBooking\WBEngine\Normalizer\EmptyDateTimeDenormalizer;
 use UnexpectedValueException;
 
 final class SerializerFactory
@@ -56,15 +58,21 @@ final class SerializerFactory
             $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader)),
             $legacy ? new MetadataAwareNameConverter($classMetadataFactory) : null,
             new PropertyInfoExtractor([], [new PhpDocExtractor, new ReflectionExtractor]),
-            null, null,
-            [
-                AbstractObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true,
-                AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
-            ],
+            null, null, (new PropertyNormalizerContextBuilder)
+                ->withDisableTypeEnforcement(true)
+                ->withSkipNullValues(true)
+                ->toArray(),
         );
 
         return new Serializer(
-            [new BackedEnumNormalizer, $propertyNormalizer, new ArrayDenormalizer, new DateTimeNormalizer],
+            [
+                new BackedEnumNormalizer,
+                new CaseInsensitiveBackedEnumDenormalizer,
+                $propertyNormalizer,
+                new ArrayDenormalizer,
+                new DateTimeNormalizer,
+                new EmptyDateTimeDenormalizer,
+            ],
             [new JsonEncoder]
         );
     }

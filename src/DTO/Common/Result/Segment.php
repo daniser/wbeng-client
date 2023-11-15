@@ -6,15 +6,18 @@ namespace TTBooking\WBEngine\DTO\Common\Result;
 
 use DateTimeInterface;
 use JMS\Serializer\Annotation\Type;
+use Symfony\Component\Serializer\Annotation\Context;
 use TTBooking\WBEngine\DTO\Common;
 use TTBooking\WBEngine\DTO\Enums\LocomotionMethod;
 use TTBooking\WBEngine\DTO\Enums\ServiceClass;
+use TTBooking\WBEngine\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
 
 class Segment
 {
     public function __construct(
         public string $token,
 
+        #[Context(denormalizationContext: [CaseInsensitiveBackedEnumDenormalizer::UPPERCASE_BACKED_ENUM => true])]
         public ServiceClass $serviceClass,
 
         public string $bookingClass,

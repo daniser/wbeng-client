@@ -6,8 +6,10 @@ namespace TTBooking\WBEngine\DTO\Common\Result;
 
 use DateTimeInterface;
 use JMS\Serializer\Annotation\Type;
+use Symfony\Component\Serializer\Annotation\Context;
 use Symfony\Component\Serializer\Annotation\SerializedPath;
 use TTBooking\WBEngine\DTO\Common;
+use TTBooking\WBEngine\Normalizer\EmptyDateTimeDenormalizer;
 
 class FlightGroup
 {
@@ -23,7 +25,8 @@ class FlightGroup
 
     public bool $latinRegistration;
 
-    public DateTimeInterface $timeLimit;
+    #[Context(denormalizationContext: [EmptyDateTimeDenormalizer::EMPTY_DATETIME_TO_NULL => true])]
+    public ?DateTimeInterface $timeLimit;
 
     public string $gds;
 
