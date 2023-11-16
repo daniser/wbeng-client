@@ -6,9 +6,9 @@ namespace TTBooking\WBEngine\DTO\FlightFares;
 
 use TTBooking\WBEngine\Attributes\Endpoint;
 use TTBooking\WBEngine\Attributes\ResultType;
+use TTBooking\WBEngine\Builders\Query as Builder;
 use TTBooking\WBEngine\DTO\Common\Query\Context;
 use TTBooking\WBEngine\DTO\Common\Query\Parameters;
-use TTBooking\WBEngine\QueryAttributes;
 use TTBooking\WBEngine\QueryInterface;
 
 /**
@@ -18,7 +18,7 @@ use TTBooking\WBEngine\QueryInterface;
 #[ResultType(Result::class)]
 class Query implements QueryInterface
 {
-    use QueryAttributes;
+    use Builder;
 
     public function __construct(
         public Context $context,

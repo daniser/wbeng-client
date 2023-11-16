@@ -11,12 +11,12 @@ use TTBooking\WBEngine\DTO\Common\Query\Context;
  */
 interface QueryInterface
 {
-    public function getEndpoint(): string;
+    public function withContext(Context $context): static;
+
+    public static function getEndpoint(): string;
 
     /**
      * @return class-string<TResult>
      */
-    public function getResultType(): string;
-
-    public function withContext(Context $context): static;
+    public static function getResultType(): string;
 }

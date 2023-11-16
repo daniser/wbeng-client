@@ -6,6 +6,7 @@ $finder = PhpCsFixer\Finder::create()
 return (new PhpCsFixer\Config)
     ->setRules([
         '@PhpCsFixer' => true,
+        'explicit_indirect_variable' => false,
         'explicit_string_variable' => false,
         'global_namespace_import' => [
             'import_classes' => true,

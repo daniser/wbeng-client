@@ -22,6 +22,7 @@ class Parameters
         public Common\Customer $customer,
 
         /** @var list<Common\Passenger> */
+        #[SerializedPath('[passengers][passenger]')]
         #[Type('list<'.Common\Passenger::class.'>')]
         public array $passengers,
 

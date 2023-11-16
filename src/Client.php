@@ -60,7 +60,7 @@ class Client implements ClientInterface, AsyncClientInterface
     {
         return $this->deserialize(
             (string) $this->httpClient->sendRequest($this->makeRequest($query))->getBody(),
-            $query->getResultType()
+            $query::getResultType()
         );
     }
 
@@ -69,7 +69,7 @@ class Client implements ClientInterface, AsyncClientInterface
         return $this->sendAsyncRequest($this->makeRequest($query))->then(
             fn (ResponseInterface $response) => $this->deserialize(
                 (string) $response->getBody(),
-                $query->getResultType()
+                $query::getResultType()
             )
         );
     }
@@ -81,7 +81,7 @@ class Client implements ClientInterface, AsyncClientInterface
      */
     protected function makeRequest(QueryInterface $query): RequestInterface
     {
-        return $this->prepareRequest($query->getEndpoint(), method: 'POST', body: $this->serialize(
+        return $this->prepareRequest($query::getEndpoint(), method: 'POST', body: $this->serialize(
             $this->validate($query)->withContext($this->context)
         ));
     }

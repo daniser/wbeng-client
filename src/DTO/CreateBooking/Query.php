@@ -6,8 +6,8 @@ namespace TTBooking\WBEngine\DTO\CreateBooking;
 
 use TTBooking\WBEngine\Attributes\Endpoint;
 use TTBooking\WBEngine\Attributes\ResultType;
+use TTBooking\WBEngine\Builders\CreateBooking;
 use TTBooking\WBEngine\DTO\Common\Query\Context;
-use TTBooking\WBEngine\QueryAttributes;
 use TTBooking\WBEngine\QueryInterface;
 
 /**
@@ -17,7 +17,7 @@ use TTBooking\WBEngine\QueryInterface;
 #[ResultType(Result::class)]
 class Query implements QueryInterface
 {
-    use QueryAttributes;
+    use CreateBooking;
 
     public function __construct(
         public Context $context,

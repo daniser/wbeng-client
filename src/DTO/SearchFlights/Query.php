@@ -9,7 +9,6 @@ use TTBooking\WBEngine\Attributes\ResultType;
 use TTBooking\WBEngine\Builders\SearchFlights;
 use TTBooking\WBEngine\DTO\Common\Query\Context;
 use TTBooking\WBEngine\DTO\Common\Result;
-use TTBooking\WBEngine\QueryAttributes;
 use TTBooking\WBEngine\QueryInterface;
 
 /**
@@ -19,7 +18,7 @@ use TTBooking\WBEngine\QueryInterface;
 #[ResultType(Result::class)]
 class Query implements QueryInterface
 {
-    use QueryAttributes, SearchFlights;
+    use SearchFlights;
 
     public function __construct(
         public Context $context,

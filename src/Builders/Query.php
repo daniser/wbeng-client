@@ -2,19 +2,34 @@
 
 declare(strict_types=1);
 
-namespace TTBooking\WBEngine;
+namespace TTBooking\WBEngine\Builders;
 
 use Exception;
 use ReflectionAttribute;
 use ReflectionClass;
+use TTBooking\WBEngine\Attributes;
 use TTBooking\WBEngine\DTO\Common\Query\Context;
 
-trait QueryAttributes
+/**
+ * @property Context $context
+ *
+ * @method static static withContext(Context $context)
+ */
+trait Query
 {
+    use StaticallyCallable;
+
+    public function withContext(Context $context): static
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
     /**
      * @throws Exception
      */
-    public function getEndpoint(): string
+    public static function getEndpoint(): string
     {
         return self::attribute(Attributes\Endpoint::class)->endpoint
             ?? throw new Exception('Endpoint attribute not defined.');
@@ -23,17 +38,10 @@ trait QueryAttributes
     /**
      * @throws Exception
      */
-    public function getResultType(): string
+    public static function getResultType(): string
     {
         return self::attribute(Attributes\ResultType::class)->type
             ?? throw new Exception('ResultType attribute not defined.');
-    }
-
-    public function withContext(Context $context): static
-    {
-        $this->context = $context;
-
-        return $this;
     }
 
     /**

@@ -15,8 +15,27 @@ use TTBooking\WBEngine\DTO\Enums\ServiceClass;
 use TTBooking\WBEngine\DTO\SearchFlights\Query\Parameters;
 use TTBooking\WBEngine\Functional\{a, an, is};
 
+/**
+ * @method static static from(Location|string $code, string $name = '')
+ * @method static static to(Location|string $code, string $name = '')
+ * @method static static on(DateTimeInterface|string $date)
+ * @method static static complex(RouteSegment ...$segments)
+ * @method static static for(Seat ...$seats)
+ * @method static static withServiceClass(ServiceClass $serviceClass)
+ * @method static static skipConnected(bool $skipConnected = true)
+ * @method static static eticketsOnly(bool $eticketsOnly = true)
+ * @method static static mixedVendors(bool $mixedVendors = true)
+ * @method static static preferAirlines(Carrier|string ...$airlines)
+ * @method static static ignoreAirlines(Carrier|string ...$airlines)
+ * @method static static sort(FlightSorting $by)
+ * @method static static sortByPrice()
+ * @method static static sortByDuration()
+ * @method static static limit(int $to)
+ */
 trait SearchFlights
 {
+    use Query;
+
     public function from(Location|string $code, string $name = ''): static
     {
         $this->parameters ??= an\entity(Parameters::class);
