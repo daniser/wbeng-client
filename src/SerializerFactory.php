@@ -25,6 +25,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
 use TTBooking\WBEngine\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
 use TTBooking\WBEngine\Normalizer\EmptyDateTimeDenormalizer;
+use TTBooking\WBEngine\Normalizer\TerminalDenormalizer;
 use UnexpectedValueException;
 
 final class SerializerFactory
@@ -68,6 +69,7 @@ final class SerializerFactory
             [
                 new CaseInsensitiveBackedEnumDenormalizer,
                 new BackedEnumNormalizer,
+                new TerminalDenormalizer,
                 $propertyNormalizer,
                 new ArrayDenormalizer,
                 new EmptyDateTimeDenormalizer,
