@@ -13,6 +13,8 @@ final class TerminalDenormalizer implements DenormalizerInterface, DenormalizerA
 {
     use DenormalizerAwareTrait;
 
+    public const STRING_TERMINAL_TO_ARRAY = 'string_terminal_to_array';
+
     public function denormalize($data, string $type, string $format = null, array $context = []): mixed
     {
         if (false === $data || '' === $data) {
@@ -23,11 +25,14 @@ final class TerminalDenormalizer implements DenormalizerInterface, DenormalizerA
             $data = ['code' => $data];
         }
 
+        unset($context[self::STRING_TERMINAL_TO_ARRAY]);
+
         return $this->denormalizer->denormalize($data, $type, $format, $context);
     }
 
     public function supportsDenormalization($data, string $type, string $format = null, array $context = []): bool
     {
-        return is_a($type, Terminal::class, true);
+        return true === ($context[self::STRING_TERMINAL_TO_ARRAY] ?? false)
+            && is_a($type, Terminal::class, true);
     }
 }

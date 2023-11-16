@@ -11,6 +11,7 @@ use TTBooking\WBEngine\DTO\Common;
 use TTBooking\WBEngine\DTO\Enums\LocomotionMethod;
 use TTBooking\WBEngine\DTO\Enums\ServiceClass;
 use TTBooking\WBEngine\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
+use TTBooking\WBEngine\Normalizer\TerminalDenormalizer;
 
 class Segment
 {
@@ -44,6 +45,7 @@ class Segment
 
         public string $flightNumber,
 
+        #[Context(denormalizationContext: [TerminalDenormalizer::STRING_TERMINAL_TO_ARRAY => true])]
         public ?Common\Terminal $terminalBegin,
 
         public Common\Location $locationBegin,
@@ -52,6 +54,7 @@ class Segment
 
         public Common\Country $countryBegin,
 
+        #[Context(denormalizationContext: [TerminalDenormalizer::STRING_TERMINAL_TO_ARRAY => true])]
         public ?Common\Terminal $terminalEnd,
 
         public Common\Location $locationEnd,
