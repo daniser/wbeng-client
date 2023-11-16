@@ -10,15 +10,15 @@ use Symfony\Component\Serializer\Annotation\SerializedPath;
 class Flight
 {
     public function __construct(
-        public string $token,
+        public ?string $token,
 
         /** @var list<Segment> */
         #[SerializedPath('[segments][segment]')]
         #[Type('list<'.Segment::class.'>')]
         public array $segments,
 
-        public int $travelDuration,
+        public ?int $travelDuration = null,
 
-        public int $seatsAvailable,
+        public ?int $seatsAvailable = null,
     ) {}
 }

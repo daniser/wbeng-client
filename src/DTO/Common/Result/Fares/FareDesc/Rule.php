@@ -11,11 +11,11 @@ use TTBooking\WBEngine\DTO\Enums\RuleType;
 class Rule
 {
     public function __construct(
-        public RuleType $type,
+        public ?RuleType $type,
 
         public bool $allowed,
 
-        public RuleApplicability $applicability,
+        public ?RuleApplicability $applicability,
 
         public ?string $penalty,
 
