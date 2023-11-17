@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\Common;
 
 use JMS\Serializer\Annotation\Type;
+use TTBooking\WBEngine\Builders;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
 use TTBooking\WBEngine\DTO\Enums\PhoneType;
 
 class Passenger
 {
+    use Builders\Passenger;
+
     public function __construct(
         public string $token,
 

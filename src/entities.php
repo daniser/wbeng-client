@@ -41,12 +41,15 @@ use DateTimeInterface;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionNamedType;
+use TTBooking\WBEngine\DTO\Common\BenefitCode;
 use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Location;
+use TTBooking\WBEngine\DTO\Common\Passenger;
 use TTBooking\WBEngine\DTO\Common\RouteSegment;
 use TTBooking\WBEngine\DTO\Common\Seat;
+use TTBooking\WBEngine\DTO\Common\TourCode;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
-use TTBooking\WBEngine\Functional\is\rollin;
+use TTBooking\WBEngine\Functional\{ an, is\rollin };
 
 /**
  * @param class-string|object $objectOrClass
@@ -78,6 +81,16 @@ function carrier(string $code, string $name = ''): Carrier
     return new Carrier($code, $name);
 }
 
+function tour_code(string $code, Carrier|string $carrier): TourCode
+{
+    return new TourCode($code, is_string($carrier) ? carrier($carrier) : $carrier);
+}
+
+function benefit_code(string $code, Carrier|string $carrier): BenefitCode
+{
+    return new BenefitCode($code, is_string($carrier) ? carrier($carrier) : $carrier);
+}
+
 function date(string $date = 'now'): DateTimeInterface
 {
     return new DateTimeImmutable($date);
@@ -106,6 +119,11 @@ function senior(int $count = 1): Seat
 function disabled(int $count = 1): Seat
 {
     return seat(PassengerType::Disabled, $count);
+}
+
+function passenger(): Passenger
+{
+    return an\entity(Passenger::class);
 }
 
 namespace TTBooking\WBEngine\Functional\an;
