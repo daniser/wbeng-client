@@ -38,12 +38,35 @@ namespace TTBooking\WBEngine\Functional\a;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use ReflectionClass;
+use ReflectionException;
+use ReflectionNamedType;
 use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Location;
 use TTBooking\WBEngine\DTO\Common\RouteSegment;
 use TTBooking\WBEngine\DTO\Common\Seat;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
 use TTBooking\WBEngine\Functional\is\rollin;
+
+/**
+ * @param class-string|object $objectOrClass
+ *
+ * @return class-string
+ *
+ * @throws ReflectionException
+ */
+function property_class(object|string $objectOrClass, string $propertyName): string
+{
+    $refClass = new ReflectionClass($objectOrClass);
+    $refType = $refClass->getProperty($propertyName)->getType();
+
+    if ($refType instanceof ReflectionNamedType) {
+        /** @var class-string */
+        return $refType->getName();
+    }
+
+    throw new ReflectionException("Property \"$propertyName\" has no type or has more than one type.");
+}
 
 function location(string $code, string $name = ''): Location
 {

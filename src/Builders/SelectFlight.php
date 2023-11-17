@@ -8,7 +8,7 @@ use TTBooking\WBEngine\DTO\Common\Query\Flight;
 use TTBooking\WBEngine\DTO\Common\Query\FlightGroup;
 use TTBooking\WBEngine\DTO\Common\Query\Itinerary;
 use TTBooking\WBEngine\DTO\Common\Result;
-use TTBooking\WBEngine\Functional\an;
+use TTBooking\WBEngine\Functional\{a, an};
 
 /**
  * @method static static fromSearchResult(Result $result, int $flightGroupId, int $itineraryId, int $flightId)
@@ -30,7 +30,7 @@ trait SelectFlight
 
     public function fromSearch(string $token): static
     {
-        $this->parameters ??= an\entity($this->parameters::class);
+        $this->parameters ??= an\entity(a\property_class(static::class, 'parameters'));
         $this->parameters->token = $token;
 
         return $this;
@@ -38,7 +38,7 @@ trait SelectFlight
 
     public function flightGroup(string $token): static
     {
-        $this->parameters ??= an\entity($this->parameters::class);
+        $this->parameters ??= an\entity(a\property_class(static::class, 'parameters'));
         $this->parameters->flightGroups[0] ??= an\entity(FlightGroup::class);
         $this->parameters->flightGroups[0]->token = $token;
 
@@ -47,7 +47,7 @@ trait SelectFlight
 
     public function flight(string $token): static
     {
-        $this->parameters ??= an\entity($this->parameters::class);
+        $this->parameters ??= an\entity(a\property_class(static::class, 'parameters'));
         $this->parameters->flightGroups[0] ??= an\entity(FlightGroup::class);
         $this->parameters->flightGroups[0]->itineraries[0] ??= an\entity(Itinerary::class);
         $this->parameters->flightGroups[0]->itineraries[0]->flights[0] ??= an\entity(Flight::class);
