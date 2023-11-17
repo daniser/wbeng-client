@@ -44,6 +44,7 @@ use ReflectionNamedType;
 use TTBooking\WBEngine\DTO\Common\BenefitCode;
 use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Location;
+use TTBooking\WBEngine\DTO\Common\LoyaltyCard;
 use TTBooking\WBEngine\DTO\Common\Passenger;
 use TTBooking\WBEngine\DTO\Common\RouteSegment;
 use TTBooking\WBEngine\DTO\Common\Seat;
@@ -89,6 +90,11 @@ function tour_code(string $code, Carrier|string $carrier): TourCode
 function benefit_code(string $code, Carrier|string $carrier): BenefitCode
 {
     return new BenefitCode($code, is_string($carrier) ? carrier($carrier) : $carrier);
+}
+
+function loyalty_card(string $id, Carrier|string $carrier): LoyaltyCard
+{
+    return new LoyaltyCard($id, is_string($carrier) ? carrier($carrier) : $carrier);
 }
 
 function date(string $date = 'now'): DateTimeInterface

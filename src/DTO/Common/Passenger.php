@@ -34,11 +34,11 @@ class Passenger
 
         public string $railwayBonusCardNumber,
 
-        public string $email,
+        public ?string $email = null,
 
         public bool $isEmailRefused = false,
 
-        public bool $isEmailAbsent = false,
+        public bool $isEmailAbsent = true,
 
         /** @var list<string> */
         #[Type('list<string>')]

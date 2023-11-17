@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\Builders;
 
+use libphonenumber\PhoneNumberType;
+use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Passport;
 use TTBooking\WBEngine\DTO\Enums\Gender;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
-use TTBooking\WBEngine\Functional\an;
+use TTBooking\WBEngine\DTO\Enums\PhoneType;
+use TTBooking\WBEngine\Functional\{ a, an };
+use TTBooking\WBEngine\Functional\do;
 
 /**
  * @method static static gender(Gender $gender)
@@ -44,6 +48,10 @@ use TTBooking\WBEngine\Functional\an;
  * @method static static surname(string $surname)
  * @method static static middleName(string $middleName)
  * @method static static patronymic(string $patronymic)
+ * @method static static phone(string $phone)
+ * @method static static email(string|null $email)
+ * @method static static withoutEmail(bool $refused = false)
+ * @method static static loyaltyCard(string $id, Carrier|string $carrier)
  */
 trait Passenger
 {
@@ -231,5 +239,45 @@ trait Passenger
     public function patronymic(string $patronymic): static
     {
         return $this->middleName($patronymic);
+    }
+
+    public function phone(string $phone): static
+    {
+        [$numberType, $countryCode, $areaCode, $subscriberNumber] = do\parse_phone($phone);
+
+        $this->phoneType = match ($numberType) {
+            PhoneNumberType::MOBILE => PhoneType::Mobile,
+            default => PhoneType::Home,
+        };
+
+        $this->countryCode = (string) $countryCode;
+        $this->areaCode = $areaCode;
+        $this->phoneNumber = $subscriberNumber;
+
+        return $this;
+    }
+
+    public function email(?string $email): static
+    {
+        $this->email = $email;
+        $this->isEmailAbsent = is_null($email);
+
+        return $this;
+    }
+
+    public function withoutEmail(bool $refused = false): static
+    {
+        $this->email = null;
+        $this->isEmailRefused = $refused;
+        $this->isEmailAbsent = !$refused;
+
+        return $this;
+    }
+
+    public function loyaltyCard(string $id, Carrier|string $carrier): static
+    {
+        $this->loyaltyCard = a\loyalty_card($id, $carrier);
+
+        return $this;
     }
 }
