@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\CreateBooking;
 
 use JMS\Serializer\Annotation\Type;
+use Symfony\Component\Serializer\Annotation\SerializedPath;
 use TTBooking\WBEngine\DTO\Common\Result\BookingFile;
 use TTBooking\WBEngine\DTO\Common\Result\Context;
 use TTBooking\WBEngine\DTO\Common\Result\Message;
@@ -16,6 +17,7 @@ class Result implements ResultInterface
         public string $token,
 
         /** @var list<Message> */
+        #[SerializedPath('[messages][message]')]
         #[Type('list<'.Message::class.'>')]
         public array $messages,
 
