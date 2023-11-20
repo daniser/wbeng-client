@@ -28,17 +28,18 @@ function book(): CreateBooking
 /**
  * @return array{int, null|int, string, string}
  */
-function parse_phone(string $phone): array
+function parse_phone(string $phone, string $defaultRegion = null): array
 {
+    $defaultRegion = isset($defaultRegion) ? strtoupper($defaultRegion) : null;
     $phoneUtil = PhoneNumberUtil::getInstance();
-    $phoneNumber = $phoneUtil->parse($phone);
+    $phoneNumber = $phoneUtil->parse($phone, $defaultRegion);
     $nationalSignificantNumber = $phoneUtil->getNationalSignificantNumber($phoneNumber);
-    $areaCodeLength = $phoneUtil->getLengthOfGeographicalAreaCode($phoneNumber);
+    $ndcLength = $phoneUtil->getLengthOfNationalDestinationCode($phoneNumber);
 
     return [
         $phoneUtil->getNumberType($phoneNumber),
         $phoneNumber->getCountryCode(),
-        $areaCodeLength > 0 ? substr($nationalSignificantNumber, 0, $areaCodeLength) : '',
-        $areaCodeLength > 0 ? substr($nationalSignificantNumber, $areaCodeLength) : $nationalSignificantNumber,
+        $ndcLength > 0 ? substr($nationalSignificantNumber, 0, $ndcLength) : '',
+        $ndcLength > 0 ? substr($nationalSignificantNumber, $ndcLength) : $nationalSignificantNumber,
     ];
 }

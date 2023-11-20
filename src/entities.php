@@ -44,6 +44,7 @@ use ReflectionNamedType;
 use TTBooking\WBEngine\DTO\Common\BenefitCode;
 use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Country;
+use TTBooking\WBEngine\DTO\Common\Customer;
 use TTBooking\WBEngine\DTO\Common\Location;
 use TTBooking\WBEngine\DTO\Common\LoyaltyCard;
 use TTBooking\WBEngine\DTO\Common\Passenger;
@@ -52,6 +53,7 @@ use TTBooking\WBEngine\DTO\Common\Seat;
 use TTBooking\WBEngine\DTO\Common\TourCode;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
 use TTBooking\WBEngine\Functional\{ an, is\rollin };
+use TTBooking\WBEngine\Functional\do;
 
 /**
  * @param class-string|object $objectOrClass
@@ -131,6 +133,13 @@ function senior(int $count = 1): Seat
 function disabled(int $count = 1): Seat
 {
     return seat(PassengerType::Disabled, $count);
+}
+
+function customer(string $name, string $email, string $phone, string $defaultRegion = null): Customer
+{
+    [, $countryCode, $areaCode, $subscriberNumber] = do\parse_phone($phone, $defaultRegion);
+
+    return new Customer($name, $email, (string) $countryCode, $areaCode, $subscriberNumber);
 }
 
 function passenger(): Passenger

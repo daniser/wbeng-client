@@ -274,9 +274,9 @@ trait Passenger
         return $this;
     }
 
-    public function phone(string $phone): static
+    public function phone(string $phone, string $defaultRegion = null): static
     {
-        [$numberType, $countryCode, $areaCode, $subscriberNumber] = do\parse_phone($phone);
+        [$numberType, $countryCode, $areaCode, $subscriberNumber] = do\parse_phone($phone, $defaultRegion);
 
         $this->phoneType = match ($numberType) {
             PhoneNumberType::MOBILE => PhoneType::Mobile,

@@ -6,12 +6,11 @@ namespace TTBooking\WBEngine\Builders;
 
 use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Code3D;
-use TTBooking\WBEngine\DTO\Common\Customer;
-use TTBooking\WBEngine\Functional\{a, an};
+use TTBooking\WBEngine\Functional\{ a, an };
 use TTBooking\WBEngine\DTO\Common\Passenger;
 
 /**
- * @method static static customer(string $name, string $email, string $countryCode, string $areaCode, string $phoneNumber)
+ * @method static static customer(string $name, string $email, string $phone, string $defaultRegion = null)
  * @method static static passengers(Passenger ...$passengers)
  * @method static static tourCode(string $code, Carrier|string $carrier)
  * @method static static benefitCode(string $code, Carrier|string $carrier)
@@ -21,10 +20,10 @@ trait CreateBooking
 {
     use SelectFlight;
 
-    public function customer(string $name, string $email, string $countryCode, string $areaCode, string $phoneNumber): static
+    public function customer(string $name, string $email, string $phone, string $defaultRegion = null): static
     {
         $this->parameters ??= an\entity(a\property_class(static::class, 'parameters'));
-        $this->parameters->customer = new Customer($name, $email, $countryCode, $areaCode, $phoneNumber);
+        $this->parameters->customer = a\customer($name, $email, $phone, $defaultRegion);
 
         return $this;
     }
