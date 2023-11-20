@@ -40,8 +40,8 @@ class Passenger
 
         public bool $isEmailAbsent = true,
 
-        /** @var list<string> */
-        #[Type('list<string>')]
+        /** @var list<Document> */
+        #[Type('list<'.Document::class.'>')]
         public array $extraDocuments = [],
     ) {}
 }

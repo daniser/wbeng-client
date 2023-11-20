@@ -33,7 +33,7 @@ trait RouteSegment
 
     public function on(DateTimeInterface|string $date): static
     {
-        $this->date = is_string($date) ? a\date($date) : $date;
+        $this->date = a\date($date);
 
         return $this;
     }

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\Builders;
 
+use DateTimeInterface;
 use libphonenumber\PhoneNumberType;
 use TTBooking\WBEngine\DTO\Common\Carrier;
+use TTBooking\WBEngine\DTO\Common\Country;
 use TTBooking\WBEngine\DTO\Common\Passport;
 use TTBooking\WBEngine\DTO\Enums\Gender;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
@@ -48,6 +50,8 @@ use TTBooking\WBEngine\Functional\do;
  * @method static static surname(string $surname)
  * @method static static middleName(string $middleName)
  * @method static static patronymic(string $patronymic)
+ * @method static static birthDate(DateTimeInterface|string $date)
+ * @method static static citizenship(Country|string $code, string $name = '')
  * @method static static phone(string $phone)
  * @method static static email(string|null $email)
  * @method static static withoutEmail(bool $refused = false)
@@ -239,6 +243,22 @@ trait Passenger
     public function patronymic(string $patronymic): static
     {
         return $this->middleName($patronymic);
+    }
+
+    public function birthDate(DateTimeInterface|string $date): static
+    {
+        $this->passport ??= an\entity(Passport::class);
+        $this->passport->birthday = a\date($date);
+
+        return $this;
+    }
+
+    public function citizenship(Country|string $code, string $name = ''): static
+    {
+        $this->passport ??= an\entity(Passport::class);
+        $this->passport->citizenship = is_string($code) ? a\country($code, $name) : $code;
+
+        return $this;
     }
 
     public function phone(string $phone): static

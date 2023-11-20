@@ -43,6 +43,7 @@ use ReflectionException;
 use ReflectionNamedType;
 use TTBooking\WBEngine\DTO\Common\BenefitCode;
 use TTBooking\WBEngine\DTO\Common\Carrier;
+use TTBooking\WBEngine\DTO\Common\Country;
 use TTBooking\WBEngine\DTO\Common\Location;
 use TTBooking\WBEngine\DTO\Common\LoyaltyCard;
 use TTBooking\WBEngine\DTO\Common\Passenger;
@@ -77,6 +78,11 @@ function location(string $code, string $name = ''): Location
     return new Location($code, $name);
 }
 
+function country(string $code, string $name = ''): Country
+{
+    return new Country($code, $name);
+}
+
 function carrier(string $code, string $name = ''): Carrier
 {
     return new Carrier($code, $name);
@@ -97,9 +103,9 @@ function loyalty_card(string $id, Carrier|string $carrier): LoyaltyCard
     return new LoyaltyCard($id, is_string($carrier) ? carrier($carrier) : $carrier);
 }
 
-function date(string $date = 'now'): DateTimeInterface
+function date(DateTimeInterface|string $date = 'now'): DateTimeInterface
 {
-    return new DateTimeImmutable($date);
+    return is_string($date) ? new DateTimeImmutable($date) : $date;
 }
 
 function segment(Location|string $from, Location|string $to, DateTimeInterface|string $on): RouteSegment
