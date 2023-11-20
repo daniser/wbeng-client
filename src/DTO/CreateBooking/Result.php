@@ -14,15 +14,15 @@ use TTBooking\WBEngine\ResultInterface;
 class Result implements ResultInterface
 {
     public function __construct(
-        public string $token,
+        public ?string $token,
 
         /** @var list<Message> */
         #[SerializedPath('[messages][message]')]
         #[Type('list<'.Message::class.'>')]
         public array $messages,
 
-        public Context $context,
+        public ?Context $context,
 
-        public BookingFile $bookingFile,
+        public ?BookingFile $bookingFile,
     ) {}
 }
