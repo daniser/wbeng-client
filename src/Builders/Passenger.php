@@ -49,8 +49,8 @@ use TTBooking\WBEngine\Functional\do;
  * @method static static name(string $name)
  * @method static static lastName(string $lastName)
  * @method static static surname(string $surname)
- * @method static static middleName(string $middleName)
- * @method static static patronymic(string $patronymic)
+ * @method static static middleName(string|null $middleName)
+ * @method static static patronymic(string|null $patronymic)
  * @method static static birthDate(DateTimeInterface|string $date)
  * @method static static citizenship(Country|string $code, string $name = '')
  * @method static static document(DocumentType $type, string $number, DateTimeInterface|string $issued, DateTimeInterface|string $expired = null)
@@ -234,7 +234,7 @@ trait Passenger
         return $this->lastName($surname);
     }
 
-    public function middleName(string $middleName): static
+    public function middleName(?string $middleName): static
     {
         $this->passport ??= an\entity(Passport::class);
         $this->passport->middleName = $middleName;
@@ -242,7 +242,7 @@ trait Passenger
         return $this;
     }
 
-    public function patronymic(string $patronymic): static
+    public function patronymic(?string $patronymic): static
     {
         return $this->middleName($patronymic);
     }
