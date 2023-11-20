@@ -9,6 +9,7 @@ use libphonenumber\PhoneNumberType;
 use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Country;
 use TTBooking\WBEngine\DTO\Common\Passport;
+use TTBooking\WBEngine\DTO\Enums\DocumentType;
 use TTBooking\WBEngine\DTO\Enums\Gender;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
 use TTBooking\WBEngine\DTO\Enums\PhoneType;
@@ -52,6 +53,7 @@ use TTBooking\WBEngine\Functional\do;
  * @method static static patronymic(string $patronymic)
  * @method static static birthDate(DateTimeInterface|string $date)
  * @method static static citizenship(Country|string $code, string $name = '')
+ * @method static static document(DocumentType $type, string $number, DateTimeInterface|string $issued, DateTimeInterface|string $expired = null)
  * @method static static phone(string $phone)
  * @method static static email(string|null $email)
  * @method static static withoutEmail(bool $refused = false)
@@ -257,6 +259,17 @@ trait Passenger
     {
         $this->passport ??= an\entity(Passport::class);
         $this->passport->citizenship = is_string($code) ? a\country($code, $name) : $code;
+
+        return $this;
+    }
+
+    public function document(DocumentType $type, string $number, DateTimeInterface|string $issued, DateTimeInterface|string $expired = null): static
+    {
+        $this->passport ??= an\entity(Passport::class);
+        $this->passport->type = $type;
+        $this->passport->number = $number;
+        $this->passport->issued = a\date($issued);
+        $this->passport->expired = a\date($expired ?? '+10 years');
 
         return $this;
     }
