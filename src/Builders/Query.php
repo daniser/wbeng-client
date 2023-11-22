@@ -26,6 +26,11 @@ trait Query
         return $this;
     }
 
+    public function getContext(): Context
+    {
+        return $this->context;
+    }
+
     /**
      * @throws Exception
      */

@@ -14,7 +14,7 @@ interface AsyncClientInterface
      *
      * @param QueryInterface<TResult> $query
      *
-     * @return Promise<TResult>
+     * @return Promise<StateInterface<TResult>>
      *
      * @throws Exception
      */

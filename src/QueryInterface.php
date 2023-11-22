@@ -13,6 +13,8 @@ interface QueryInterface
 {
     public function withContext(Context $context): static;
 
+    public function getContext(): Context;
+
     public static function getEndpoint(): string;
 
     /**

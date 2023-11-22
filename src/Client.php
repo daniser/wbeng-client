@@ -11,6 +11,8 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Http\Promise\Promise;
 use JMS\Serializer\SerializerInterface as JMSSerializerInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -44,6 +46,7 @@ class Client implements ClientInterface, AsyncClientInterface
         StreamFactoryInterface $streamFactory = null,
         ValidatorInterface $validator = null,
         JMSSerializerInterface|SymfonySerializerInterface $serializer = null,
+        protected ?ContainerInterface $container = null,
     ) {
         $this->baseUri = rtrim($baseUri, '/');
         $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
@@ -56,22 +59,48 @@ class Client implements ClientInterface, AsyncClientInterface
         $this->validate($context);
     }
 
-    public function query(QueryInterface $query): ResultInterface
+    public function query(QueryInterface $query): StateInterface
     {
-        return $this->deserialize(
+        return $this->buildState($query, $this->deserialize(
             (string) $this->httpClient->sendRequest($this->makeRequest($query))->getBody(),
             $query::getResultType()
-        );
+        ));
     }
 
     public function asyncQuery(QueryInterface $query): Promise
     {
         return $this->sendAsyncRequest($this->makeRequest($query))->then(
-            fn (ResponseInterface $response) => $this->deserialize(
+            fn (ResponseInterface $response) => $this->buildState($query, $this->deserialize(
                 (string) $response->getBody(),
                 $query::getResultType()
-            )
+            ))
         );
+    }
+
+    /**
+     * @template TResult of ResultInterface
+     *
+     * @param QueryInterface<TResult> $query
+     *
+     * @phpstan-param TResult $result
+     *
+     * @return StateInterface<TResult>
+     */
+    protected function buildState(QueryInterface $query, ResultInterface $result): StateInterface
+    {
+        try {
+            /** @var StateInterface<TResult> $state */
+            $state = $this->container?->get(StateInterface::class) ?? new State;
+        } catch (ContainerExceptionInterface) {
+            /** @var State<TResult> $state */
+            $state = new State;
+        }
+
+        return $state
+            ->setBaseUri($this->baseUri)
+            ->setLegacy($this->legacy)
+            ->setQuery($query)
+            ->setResult($result);
     }
 
     /**
