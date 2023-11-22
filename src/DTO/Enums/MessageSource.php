@@ -10,4 +10,5 @@ enum MessageSource: string
     case Build = 'BUILD';
     case Operation = 'OPERATION';
     case Provider = 'PROVIDER';
+    case Parallel = 'PARALLEL';
 }
