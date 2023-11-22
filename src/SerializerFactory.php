@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
 use TTBooking\WBEngine\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
 use TTBooking\WBEngine\Normalizer\EmptyDateTimeDenormalizer;
@@ -30,7 +30,7 @@ use UnexpectedValueException;
 
 final class SerializerFactory
 {
-    public static function createSerializer(string $serializer = null, bool $legacy = true): JMSSerializerInterface|SymfonySerializerInterface
+    public static function createSerializer(string $serializer = null, bool $legacy = true): SerializerInterface
     {
         return match ($serializer) {
             'default', null => self::discoverSerializer($legacy),
@@ -40,7 +40,7 @@ final class SerializerFactory
         };
     }
 
-    public static function discoverSerializer(bool $legacy = true): JMSSerializerInterface|SymfonySerializerInterface
+    public static function discoverSerializer(bool $legacy = true): SerializerInterface
     {
         if (interface_exists(SymfonySerializerInterface::class)) {
             return self::createSymfonySerializer($legacy);
@@ -53,7 +53,7 @@ final class SerializerFactory
         throw new Exception('Neither Symfony nor JMS serializer found.');
     }
 
-    public static function createSymfonySerializer(bool $legacy = true): SymfonySerializerInterface
+    public static function createSymfonySerializer(bool $legacy = true): SerializerInterface
     {
         $propertyNormalizer = new PropertyNormalizer(
             $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader)),
@@ -66,24 +66,28 @@ final class SerializerFactory
         );
 
         return new Serializer(
-            [
-                new CaseInsensitiveBackedEnumDenormalizer,
-                new BackedEnumNormalizer,
-                new TerminalDenormalizer,
-                $propertyNormalizer,
-                new ArrayDenormalizer,
-                new EmptyDateTimeDenormalizer,
-                new DateTimeNormalizer,
-            ],
-            [new JsonEncoder]
+            new SymfonySerializer(
+                [
+                    new CaseInsensitiveBackedEnumDenormalizer,
+                    new BackedEnumNormalizer,
+                    new TerminalDenormalizer,
+                    $propertyNormalizer,
+                    new ArrayDenormalizer,
+                    new EmptyDateTimeDenormalizer,
+                    new DateTimeNormalizer,
+                ],
+                [new JsonEncoder]
+            )
         );
     }
 
-    public static function createJMSSerializer(bool $legacy = true): JMSSerializerInterface
+    public static function createJMSSerializer(bool $legacy = true): SerializerInterface
     {
-        return SerializerBuilder::create()
-            ->enableEnumSupport()
-            ->setPropertyNamingStrategy(new IdenticalPropertyNamingStrategy)
-            ->build();
+        return new Serializer(
+            SerializerBuilder::create()
+                ->enableEnumSupport()
+                ->setPropertyNamingStrategy(new IdenticalPropertyNamingStrategy)
+                ->build()
+        );
     }
 }

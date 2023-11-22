@@ -10,7 +10,6 @@ use Http\Discovery\HttpAsyncClientDiscovery;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Http\Promise\Promise;
-use JMS\Serializer\SerializerInterface as JMSSerializerInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
@@ -18,7 +17,6 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -34,7 +32,7 @@ class Client implements ClientInterface, AsyncClientInterface
 
     protected ValidatorInterface $validator;
 
-    protected JMSSerializerInterface|SymfonySerializerInterface $serializer;
+    protected SerializerInterface $serializer;
 
     public function __construct(
         protected string $baseUri,
@@ -45,7 +43,7 @@ class Client implements ClientInterface, AsyncClientInterface
         RequestFactoryInterface $requestFactory = null,
         StreamFactoryInterface $streamFactory = null,
         ValidatorInterface $validator = null,
-        JMSSerializerInterface|SymfonySerializerInterface $serializer = null,
+        SerializerInterface $serializer = null,
         protected ?ContainerInterface $container = null,
     ) {
         $this->baseUri = rtrim($baseUri, '/');
@@ -61,7 +59,7 @@ class Client implements ClientInterface, AsyncClientInterface
 
     public function query(QueryInterface $query): StateInterface
     {
-        return $this->buildState($query, $this->deserialize(
+        return $this->buildState($query, $this->serializer->deserialize(
             (string) $this->httpClient->sendRequest($this->makeRequest($query))->getBody(),
             $query::getResultType()
         ));
@@ -70,7 +68,7 @@ class Client implements ClientInterface, AsyncClientInterface
     public function asyncQuery(QueryInterface $query): Promise
     {
         return $this->sendAsyncRequest($this->makeRequest($query))->then(
-            fn (ResponseInterface $response) => $this->buildState($query, $this->deserialize(
+            fn (ResponseInterface $response) => $this->buildState($query, $this->serializer->deserialize(
                 (string) $response->getBody(),
                 $query::getResultType()
             ))
@@ -110,7 +108,7 @@ class Client implements ClientInterface, AsyncClientInterface
      */
     protected function makeRequest(QueryInterface $query): RequestInterface
     {
-        return $this->prepareRequest($query::getEndpoint(), method: 'POST', body: $this->serialize(
+        return $this->prepareRequest($query::getEndpoint(), method: 'POST', body: $this->serializer->serialize(
             $this->validate($query)->withContext($this->context)
         ));
     }
@@ -131,24 +129,6 @@ class Client implements ClientInterface, AsyncClientInterface
         }
 
         return $entity;
-    }
-
-    protected function serialize(mixed $data): string
-    {
-        return $this->serializer->serialize($data, 'json');
-    }
-
-    /**
-     * @template T of object
-     *
-     * @param class-string<T> $type
-     *
-     * @return T
-     */
-    protected function deserialize(string $data, string $type)
-    {
-        /** @var T */
-        return $this->serializer->deserialize($data, $type, 'json');
     }
 
     /**
