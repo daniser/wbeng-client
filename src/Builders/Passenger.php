@@ -54,7 +54,7 @@ use TTBooking\WBEngine\Functional\do;
  * @method static static birthDate(DateTimeInterface|string $date)
  * @method static static citizenship(Country|string $code, string $name = '')
  * @method static static document(DocumentType $type, string $number, DateTimeInterface|string $issued, DateTimeInterface|string $expired = null)
- * @method static static phone(string $phone)
+ * @method static static phone(string $phone, string $defaultRegion = null)
  * @method static static email(string|null $email)
  * @method static static withoutEmail(bool $refused = false)
  * @method static static loyaltyCard(string $id, Carrier|string $carrier)
