@@ -13,9 +13,9 @@ interface ClientInterface
      *
      * @param QueryInterface<TResult> $query
      *
-     * @return StateInterface<TResult>
+     * @return State<TResult>
      *
      * @throws ClientExceptionInterface
      */
-    public function query(QueryInterface $query): StateInterface;
+    public function query(QueryInterface $query): State;
 }

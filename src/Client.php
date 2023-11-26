@@ -57,7 +57,7 @@ class Client implements ClientInterface, AsyncClientInterface
         $this->validate($context);
     }
 
-    public function query(QueryInterface $query): StateInterface
+    public function query(QueryInterface $query): State
     {
         return $this->buildState($query, $this->serializer->deserialize(
             (string) $this->httpClient->sendRequest($this->makeRequest($query))->getBody(),
@@ -82,23 +82,23 @@ class Client implements ClientInterface, AsyncClientInterface
      *
      * @phpstan-param TResult $result
      *
-     * @return StateInterface<TResult>
+     * @return State<TResult>
      */
-    protected function buildState(QueryInterface $query, ResultInterface $result): StateInterface
+    protected function buildState(QueryInterface $query, ResultInterface $result): State
     {
         try {
-            /** @var StateInterface<TResult> $state */
-            $state = $this->container?->get(StateInterface::class) ?? new State;
+            /** @var State<TResult> $state */
+            $state = $this->container?->get(State::class) ?? new State;
         } catch (ContainerExceptionInterface) {
             /** @var State<TResult> $state */
             $state = new State;
         }
 
         return $state
-            ->setBaseUri($this->baseUri)
-            ->setLegacy($this->legacy)
-            ->setQuery($query)
-            ->setResult($result);
+            ->baseUri($this->baseUri)
+            ->legacy($this->legacy)
+            ->query($query)
+            ->result($result);
     }
 
     /**
