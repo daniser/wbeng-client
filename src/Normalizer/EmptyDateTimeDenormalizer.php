@@ -35,7 +35,7 @@ final class EmptyDateTimeDenormalizer implements DenormalizerInterface, Denormal
     public function getSupportedTypes(?string $format): array
     {
         return [
-            DateTimeInterface::class => true,
+            DateTimeInterface::class => false,
         ];
     }
 }

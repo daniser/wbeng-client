@@ -35,7 +35,7 @@ final class CaseInsensitiveBackedEnumDenormalizer implements DenormalizerInterfa
     public function getSupportedTypes(?string $format): array
     {
         return [
-            BackedEnum::class => true,
+            BackedEnum::class => false,
         ];
     }
 }
