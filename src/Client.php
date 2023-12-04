@@ -51,7 +51,7 @@ class Client implements ClientInterface, AsyncClientInterface
         $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
         $this->streamFactory = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
         $this->validator = $validator ?? Validation::createValidatorBuilder()
-            ->enableAnnotationMapping()
+            ->enableAttributeMapping()
             ->getValidator();
         $this->serializer = $serializer ?? SerializerFactory::discoverSerializer($legacy);
         $this->validate($context);

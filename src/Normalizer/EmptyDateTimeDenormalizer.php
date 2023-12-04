@@ -31,4 +31,11 @@ final class EmptyDateTimeDenormalizer implements DenormalizerInterface, Denormal
         return true === ($context[self::EMPTY_DATETIME_TO_NULL] ?? false)
             && is_a($type, DateTimeInterface::class, true);
     }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            DateTimeInterface::class => true,
+        ];
+    }
 }

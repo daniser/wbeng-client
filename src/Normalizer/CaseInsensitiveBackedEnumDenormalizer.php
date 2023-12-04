@@ -31,4 +31,11 @@ final class CaseInsensitiveBackedEnumDenormalizer implements DenormalizerInterfa
         return true === ($context[self::UPPERCASE_BACKED_ENUM] ?? false)
             && is_subclass_of($type, BackedEnum::class);
     }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            BackedEnum::class => true,
+        ];
+    }
 }

@@ -35,4 +35,11 @@ final class TerminalDenormalizer implements DenormalizerInterface, DenormalizerA
         return true === ($context[self::STRING_TERMINAL_TO_ARRAY] ?? false)
             && is_a($type, Terminal::class, true);
     }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            Terminal::class => false,
+        ];
+    }
 }

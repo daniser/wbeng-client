@@ -31,4 +31,11 @@ final class EmptyBookingFileDenormalizer implements DenormalizerInterface, Denor
         return true === ($context[self::EMPTY_BOOKING_FILE_TO_NULL] ?? false)
             && is_a($type, BookingFile::class, true);
     }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            BookingFile::class => false,
+        ];
+    }
 }
