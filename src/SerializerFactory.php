@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use Exception;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 use JMS\Serializer\SerializerBuilder;
@@ -15,7 +14,7 @@ use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\Serializer\Context\Normalizer\PropertyNormalizerContextBuilder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
@@ -24,6 +23,7 @@ use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
 use TTBooking\WBEngine\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
+use TTBooking\WBEngine\Normalizer\EmptyBookingFileDenormalizer;
 use TTBooking\WBEngine\Normalizer\EmptyDateTimeDenormalizer;
 use TTBooking\WBEngine\Normalizer\TerminalDenormalizer;
 use UnexpectedValueException;
@@ -56,7 +56,7 @@ final class SerializerFactory
     public static function createSymfonySerializer(bool $legacy = true): SerializerInterface
     {
         $propertyNormalizer = new PropertyNormalizer(
-            $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader)),
+            $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader),
             $legacy ? new MetadataAwareNameConverter($classMetadataFactory) : null,
             new PropertyInfoExtractor([], [new PhpDocExtractor, new ReflectionExtractor]), null, null,
             (new PropertyNormalizerContextBuilder)
@@ -71,6 +71,7 @@ final class SerializerFactory
                     new CaseInsensitiveBackedEnumDenormalizer,
                     new BackedEnumNormalizer,
                     new TerminalDenormalizer,
+                    new EmptyBookingFileDenormalizer,
                     $propertyNormalizer,
                     new ArrayDenormalizer,
                     new EmptyDateTimeDenormalizer,

@@ -7,6 +7,7 @@ namespace TTBooking\WBEngine\Context\Normalizer;
 use Symfony\Component\Serializer\Context\ContextBuilderInterface;
 use Symfony\Component\Serializer\Context\ContextBuilderTrait;
 use TTBooking\WBEngine\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
+use TTBooking\WBEngine\Normalizer\EmptyBookingFileDenormalizer;
 use TTBooking\WBEngine\Normalizer\EmptyDateTimeDenormalizer;
 use TTBooking\WBEngine\Normalizer\TerminalDenormalizer;
 
@@ -17,6 +18,11 @@ final class LegacyContextBuilder implements ContextBuilderInterface
     public function withEmptyDateTimeToNull(bool $emptyDateTimeToNull = true): self
     {
         return $this->with(EmptyDateTimeDenormalizer::EMPTY_DATETIME_TO_NULL, $emptyDateTimeToNull);
+    }
+
+    public function withEmptyBookingFileToNull(bool $emptyBookingFileToNull = true): self
+    {
+        return $this->with(EmptyBookingFileDenormalizer::EMPTY_BOOKING_FILE_TO_NULL, $emptyBookingFileToNull);
     }
 
     public function withUppercaseBackedEnum(bool $uppercaseBackedEnum = true): self

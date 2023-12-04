@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\CreateBooking;
 
 use JMS\Serializer\Annotation\Type;
+use Symfony\Component\Serializer\Annotation\Context;
 use Symfony\Component\Serializer\Annotation\SerializedPath;
 use TTBooking\WBEngine\DTO\Common\Result\BookingFile;
-use TTBooking\WBEngine\DTO\Common\Result\Context;
+use TTBooking\WBEngine\DTO\Common\Result\Context as ResultContext;
 use TTBooking\WBEngine\DTO\Common\Result\Message;
+use TTBooking\WBEngine\Normalizer\EmptyBookingFileDenormalizer;
 use TTBooking\WBEngine\ResultInterface;
 
 class Result implements ResultInterface
@@ -21,8 +23,9 @@ class Result implements ResultInterface
         #[Type('list<'.Message::class.'>')]
         public array $messages,
 
-        public ?Context $context,
+        public ?ResultContext $context,
 
+        #[Context(denormalizationContext: [EmptyBookingFileDenormalizer::EMPTY_BOOKING_FILE_TO_NULL => true])]
         public ?BookingFile $bookingFile,
     ) {}
 }
