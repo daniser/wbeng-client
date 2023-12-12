@@ -6,60 +6,66 @@ namespace TTBooking\WBEngine;
 
 /**
  * @template TResult of ResultInterface
+ *
+ * @implements StateInterface<TResult>
  */
-class State
+class State implements StateInterface
 {
-    public string $baseUri;
+    protected string $baseUri;
 
-    public bool $legacy = false;
+    protected bool $legacy = false;
 
     /** @var QueryInterface<TResult> */
-    public QueryInterface $query;
+    protected QueryInterface $query;
 
     /** @phpstan-var TResult */
-    public ResultInterface $result;
+    protected ResultInterface $result;
 
-    /**
-     * @return $this
-     */
-    public function baseUri(string $baseUri): static
+    public function setBaseUri(string $baseUri): static
     {
         $this->baseUri = $baseUri;
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function legacy(bool $legacy = true): static
+    public function getBaseUri(): string
+    {
+        return $this->baseUri;
+    }
+
+    public function setLegacy(bool $legacy = true): static
     {
         $this->legacy = $legacy;
 
         return $this;
     }
 
-    /**
-     * @param QueryInterface<TResult> $query
-     *
-     * @return $this
-     */
-    public function query(QueryInterface $query): static
+    public function isLegacy(): bool
+    {
+        return $this->legacy;
+    }
+
+    public function setQuery(QueryInterface $query): static
     {
         $this->query = $query;
 
         return $this;
     }
 
-    /**
-     * @phpstan-param TResult $result
-     *
-     * @return $this
-     */
-    public function result(ResultInterface $result): static
+    public function getQuery(): QueryInterface
+    {
+        return $this->query;
+    }
+
+    public function setResult(ResultInterface $result): static
     {
         $this->result = $result;
 
         return $this;
+    }
+
+    public function getResult(): ResultInterface
+    {
+        return $this->result;
     }
 }
