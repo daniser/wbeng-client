@@ -57,6 +57,22 @@ class Client implements ClientInterface, AsyncClientInterface
         $this->validate($context);
     }
 
+    /**
+     * @param null|StateInterface<ResultInterface> $state
+     */
+    public function continue(StateInterface $state = null): static
+    {
+        $client = clone $this;
+
+        if ($state) {
+            $client->baseUri = $state->getBaseUri();
+            $client->context = $state->getQuery()->getContext();
+            $client->legacy = $state->isLegacy();
+        }
+
+        return $client;
+    }
+
     public function query(QueryInterface $query): StateInterface
     {
         return $this->buildState($query, $this->serializer->deserialize(
