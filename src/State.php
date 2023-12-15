@@ -13,7 +13,8 @@ class State implements StateInterface
 {
     protected string $baseUri;
 
-    protected bool $legacy = false;
+    /** @var array<string, mixed> */
+    protected array $attributes;
 
     /** @var QueryInterface<TResult> */
     protected QueryInterface $query;
@@ -33,16 +34,38 @@ class State implements StateInterface
         return $this->baseUri;
     }
 
-    public function setLegacy(bool $legacy = true): static
+    public function setAttrs(array $attributes): static
     {
-        $this->legacy = $legacy;
+        $this->attributes = $attributes;
 
         return $this;
     }
 
+    public function getAttrs(): array
+    {
+        return $this->attributes;
+    }
+
+    public function setAttr(string $attribute, mixed $value): static
+    {
+        $this->attributes[$attribute] = $value;
+
+        return $this;
+    }
+
+    public function getAttr(string $attribute, mixed $default = null): mixed
+    {
+        return $this->attributes[$attribute] ?? $default;
+    }
+
+    public function setLegacy(bool $legacy = true): static
+    {
+        return $this->setAttr(self::ATTR_LEGACY, $legacy);
+    }
+
     public function isLegacy(): bool
     {
-        return $this->legacy;
+        return (bool) $this->getAttr(self::ATTR_LEGACY, true);
     }
 
     public function setQuery(QueryInterface $query): static

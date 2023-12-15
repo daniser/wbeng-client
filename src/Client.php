@@ -34,10 +34,13 @@ class Client implements ClientInterface, AsyncClientInterface
 
     protected SerializerInterface $serializer;
 
+    /**
+     * @param array<string, mixed> $defaultAttributes
+     */
     public function __construct(
         protected string $baseUri,
-        protected Common\Query\Context $context,
-        protected bool $legacy = true,
+        protected Common\Query\Context $defaultContext,
+        protected array $defaultAttributes = [],
         HttpClientInterface $httpClient = null,
         protected ?HttpAsyncClient $httpAsyncClient = null,
         RequestFactoryInterface $requestFactory = null,
@@ -53,8 +56,8 @@ class Client implements ClientInterface, AsyncClientInterface
         $this->validator = $validator ?? Validation::createValidatorBuilder()
             ->enableAttributeMapping()
             ->getValidator();
-        $this->serializer = $serializer ?? SerializerFactory::discoverSerializer($legacy);
-        $this->validate($context);
+        $this->serializer = $serializer ?? SerializerFactory::discoverSerializer($this->legacy());
+        $this->validate($defaultContext);
     }
 
     /**
@@ -66,8 +69,8 @@ class Client implements ClientInterface, AsyncClientInterface
 
         if ($state) {
             $client->baseUri = $state->getBaseUri();
-            $client->context = $state->getQuery()->getContext();
-            $client->legacy = $state->isLegacy();
+            $client->defaultContext = $state->getQuery()->getContext();
+            $client->defaultAttributes = $state->getAttrs();
         }
 
         return $client;
@@ -112,7 +115,7 @@ class Client implements ClientInterface, AsyncClientInterface
 
         return $state
             ->setBaseUri($this->baseUri)
-            ->setLegacy($this->legacy)
+            ->setAttrs($this->defaultAttributes)
             ->setQuery($query)
             ->setResult($result);
     }
@@ -125,7 +128,7 @@ class Client implements ClientInterface, AsyncClientInterface
     protected function makeRequest(QueryInterface $query): RequestInterface
     {
         return $this->prepareRequest($query::getEndpoint(), method: 'POST', body: $this->serializer->serialize(
-            $this->validate($query)->withContext($this->context)
+            $this->validate($query)->withContext($this->defaultContext)
         ));
     }
 
@@ -153,7 +156,7 @@ class Client implements ClientInterface, AsyncClientInterface
      */
     protected function prepareRequest(string $endpoint, array $headers = [], string $method = 'GET', array|string $body = ''): RequestInterface
     {
-        $this->legacy && $endpoint .= '?legacy=on';
+        $this->legacy() && $endpoint .= '?legacy=on';
         $request = $this->requestFactory->createRequest($method, "$this->baseUri/$endpoint");
 
         $headers += ['Content-Type' => 'application/json'];
@@ -179,5 +182,10 @@ class Client implements ClientInterface, AsyncClientInterface
         $this->httpAsyncClient ??= HttpAsyncClientDiscovery::find();
 
         return $this->httpAsyncClient->sendAsyncRequest($request);
+    }
+
+    private function legacy(): bool
+    {
+        return (bool) ($this->defaultAttributes[StateInterface::ATTR_LEGACY] ?? true);
     }
 }

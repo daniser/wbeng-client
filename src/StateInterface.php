@@ -9,6 +9,8 @@ namespace TTBooking\WBEngine;
  */
 interface StateInterface
 {
+    public const ATTR_LEGACY = 'legacy';
+
     /**
      * @return $this
      */
@@ -17,9 +19,28 @@ interface StateInterface
     public function getBaseUri(): string;
 
     /**
+     * @param array<string, mixed> $attributes
+     *
      * @return $this
      */
-    public function setLegacy(bool $legacy = true): static;
+    public function setAttrs(array $attributes): static;
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getAttrs(): array;
+
+    /**
+     * @return $this
+     */
+    public function setAttr(string $attribute, mixed $value): static;
+
+    public function getAttr(string $attribute, mixed $default = null): mixed;
+
+    /**
+     * @return $this
+     */
+    public function setLegacy(): static;
 
     public function isLegacy(): bool;
 
