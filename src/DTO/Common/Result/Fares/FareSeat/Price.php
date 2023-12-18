@@ -13,7 +13,7 @@ class Price
 
         public string $currency,
 
-        public int $rate,
+        public ?int $rate,
 
         public int $amountBase,
 
