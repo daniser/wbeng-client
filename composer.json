@@ -28,7 +28,7 @@
         "symfony/validator": "^6.4 || ^7.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.32",
+        "friendsofphp/php-cs-fixer": "^3.34",
         "jms/serializer": "^3.20",
         "nyholm/psr7": "^1.0",
         "php-http/message": "^1.7",
