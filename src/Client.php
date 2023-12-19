@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use TTBooking\WBEngine\DTO\Common;
 
-class Client implements ClientInterface, AsyncClientInterface
+class Client implements ClientInterface
 {
     protected HttpClientInterface $httpClient;
 
@@ -60,9 +60,6 @@ class Client implements ClientInterface, AsyncClientInterface
         $this->validate($defaultContext);
     }
 
-    /**
-     * @param null|StateInterface<ResultInterface> $state
-     */
     public function continue(StateInterface $state = null): static
     {
         $client = clone $this;
