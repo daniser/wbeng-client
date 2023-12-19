@@ -13,7 +13,7 @@ interface ClientInterface
     /**
      * @param null|StateInterface<ResultInterface> $state
      */
-    public function continue(StateInterface $state = null): static;
+    public function continue(StateInterface $state = null): self;
 
     /**
      * @template TResult of ResultInterface
