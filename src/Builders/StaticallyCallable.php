@@ -8,6 +8,9 @@ use TTBooking\WBEngine\Functional\an;
 
 trait StaticallyCallable
 {
+    /**
+     * @param list<mixed> $arguments
+     */
     public static function __callStatic(string $name, array $arguments): mixed
     {
         return an\entity(static::class)->$name(...$arguments);

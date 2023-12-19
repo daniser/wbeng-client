@@ -66,5 +66,10 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "scripts": {
+        "analyse": "@php vendor/bin/phpstan analyse",
+        "lint": "@php vendor/bin/php-cs-fixer check",
+        "test": "@php vendor/bin/phpunit"
+    }
 }

@@ -6,8 +6,8 @@ namespace TTBooking\WBEngine\Builders;
 
 use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Code3D;
-use TTBooking\WBEngine\Functional\{ a, an };
 use TTBooking\WBEngine\DTO\Common\Passenger;
+use TTBooking\WBEngine\Functional\{ a, an };
 
 /**
  * @method static static customer(string $name, string $email, string $phone, string $defaultRegion = null)

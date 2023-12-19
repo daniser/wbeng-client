@@ -13,8 +13,8 @@ use TTBooking\WBEngine\DTO\Enums\DocumentType;
 use TTBooking\WBEngine\DTO\Enums\Gender;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
 use TTBooking\WBEngine\DTO\Enums\PhoneType;
-use TTBooking\WBEngine\Functional\{ a, an };
 use TTBooking\WBEngine\Functional\do;
+use TTBooking\WBEngine\Functional\{ a, an };
 
 /**
  * @method static static gender(Gender $gender)

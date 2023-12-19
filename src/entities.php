@@ -52,8 +52,8 @@ use TTBooking\WBEngine\DTO\Common\RouteSegment;
 use TTBooking\WBEngine\DTO\Common\Seat;
 use TTBooking\WBEngine\DTO\Common\TourCode;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
-use TTBooking\WBEngine\Functional\{ an, is\rollin };
 use TTBooking\WBEngine\Functional\do;
+use TTBooking\WBEngine\Functional\{ an, is\rollin };
 
 /**
  * @param class-string|object $objectOrClass
