@@ -14,8 +14,11 @@ use TTBooking\WBEngine\DTO\Enums\PassengerType;
 use TTBooking\WBEngine\DTO\Enums\ServiceClass;
 use TTBooking\WBEngine\DTO\SearchFlights\Query\Parameters;
 use TTBooking\WBEngine\Functional\{a, an, is};
+use TTBooking\WBEngine\ResultInterface;
 
 /**
+ * @template TResult of ResultInterface
+ *
  * @method static static from(Location|string $code, string $name = '')
  * @method static static to(Location|string $code, string $name = '')
  * @method static static on(DateTimeInterface|string $date)
@@ -34,6 +37,7 @@ use TTBooking\WBEngine\Functional\{a, an, is};
  */
 trait SearchFlights
 {
+    /** @use Query<TResult> */
     use Query;
 
     public function from(Location|string $code, string $name = ''): static

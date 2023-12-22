@@ -15,7 +15,10 @@ final class EmptyBookingFileDenormalizer implements DenormalizerInterface, Denor
 
     public const EMPTY_BOOKING_FILE_TO_NULL = 'empty_booking_file_to_null';
 
-    public function denormalize($data, string $type, string $format = null, array $context = []): mixed
+    /**
+     * @param array<string, mixed> $context
+     */
+    public function denormalize(mixed $data, string $type, string $format = null, array $context = []): mixed
     {
         if ([] === $data) {
             return null;
@@ -26,12 +29,18 @@ final class EmptyBookingFileDenormalizer implements DenormalizerInterface, Denor
         return $this->denormalizer->denormalize($data, $type, $format, $context);
     }
 
-    public function supportsDenormalization($data, string $type, string $format = null, array $context = []): bool
+    /**
+     * @param array<string, mixed> $context
+     */
+    public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
     {
         return true === ($context[self::EMPTY_BOOKING_FILE_TO_NULL] ?? false)
             && is_a($type, BookingFile::class, true);
     }
 
+    /**
+     * @return array<'*'|'object'|class-string|string, null|bool>
+     */
     public function getSupportedTypes(?string $format): array
     {
         return [

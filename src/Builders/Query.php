@@ -9,8 +9,11 @@ use ReflectionAttribute;
 use ReflectionClass;
 use TTBooking\WBEngine\Attributes;
 use TTBooking\WBEngine\DTO\Common\Query\Context;
+use TTBooking\WBEngine\ResultInterface;
 
 /**
+ * @template TResult of ResultInterface
+ *
  * @property Context $context
  *
  * @method static static withContext(Context $context)
@@ -45,6 +48,7 @@ trait Query
      */
     public static function getResultType(): string
     {
+        /** @var class-string<TResult> */
         return self::attribute(Attributes\ResultType::class)->type
             ?? throw new Exception('ResultType attribute not defined.');
     }

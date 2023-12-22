@@ -18,6 +18,7 @@ use TTBooking\WBEngine\QueryInterface;
 #[ResultType(Result::class)]
 class Query implements QueryInterface
 {
+    /** @use Builder<Result> */
     use Builder;
 
     public function __construct(

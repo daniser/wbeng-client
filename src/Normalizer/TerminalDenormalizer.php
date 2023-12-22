@@ -15,7 +15,10 @@ final class TerminalDenormalizer implements DenormalizerInterface, DenormalizerA
 
     public const STRING_TERMINAL_TO_ARRAY = 'string_terminal_to_array';
 
-    public function denormalize($data, string $type, string $format = null, array $context = []): mixed
+    /**
+     * @param array<string, mixed> $context
+     */
+    public function denormalize(mixed $data, string $type, string $format = null, array $context = []): mixed
     {
         if (false === $data || '' === $data) {
             return null;
@@ -30,12 +33,18 @@ final class TerminalDenormalizer implements DenormalizerInterface, DenormalizerA
         return $this->denormalizer->denormalize($data, $type, $format, $context);
     }
 
-    public function supportsDenormalization($data, string $type, string $format = null, array $context = []): bool
+    /**
+     * @param array<string, mixed> $context
+     */
+    public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
     {
         return true === ($context[self::STRING_TERMINAL_TO_ARRAY] ?? false)
             && is_a($type, Terminal::class, true);
     }
 
+    /**
+     * @return array<'*'|'object'|class-string|string, null|bool>
+     */
     public function getSupportedTypes(?string $format): array
     {
         return [

@@ -9,8 +9,11 @@ use TTBooking\WBEngine\DTO\Common\Query\FlightGroup;
 use TTBooking\WBEngine\DTO\Common\Query\Itinerary;
 use TTBooking\WBEngine\DTO\Common\Result;
 use TTBooking\WBEngine\Functional\{a, an};
+use TTBooking\WBEngine\ResultInterface;
 
 /**
+ * @template TResult of ResultInterface
+ *
  * @method static static fromSearchResult(Result $result, int $flightGroupId, int $itineraryId, int $flightId)
  * @method static static fromSearch(string $token)
  * @method static static flightGroup(string $token)
@@ -18,6 +21,7 @@ use TTBooking\WBEngine\Functional\{a, an};
  */
 trait SelectFlight
 {
+    /** @use Query<TResult> */
     use Query;
 
     public function fromSearchResult(Result $result, int $flightGroupId, int $itineraryId, int $flightId): static

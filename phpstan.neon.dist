@@ -1,5 +1,10 @@
 parameters:
     paths:
         - src
+        - tests
 
     level: 9
+
+    ignoreErrors:
+        - '#^Property [a-zA-Z0-9\\_]+::\$parameters \([a-zA-Z0-9\\_]+\\Parameters\) does not accept object\.$#'
+        - '#^Access to an undefined property object::\$\w+\.$#'

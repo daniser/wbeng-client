@@ -8,8 +8,11 @@ use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Code3D;
 use TTBooking\WBEngine\DTO\Common\Passenger;
 use TTBooking\WBEngine\Functional\{ a, an };
+use TTBooking\WBEngine\ResultInterface;
 
 /**
+ * @template TResult of ResultInterface
+ *
  * @method static static customer(string $name, string $email, string $phone, string $defaultRegion = null)
  * @method static static passengers(Passenger ...$passengers)
  * @method static static tourCode(string $code, Carrier|string $carrier)
@@ -18,6 +21,7 @@ use TTBooking\WBEngine\Functional\{ a, an };
  */
 trait CreateBooking
 {
+    /** @use SelectFlight<TResult> */
     use SelectFlight;
 
     public function customer(string $name, string $email, string $phone, string $defaultRegion = null): static
