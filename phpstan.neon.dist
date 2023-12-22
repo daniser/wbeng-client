@@ -8,5 +8,9 @@ parameters:
     ignoreErrors:
         - '#^Property [a-zA-Z0-9\\_]+::\$parameters \([a-zA-Z0-9\\_]+\\Parameters\) does not accept object\.$#'
         - '#^Access to an undefined property object::\$\w+\.$#'
-        - '#^PHPDoc tag @return contains generic type Http\\Promise\\Promise<.+?> but interface Http\\Promise\\Promise is not generic\.$#'
-        - '#^Method TTBooking\\WBEngine\\Client::prepareRequest\(\) should return Psr\\Http\\Message\\RequestInterface but returns Psr\\Http\\Message\\MessageInterface\.$#'
+        -
+            message: '#^PHPDoc tag @return contains generic type Http\\Promise\\Promise<.+?> but interface Http\\Promise\\Promise is not generic\.$#'
+            reportUnmatched: false
+        -
+            message: '#^Method TTBooking\\WBEngine\\Client::prepareRequest\(\) should return Psr\\Http\\Message\\RequestInterface but returns Psr\\Http\\Message\\MessageInterface\.$#'
+            reportUnmatched: false
