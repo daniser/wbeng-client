@@ -6,8 +6,9 @@ namespace TTBooking\WBEngine;
 
 /**
  * @template TResult of ResultInterface
+ * @template TQuery of QueryInterface<TResult>
  *
- * @implements StateInterface<TResult>
+ * @implements StateInterface<TResult, TQuery>
  */
 class State implements StateInterface
 {
@@ -16,7 +17,7 @@ class State implements StateInterface
     /** @var array<string, mixed> */
     protected array $attributes;
 
-    /** @var QueryInterface<TResult> */
+    /** @phpstan-var TQuery */
     protected QueryInterface $query;
 
     /** @phpstan-var TResult */

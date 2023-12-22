@@ -22,6 +22,11 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use TTBooking\WBEngine\DTO\Common;
 
+/**
+ * @template-covariant TState of StateInterface
+ *
+ * @implements ClientInterface<TState>
+ */
 class Client implements ClientInterface
 {
     protected HttpClientInterface $httpClient;
@@ -93,20 +98,20 @@ class Client implements ClientInterface
 
     /**
      * @template TResult of ResultInterface
+     * @template TQuery of QueryInterface<TResult>
      *
-     * @param QueryInterface<TResult> $query
-     *
+     * @phpstan-param TQuery $query
      * @phpstan-param TResult $result
      *
-     * @return StateInterface<TResult>
+     * @phpstan-return TState<TResult, TQuery>
      */
     protected function buildState(QueryInterface $query, ResultInterface $result): StateInterface
     {
         try {
-            /** @var StateInterface<TResult> $state */
+            /** @var TState<TResult, TQuery> $state */
             $state = $this->container?->get(StateInterface::class) ?? new State;
         } catch (ContainerExceptionInterface) {
-            /** @var State<TResult> $state */
+            /** @var State<TResult, TQuery> $state */
             $state = new State;
         }
 
@@ -119,8 +124,9 @@ class Client implements ClientInterface
 
     /**
      * @template TResult of ResultInterface
+     * @template TQuery of QueryInterface<TResult>
      *
-     * @param QueryInterface<TResult> $query
+     * @phpstan-param TQuery $query
      */
     protected function makeRequest(QueryInterface $query): RequestInterface
     {

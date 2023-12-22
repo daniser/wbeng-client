@@ -8,19 +8,28 @@ use Exception;
 use Http\Promise\Promise;
 use Psr\Http\Client\ClientExceptionInterface;
 
+/**
+ * @template-covariant TState of StateInterface
+ */
 interface ClientInterface
 {
     /**
-     * @param null|StateInterface<ResultInterface> $state
+     * @template TResult of ResultInterface
+     * @template TQuery of QueryInterface<TResult>
+     *
+     * @phpstan-param null|TState<TResult, TQuery> $state
+     *
+     * @return self<TState>
      */
     public function continue(StateInterface $state = null): self;
 
     /**
      * @template TResult of ResultInterface
+     * @template TQuery of QueryInterface<TResult>
      *
-     * @param QueryInterface<TResult> $query
+     * @phpstan-param TQuery $query
      *
-     * @return StateInterface<TResult>
+     * @phpstan-return TState<TResult, TQuery>
      *
      * @throws ClientExceptionInterface
      */
@@ -28,10 +37,11 @@ interface ClientInterface
 
     /**
      * @template TResult of ResultInterface
+     * @template TQuery of QueryInterface<TResult>
      *
-     * @param QueryInterface<TResult> $query
+     * @phpstan-param TQuery $query
      *
-     * @return Promise<StateInterface<TResult>>
+     * @return Promise<TState<TResult, TQuery>>
      *
      * @throws Exception
      */

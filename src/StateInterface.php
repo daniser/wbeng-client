@@ -6,6 +6,7 @@ namespace TTBooking\WBEngine;
 
 /**
  * @template TResult of ResultInterface
+ * @template TQuery of QueryInterface<TResult>
  */
 interface StateInterface
 {
@@ -45,14 +46,14 @@ interface StateInterface
     public function isLegacy(): bool;
 
     /**
-     * @param QueryInterface<TResult> $query
+     * @phpstan-param TQuery $query
      *
      * @return $this
      */
     public function setQuery(QueryInterface $query): static;
 
     /**
-     * @return QueryInterface<TResult>
+     * @phpstan-return TQuery
      */
     public function getQuery(): QueryInterface;
 
