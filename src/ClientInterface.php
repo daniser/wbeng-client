@@ -19,7 +19,7 @@ interface ClientInterface
      *
      * @phpstan-param null|TState<TResult, TQuery> $state
      *
-     * @return self<TState>
+     * @return self<TState<TResult, TQuery>>
      */
     public function continue(StateInterface $state = null): self;
 
