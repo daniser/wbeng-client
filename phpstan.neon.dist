@@ -3,7 +3,7 @@ parameters:
         - src
         - tests
 
-    level: 9
+    level: max
 
     ignoreErrors:
         - '#^Property [a-zA-Z0-9\\_]+::\$parameters \([a-zA-Z0-9\\_]+\\Parameters\) does not accept object\.$#'

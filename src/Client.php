@@ -21,6 +21,7 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Throwable;
 use TTBooking\WBEngine\DTO\Common;
 
 /**
@@ -98,7 +99,7 @@ class Client implements ClientInterface
                 (string) $response->getBody(),
                 $query::getResultType()
             )),
-            static fn (Exception $e) => $e instanceof ClientExceptionInterface
+            static fn (Throwable $e) => throw $e instanceof ClientExceptionInterface
                 ? new ClientException('Query failed.', $e->getCode(), $e) : $e
         );
     }
