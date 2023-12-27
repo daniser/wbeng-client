@@ -12,6 +12,7 @@ use Http\Discovery\Psr18ClientDiscovery;
 use Http\Promise\Promise;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -80,10 +81,14 @@ class Client implements ClientInterface
 
     public function query(QueryInterface $query): StateInterface
     {
-        return $this->buildState($query, $this->serializer->deserialize(
-            (string) $this->httpClient->sendRequest($this->makeRequest($query))->getBody(),
-            $query::getResultType()
-        ));
+        try {
+            return $this->buildState($query, $this->serializer->deserialize(
+                (string) $this->httpClient->sendRequest($this->makeRequest($query))->getBody(),
+                $query::getResultType()
+            ));
+        } catch (ClientExceptionInterface $e) {
+            throw new ClientException('Query failed.', $e->getCode(), $e);
+        }
     }
 
     public function asyncQuery(QueryInterface $query): Promise
@@ -92,7 +97,9 @@ class Client implements ClientInterface
             fn (ResponseInterface $response) => $this->buildState($query, $this->serializer->deserialize(
                 (string) $response->getBody(),
                 $query::getResultType()
-            ))
+            )),
+            static fn (Exception $e) => $e instanceof ClientExceptionInterface
+                ? new ClientException('Query failed.', $e->getCode(), $e) : $e
         );
     }
 

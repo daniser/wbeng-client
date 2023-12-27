@@ -6,7 +6,6 @@ namespace TTBooking\WBEngine;
 
 use Exception;
 use Http\Promise\Promise;
-use Psr\Http\Client\ClientExceptionInterface;
 
 /**
  * @template-covariant TState of StateInterface
@@ -31,7 +30,7 @@ interface ClientInterface
      *
      * @phpstan-return TState<TResult, TQuery>
      *
-     * @throws ClientExceptionInterface
+     * @throws ClientException
      */
     public function query(QueryInterface $query): StateInterface;
 
