@@ -6,14 +6,18 @@ namespace TTBooking\WBEngine;
 
 interface SerializerInterface
 {
-    public function serialize(mixed $data): string;
+    /**
+     * @param array<string, mixed> $context
+     */
+    public function serialize(mixed $data, array $context = []): string;
 
     /**
      * @template T of object
      *
-     * @param class-string<T> $type
+     * @param class-string<T>      $type
+     * @param array<string, mixed> $context
      *
      * @phpstan-return T
      */
-    public function deserialize(string $data, string $type): object;
+    public function deserialize(string $data, string $type, array $context = []): object;
 }

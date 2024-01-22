@@ -22,6 +22,7 @@ use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
+use TTBooking\WBEngine\NameConverter\LegacyNameConverter;
 use TTBooking\WBEngine\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
 use TTBooking\WBEngine\Normalizer\EmptyBookingFileDenormalizer;
 use TTBooking\WBEngine\Normalizer\EmptyDateTimeDenormalizer;
@@ -30,34 +31,34 @@ use UnexpectedValueException;
 
 final class SerializerFactory
 {
-    public static function createSerializer(string $serializer = null, bool $legacy = true): SerializerInterface
+    public static function createSerializer(string $serializer = null): SerializerInterface
     {
         return match ($serializer) {
-            'default', null => self::discoverSerializer($legacy),
-            'symfony' => self::createSymfonySerializer($legacy),
-            'jms' => self::createJMSSerializer($legacy),
+            'default', null => self::discoverSerializer(),
+            'symfony' => self::createSymfonySerializer(),
+            'jms' => self::createJMSSerializer(),
             default => throw new UnexpectedValueException("Invalid serializer [$serializer]."),
         };
     }
 
-    public static function discoverSerializer(bool $legacy = true): SerializerInterface
+    public static function discoverSerializer(): SerializerInterface
     {
         if (interface_exists(SymfonySerializerInterface::class)) {
-            return self::createSymfonySerializer($legacy);
+            return self::createSymfonySerializer();
         }
 
         if (interface_exists(JMSSerializerInterface::class)) {
-            return self::createJMSSerializer($legacy);
+            return self::createJMSSerializer();
         }
 
         throw new Exception('Neither Symfony nor JMS serializer found.');
     }
 
-    public static function createSymfonySerializer(bool $legacy = true): SerializerInterface
+    public static function createSymfonySerializer(): SerializerInterface
     {
         $propertyNormalizer = new PropertyNormalizer(
             $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader),
-            $legacy ? new MetadataAwareNameConverter($classMetadataFactory) : null,
+            new LegacyNameConverter(new MetadataAwareNameConverter($classMetadataFactory)),
             new PropertyInfoExtractor([], [new PhpDocExtractor, new ReflectionExtractor]), null, null,
             (new PropertyNormalizerContextBuilder)
                 ->withDisableTypeEnforcement(true)
@@ -82,7 +83,7 @@ final class SerializerFactory
         );
     }
 
-    public static function createJMSSerializer(bool $legacy = true): SerializerInterface
+    public static function createJMSSerializer(): SerializerInterface
     {
         return new Serializer(
             SerializerBuilder::create()

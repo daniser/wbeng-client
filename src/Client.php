@@ -63,7 +63,7 @@ class Client implements ClientInterface
         $this->validator = $validator ?? Validation::createValidatorBuilder()
             ->enableAttributeMapping()
             ->getValidator();
-        $this->serializer = $serializer ?? SerializerFactory::discoverSerializer($this->legacy());
+        $this->serializer = $serializer ?? SerializerFactory::discoverSerializer();
         $this->validate($defaultContext);
     }
 
@@ -85,7 +85,8 @@ class Client implements ClientInterface
         try {
             return $this->buildState($query, $this->serializer->deserialize(
                 (string) $this->httpClient->sendRequest($this->makeRequest($query))->getBody(),
-                $query::getResultType()
+                $query::getResultType(),
+                $this->defaultAttributes
             ));
         } catch (ClientExceptionInterface $e) {
             throw new ClientException('Query failed.', $e->getCode(), $e);
@@ -97,7 +98,8 @@ class Client implements ClientInterface
         return $this->sendAsyncRequest($this->makeRequest($query))->then(
             fn (ResponseInterface $response) => $this->buildState($query, $this->serializer->deserialize(
                 (string) $response->getBody(),
-                $query::getResultType()
+                $query::getResultType(),
+                $this->defaultAttributes
             )),
             static fn (Throwable $e) => throw $e instanceof ClientExceptionInterface
                 ? new ClientException('Query failed.', $e->getCode(), $e) : $e
@@ -139,7 +141,7 @@ class Client implements ClientInterface
     protected function makeRequest(QueryInterface $query): RequestInterface
     {
         return $this->prepareRequest($query::getEndpoint(), method: 'POST', body: $this->serializer->serialize(
-            $this->validate($query)->withContext($this->defaultContext)
+            $this->validate($query)->withContext($this->defaultContext), $this->defaultAttributes
         ));
     }
 
