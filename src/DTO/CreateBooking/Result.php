@@ -6,7 +6,7 @@ namespace TTBooking\WBEngine\DTO\CreateBooking;
 
 use JMS\Serializer\Annotation\Type;
 use Symfony\Component\Serializer\Annotation\Context;
-use Symfony\Component\Serializer\Annotation\SerializedPath;
+use TTBooking\WBEngine\Attributes\SerializedPath;
 use TTBooking\WBEngine\DTO\Common\Result\BookingFile;
 use TTBooking\WBEngine\DTO\Common\Result\Context as ResultContext;
 use TTBooking\WBEngine\DTO\Common\Result\Message;
@@ -19,7 +19,7 @@ class Result implements ResultInterface
         public ?string $token,
 
         /** @var list<Message> */
-        #[SerializedPath('[messages][message]')]
+        #[SerializedPath('[messages]', ['legacy' => '[messages][message]'])]
         #[Type('list<'.Message::class.'>')]
         public array $messages,
 

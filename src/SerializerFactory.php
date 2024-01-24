@@ -22,7 +22,6 @@ use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
-use TTBooking\WBEngine\NameConverter\LegacyNameConverter;
 use TTBooking\WBEngine\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
 use TTBooking\WBEngine\Normalizer\EmptyBookingFileDenormalizer;
 use TTBooking\WBEngine\Normalizer\EmptyDateTimeDenormalizer;
@@ -58,7 +57,7 @@ final class SerializerFactory
     {
         $propertyNormalizer = new PropertyNormalizer(
             $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader),
-            new LegacyNameConverter(new MetadataAwareNameConverter($classMetadataFactory)),
+            new MetadataAwareNameConverter($classMetadataFactory),
             new PropertyInfoExtractor([], [new PhpDocExtractor, new ReflectionExtractor]), null, null,
             (new PropertyNormalizerContextBuilder)
                 ->withDisableTypeEnforcement(true)
