@@ -6,7 +6,7 @@ namespace TTBooking\WBEngine\DTO\Common\Result;
 
 use DateTimeInterface;
 use JMS\Serializer\Annotation\Type;
-use Symfony\Component\Serializer\Annotation\Context;
+use Symfony\Component\Serializer\Attribute\Context;
 use TTBooking\WBEngine\DTO\Common;
 use TTBooking\WBEngine\DTO\Enums\LocomotionMethod;
 use TTBooking\WBEngine\DTO\Enums\ServiceClass;

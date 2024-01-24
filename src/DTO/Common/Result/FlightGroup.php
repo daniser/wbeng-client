@@ -6,10 +6,10 @@ namespace TTBooking\WBEngine\DTO\Common\Result;
 
 use DateTimeInterface;
 use JMS\Serializer\Annotation\Type;
-use Symfony\Component\Serializer\Annotation\Context;
-use TTBooking\WBEngine\Attributes\SerializedPath;
+use Symfony\Component\Serializer\Attribute\Context;
 use TTBooking\WBEngine\DTO\Common;
 use TTBooking\WBEngine\Normalizer\EmptyDateTimeDenormalizer;
+use TTBooking\WBEngine\Normalizer\LegacyNormalizer;
 
 class FlightGroup
 {
@@ -37,7 +37,7 @@ class FlightGroup
     public bool $allow3D;
 
     /** @var list<Itinerary> */
-    #[SerializedPath('[itineraries]', ['legacy' => '[itineraries][itinerary]'])]
+    #[Context([LegacyNormalizer::PATH => '[itineraries][itinerary]'])]
     #[Type('list<'.Itinerary::class.'>')]
     public array $itineraries;
 

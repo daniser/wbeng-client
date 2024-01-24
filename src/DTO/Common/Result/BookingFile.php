@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\Common\Result;
 
 use JMS\Serializer\Annotation\Type;
-use TTBooking\WBEngine\Attributes\SerializedPath;
+use Symfony\Component\Serializer\Attribute\Context;
 use TTBooking\WBEngine\DTO\Common;
 use TTBooking\WBEngine\DTO\Enums\BookingStatus;
+use TTBooking\WBEngine\Normalizer\LegacyNormalizer;
 
 class BookingFile
 {
@@ -33,7 +34,7 @@ class BookingFile
         public string $paymentType,
 
         /** @var list<Reservation> */
-        #[SerializedPath('[reservations]', ['legacy' => '[reservations][reservation]'])]
+        #[Context([LegacyNormalizer::PATH => '[reservations][reservation]'])]
         #[Type('list<'.Reservation::class.'>')]
         public array $reservations,
 

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\Common\Result\Fares;
 
 use JMS\Serializer\Annotation\Type;
-use TTBooking\WBEngine\Attributes\SerializedPath;
+use Symfony\Component\Serializer\Attribute\Context;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
+use TTBooking\WBEngine\Normalizer\LegacyNormalizer;
 
 class FareSeat
 {
@@ -16,7 +17,7 @@ class FareSeat
         public int $count,
 
         /** @var list<FareSeat\Price> */
-        #[SerializedPath('[prices]', ['legacy' => '[prices][price]'])]
+        #[Context([LegacyNormalizer::PATH => '[prices][price]'])]
         #[Type('list<'.FareSeat\Price::class.'>')]
         public array $prices,
 
