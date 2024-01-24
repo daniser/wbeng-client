@@ -6,7 +6,7 @@ namespace TTBooking\WBEngine;
 
 use JMS\Serializer\SerializerInterface as JMSSerializerInterface;
 use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
-use TTBooking\WBEngine\Serializer\SerializedPath;
+use TTBooking\WBEngine\Attributes\SerializedPath;
 
 class Serializer implements SerializerInterface
 {
