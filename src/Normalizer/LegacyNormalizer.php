@@ -67,8 +67,10 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
 
     /**
      * @param array<string, mixed> $context
+     *
+     * @return null|array<string, mixed>
      */
-    public function normalize(mixed $object, string $format = null, array $context = []): mixed
+    public function normalize(mixed $object, string $format = null, array $context = []): ?array
     {
         /** @var null|string $propertyPath */
         $propertyPath = $context[self::PATH];
