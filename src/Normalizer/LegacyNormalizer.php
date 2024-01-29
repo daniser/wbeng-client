@@ -16,6 +16,7 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
 {
     use SerializerAwareTrait;
 
+    public const LEGACY = 'legacy';
     public const PATH = 'path';
 
     private readonly PropertyAccessorInterface $propertyAccessor;
@@ -62,7 +63,9 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
      */
     public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
     {
-        return array_key_exists(self::PATH, $context) && !isset($context['unwrapped']);
+        return true === ($context[self::LEGACY] ?? false)
+            && array_key_exists(self::PATH, $context)
+            && !isset($context['unwrapped']);
     }
 
     /**
@@ -99,6 +102,8 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
      */
     public function supportsNormalization(mixed $data, string $format = null, array $context = []): bool
     {
-        return array_key_exists(self::PATH, $context) && !isset($context['wrapped']);
+        return true === ($context[self::LEGACY] ?? false)
+            && array_key_exists(self::PATH, $context)
+            && !isset($context['wrapped']);
     }
 }

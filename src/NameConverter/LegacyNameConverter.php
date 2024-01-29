@@ -9,6 +9,7 @@ use Symfony\Component\Serializer\NameConverter\AdvancedNameConverterInterface;
 
 final class LegacyNameConverter implements AdvancedNameConverterInterface
 {
+    public const LEGACY = 'legacy';
     public const NAME = 'name';
 
     /** @var array<string, array<string, null|string>> */
@@ -27,7 +28,7 @@ final class LegacyNameConverter implements AdvancedNameConverterInterface
      */
     public function normalize(string $propertyName, string $class = null, string $format = null, array $context = []): string
     {
-        if (!isset($class)) {
+        if (!isset($class) || true !== ($context[self::LEGACY] ?? false)) {
             return $propertyName;
         }
 
@@ -43,7 +44,7 @@ final class LegacyNameConverter implements AdvancedNameConverterInterface
      */
     public function denormalize(string $propertyName, string $class = null, string $format = null, array $context = []): string
     {
-        if (!isset($class)) {
+        if (!isset($class) || true !== ($context[self::LEGACY] ?? false)) {
             return $propertyName;
         }
 
