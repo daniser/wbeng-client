@@ -15,13 +15,13 @@ use Symfony\Component\Serializer\Context\Normalizer\PropertyNormalizerContextBui
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
-use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
+use TTBooking\WBEngine\NameConverter\LegacyNameConverter;
 use TTBooking\WBEngine\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
 use TTBooking\WBEngine\Normalizer\EmptyBookingFileDenormalizer;
 use TTBooking\WBEngine\Normalizer\EmptyDateTimeDenormalizer;
@@ -58,7 +58,7 @@ final class SerializerFactory
     {
         $propertyNormalizer = new PropertyNormalizer(
             $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader),
-            new MetadataAwareNameConverter($classMetadataFactory),
+            new LegacyNameConverter($classMetadataFactory),
             new PropertyInfoExtractor([], [new PhpDocExtractor, new ReflectionExtractor]), null, null,
             (new PropertyNormalizerContextBuilder)
                 ->withDisableTypeEnforcement(true)

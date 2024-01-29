@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\Common;
 
 use JMS\Serializer\Annotation\Type;
-use Symfony\Component\Serializer\Attribute\Context;
+use TTBooking\WBEngine\Attributes\SerializedPath;
+use TTBooking\WBEngine\DTO\Common\Result\Context;
 use TTBooking\WBEngine\DTO\Common\Result\Message;
-use TTBooking\WBEngine\Normalizer\LegacyNormalizer;
 use TTBooking\WBEngine\ResultInterface;
 
 class Result implements ResultInterface
@@ -15,14 +15,14 @@ class Result implements ResultInterface
     public string $token;
 
     /** @var list<Message> */
-    #[Context([LegacyNormalizer::PATH => '[messages][message]'])]
+    #[SerializedPath('[messages][message]')]
     #[Type('list<'.Message::class.'>')]
     public array $messages = [];
 
-    public Result\Context $context;
+    public Context $context;
 
     /** @var list<Result\FlightGroup> */
-    #[Context([LegacyNormalizer::PATH => '[flightsGroup][flightGroup]'])]
+    #[SerializedPath('[flightsGroup][flightGroup]')]
     #[Type('list<'.Result\FlightGroup::class.'>')]
     public array $flightGroups;
 

@@ -30,7 +30,7 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
      */
     public function getSupportedTypes(?string $format): array
     {
-        return ['object' => false];
+        return ['*' => false];
     }
 
     /**
@@ -89,7 +89,7 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
             $this->propertyAccessor->setValue($data, $propertyPath, $value);
         }
 
-        return $value;
+        return $data;
     }
 
     /**

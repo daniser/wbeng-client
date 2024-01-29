@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\Common\Query;
 
 use JMS\Serializer\Annotation\Type;
-use Symfony\Component\Serializer\Attribute\Context;
-use TTBooking\WBEngine\Normalizer\LegacyNormalizer;
+use TTBooking\WBEngine\Attributes\SerializedPath;
 
 class FlightGroup
 {
@@ -14,7 +13,7 @@ class FlightGroup
         public string $token,
 
         /** @var list<Itinerary> */
-        #[Context([LegacyNormalizer::PATH => '[itineraries][itinerary]'])]
+        #[SerializedPath('[itineraries][itinerary]')]
         #[Type('list<'.Itinerary::class.'>')]
         public array $itineraries,
     ) {}

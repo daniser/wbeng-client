@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\Common\Result;
 
 use JMS\Serializer\Annotation\Type;
-use Symfony\Component\Serializer\Attribute\Context;
-use TTBooking\WBEngine\Normalizer\LegacyNormalizer;
+use TTBooking\WBEngine\Attributes\SerializedPath;
 
 class Fares
 {
@@ -14,11 +13,11 @@ class Fares
         public Fares\FareDesc $fareDesc,
 
         /** @var list<Fares\FareSeat> */
-        #[Context([LegacyNormalizer::PATH => '[fareSeats][fareSeat]'])]
+        #[SerializedPath('[fareSeats][fareSeat]')]
         #[Type('list<'.Fares\FareSeat::class.'>')]
         public array $fareSeats,
 
-        #[Context([LegacyNormalizer::PATH => '[fareTotal][total]'])]
+        #[SerializedPath('[fareTotal][total]')]
         public int $fareTotal,
 
         public Fares\FareTotalOriginal $fareTotalOriginal,
