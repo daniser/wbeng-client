@@ -41,7 +41,7 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
     {
         /** @var null|string $propertyPath */
         $propertyPath = $context[self::PATH];
-        $context['unwrapped'] = true;
+        unset($context[self::PATH]);
 
         if ($propertyPath && (is_object($data) || is_array($data))) {
             if (!$this->propertyAccessor->isReadable($data, $propertyPath)) {
@@ -64,8 +64,7 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
     public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
     {
         return true === ($context[self::LEGACY] ?? false)
-            && array_key_exists(self::PATH, $context)
-            && !isset($context['unwrapped']);
+            && array_key_exists(self::PATH, $context);
     }
 
     /**
@@ -77,7 +76,7 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
     {
         /** @var null|string $propertyPath */
         $propertyPath = $context[self::PATH];
-        $context['wrapped'] = true;
+        unset($context[self::PATH]);
 
         if (!$this->serializer instanceof NormalizerInterface) {
             throw new LogicException('Cannot wrap path because the injected serializer is not a normalizer.');
@@ -103,7 +102,6 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
     public function supportsNormalization(mixed $data, string $format = null, array $context = []): bool
     {
         return true === ($context[self::LEGACY] ?? false)
-            && array_key_exists(self::PATH, $context)
-            && !isset($context['wrapped']);
+            && array_key_exists(self::PATH, $context);
     }
 }
