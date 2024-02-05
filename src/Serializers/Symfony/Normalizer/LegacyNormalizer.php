@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TTBooking\WBEngine\Normalizer;
+namespace TTBooking\WBEngine\Serializers\Symfony\Normalizer;
 
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;

@@ -2,29 +2,33 @@
 
 declare(strict_types=1);
 
-namespace TTBooking\WBEngine\Normalizer;
+namespace TTBooking\WBEngine\Serializers\Symfony\Normalizer;
 
-use DateTimeInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use TTBooking\WBEngine\DTO\Common\Terminal;
 
-final class EmptyDateTimeDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
+final class TerminalDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
 {
     use DenormalizerAwareTrait;
 
-    public const EMPTY_DATETIME_TO_NULL = 'empty_datetime_to_null';
+    public const STRING_TERMINAL_TO_ARRAY = 'string_terminal_to_array';
 
     /**
      * @param array<string, mixed> $context
      */
     public function denormalize(mixed $data, string $type, string $format = null, array $context = []): mixed
     {
-        if ('' === $data) {
+        if (false === $data || '' === $data) {
             return null;
         }
 
-        unset($context[self::EMPTY_DATETIME_TO_NULL]);
+        if (is_string($data)) {
+            $data = ['code' => $data];
+        }
+
+        unset($context[self::STRING_TERMINAL_TO_ARRAY]);
 
         return $this->denormalizer->denormalize($data, $type, $format, $context);
     }
@@ -34,8 +38,8 @@ final class EmptyDateTimeDenormalizer implements DenormalizerInterface, Denormal
      */
     public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
     {
-        return true === ($context[self::EMPTY_DATETIME_TO_NULL] ?? false)
-            && is_a($type, DateTimeInterface::class, true);
+        return true === ($context[self::STRING_TERMINAL_TO_ARRAY] ?? false)
+            && is_a($type, Terminal::class, true);
     }
 
     /**
@@ -44,7 +48,7 @@ final class EmptyDateTimeDenormalizer implements DenormalizerInterface, Denormal
     public function getSupportedTypes(?string $format): array
     {
         return [
-            DateTimeInterface::class => false,
+            Terminal::class => false,
         ];
     }
 }

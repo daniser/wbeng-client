@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\Common;
 
 use JMS\Serializer\Annotation\Type;
-use TTBooking\WBEngine\Attributes\SerializedPath;
 use TTBooking\WBEngine\DTO\Common\Result\Context;
 use TTBooking\WBEngine\DTO\Common\Result\Message;
 use TTBooking\WBEngine\ResultInterface;
+use TTBooking\WBEngine\Serializers\Symfony\Attribute\SerializedPath;
 
 class Result implements ResultInterface
 {

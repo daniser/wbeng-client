@@ -7,9 +7,9 @@ namespace TTBooking\WBEngine\DTO\Common\Result;
 use DateTimeInterface;
 use JMS\Serializer\Annotation\Type;
 use Symfony\Component\Serializer\Attribute\Context;
-use TTBooking\WBEngine\Attributes\SerializedPath;
 use TTBooking\WBEngine\DTO\Common;
-use TTBooking\WBEngine\Normalizer\EmptyDateTimeDenormalizer;
+use TTBooking\WBEngine\Serializers\Symfony\Attribute\SerializedPath;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\EmptyDateTimeDenormalizer;
 
 class FlightGroup
 {

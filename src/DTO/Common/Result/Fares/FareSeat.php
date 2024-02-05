@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\Common\Result\Fares;
 
 use JMS\Serializer\Annotation\Type;
-use TTBooking\WBEngine\Attributes\SerializedPath;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
+use TTBooking\WBEngine\Serializers\Symfony\Attribute\SerializedPath;
 
 class FareSeat
 {

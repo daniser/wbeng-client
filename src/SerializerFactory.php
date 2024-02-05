@@ -21,12 +21,12 @@ use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterface;
-use TTBooking\WBEngine\NameConverter\LegacyNameConverter;
-use TTBooking\WBEngine\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
-use TTBooking\WBEngine\Normalizer\EmptyBookingFileDenormalizer;
-use TTBooking\WBEngine\Normalizer\EmptyDateTimeDenormalizer;
-use TTBooking\WBEngine\Normalizer\LegacyNormalizer;
-use TTBooking\WBEngine\Normalizer\TerminalDenormalizer;
+use TTBooking\WBEngine\Serializers\Symfony\NameConverter\LegacyNameConverter;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\EmptyBookingFileDenormalizer;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\EmptyDateTimeDenormalizer;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\LegacyNormalizer;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\TerminalDenormalizer;
 use UnexpectedValueException;
 
 final class SerializerFactory

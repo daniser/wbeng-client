@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\CreateBooking\Query;
 
 use JMS\Serializer\Annotation\Type;
-use TTBooking\WBEngine\Attributes\SerializedPath;
 use TTBooking\WBEngine\DTO\Common;
 use TTBooking\WBEngine\DTO\Common\Query\FlightGroup;
+use TTBooking\WBEngine\Serializers\Symfony\Attribute\SerializedPath;
 
 class Parameters
 {

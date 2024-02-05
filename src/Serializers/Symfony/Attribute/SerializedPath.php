@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TTBooking\WBEngine\Attributes;
+namespace TTBooking\WBEngine\Serializers\Symfony\Attribute;
 
 use Attribute;
 use Symfony\Component\Serializer\Attribute\Context;
-use TTBooking\WBEngine\NameConverter\LegacyNameConverter;
-use TTBooking\WBEngine\Normalizer\LegacyNormalizer;
+use TTBooking\WBEngine\Serializers\Symfony\NameConverter\LegacyNameConverter;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\LegacyNormalizer;
 
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class SerializedPath extends Context

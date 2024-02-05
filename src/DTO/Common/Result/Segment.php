@@ -10,8 +10,8 @@ use Symfony\Component\Serializer\Attribute\Context;
 use TTBooking\WBEngine\DTO\Common;
 use TTBooking\WBEngine\DTO\Enums\LocomotionMethod;
 use TTBooking\WBEngine\DTO\Enums\ServiceClass;
-use TTBooking\WBEngine\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
-use TTBooking\WBEngine\Normalizer\TerminalDenormalizer;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\TerminalDenormalizer;
 
 class Segment
 {

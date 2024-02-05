@@ -2,29 +2,29 @@
 
 declare(strict_types=1);
 
-namespace TTBooking\WBEngine\Normalizer;
+namespace TTBooking\WBEngine\Serializers\Symfony\Normalizer;
 
+use BackedEnum;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use TTBooking\WBEngine\DTO\Common\Result\BookingFile;
 
-final class EmptyBookingFileDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
+final class CaseInsensitiveBackedEnumDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
 {
     use DenormalizerAwareTrait;
 
-    public const EMPTY_BOOKING_FILE_TO_NULL = 'empty_booking_file_to_null';
+    public const UPPERCASE_BACKED_ENUM = 'uppercase_backed_enum';
 
     /**
      * @param array<string, mixed> $context
      */
     public function denormalize(mixed $data, string $type, string $format = null, array $context = []): mixed
     {
-        if ([] === $data) {
-            return null;
+        if (is_string($data)) {
+            $data = strtoupper($data);
         }
 
-        unset($context[self::EMPTY_BOOKING_FILE_TO_NULL]);
+        unset($context[self::UPPERCASE_BACKED_ENUM]);
 
         return $this->denormalizer->denormalize($data, $type, $format, $context);
     }
@@ -34,8 +34,8 @@ final class EmptyBookingFileDenormalizer implements DenormalizerInterface, Denor
      */
     public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
     {
-        return true === ($context[self::EMPTY_BOOKING_FILE_TO_NULL] ?? false)
-            && is_a($type, BookingFile::class, true);
+        return true === ($context[self::UPPERCASE_BACKED_ENUM] ?? false)
+            && is_subclass_of($type, BackedEnum::class);
     }
 
     /**
@@ -44,7 +44,7 @@ final class EmptyBookingFileDenormalizer implements DenormalizerInterface, Denor
     public function getSupportedTypes(?string $format): array
     {
         return [
-            BookingFile::class => false,
+            BackedEnum::class => false,
         ];
     }
 }

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TTBooking\WBEngine\Context\Normalizer;
+namespace TTBooking\WBEngine\Serializers\Symfony\Context\Normalizer;
 
 use Symfony\Component\Serializer\Context\ContextBuilderInterface;
 use Symfony\Component\Serializer\Context\ContextBuilderTrait;
-use TTBooking\WBEngine\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
-use TTBooking\WBEngine\Normalizer\EmptyBookingFileDenormalizer;
-use TTBooking\WBEngine\Normalizer\EmptyDateTimeDenormalizer;
-use TTBooking\WBEngine\Normalizer\TerminalDenormalizer;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\CaseInsensitiveBackedEnumDenormalizer;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\EmptyBookingFileDenormalizer;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\EmptyDateTimeDenormalizer;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\TerminalDenormalizer;
 
 final class LegacyContextBuilder implements ContextBuilderInterface
 {

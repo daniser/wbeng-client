@@ -6,12 +6,12 @@ namespace TTBooking\WBEngine\DTO\CreateBooking;
 
 use JMS\Serializer\Annotation\Type;
 use Symfony\Component\Serializer\Attribute\Context;
-use TTBooking\WBEngine\Attributes\SerializedPath;
 use TTBooking\WBEngine\DTO\Common\Result\BookingFile;
 use TTBooking\WBEngine\DTO\Common\Result\Context as ResultContext;
 use TTBooking\WBEngine\DTO\Common\Result\Message;
-use TTBooking\WBEngine\Normalizer\EmptyBookingFileDenormalizer;
 use TTBooking\WBEngine\ResultInterface;
+use TTBooking\WBEngine\Serializers\Symfony\Attribute\SerializedPath;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\EmptyBookingFileDenormalizer;
 
 class Result implements ResultInterface
 {
