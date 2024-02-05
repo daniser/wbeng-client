@@ -34,6 +34,8 @@ final class FaresNormalizer implements NormalizerInterface, DenormalizerInterfac
      */
     public function normalize(mixed $object, ?string $format = null, array $context = []): array
     {
+        $context['wrapped'] = true;
+
         if (!$this->serializer instanceof NormalizerInterface) {
             throw new LogicException('Cannot wrap path because the injected serializer is not a normalizer.');
         }
@@ -54,7 +56,8 @@ final class FaresNormalizer implements NormalizerInterface, DenormalizerInterfac
     public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return true === ($context[self::LEGACY] ?? false)
-            && $data instanceof Fares;
+            && $data instanceof Fares
+            && true !== ($context['wrapped'] ?? false);
     }
 
     /**
@@ -79,6 +82,7 @@ final class FaresNormalizer implements NormalizerInterface, DenormalizerInterfac
     public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         return true === ($context[self::LEGACY] ?? false)
-            && is_a($type, Fares::class, true);
+            && is_a($type, Fares::class, true)
+            && is_array($data) && isset($data['fareTotal']['total']);
     }
 }
