@@ -6,6 +6,7 @@ namespace TTBooking\WBEngine;
 
 use Exception;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
+use JMS\Serializer\Naming\SerializedNameAnnotationStrategy;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface as JMSSerializerInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
@@ -91,7 +92,7 @@ final class SerializerFactory
         return new Serializer(
             SerializerBuilder::create()
                 ->enableEnumSupport()
-                ->setPropertyNamingStrategy(new IdenticalPropertyNamingStrategy)
+                ->setPropertyNamingStrategy(new SerializedNameAnnotationStrategy(new IdenticalPropertyNamingStrategy))
                 ->build()
         );
     }
