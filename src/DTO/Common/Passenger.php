@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\DTO\Common;
 
 use JMS\Serializer\Annotation\Type;
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
+use Symfony\Component\Validator\Constraints as Assert;
 use TTBooking\WBEngine\Builders;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
-use TTBooking\WBEngine\DTO\Enums\PhoneType;
 
 class Passenger
 {
@@ -22,18 +23,14 @@ class Passenger
 
         public PassengerType $type,
 
-        public PhoneType $phoneType,
-
-        public string $phoneNumber,
-
-        public string $countryCode,
-
-        public string $areaCode,
+        #[AssertPhoneNumber]
+        public string $phone,
 
         public ?string $tariff,
 
         public string $railwayBonusCardNumber,
 
+        #[Assert\Email(mode: Assert\Email::VALIDATION_MODE_STRICT)]
         public ?string $email = null,
 
         public bool $isEmailRefused = false,

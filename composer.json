@@ -16,7 +16,9 @@
     ],
     "require": {
         "php": "^8.1",
+        "egulias/email-validator": "^4.0",
         "giggsey/libphonenumber-for-php": "^8.8.1",
+        "odolbeau/phone-number-bundle": "^3.10",
         "php-http/async-client-implementation": "^1.0",
         "php-http/discovery": "^1.9.1",
         "php-http/httplug": "^1.0 || ^2.0",
@@ -37,6 +39,9 @@
         "phpunit/phpunit": "^10.0 || ^11.0",
         "symfony/property-access": "^6.4 || ^7.0",
         "symfony/serializer": "^6.4 || ^7.0"
+    },
+    "replace": {
+        "symfony/framework-bundle": "*"
     },
     "autoload": {
         "psr-4": {

@@ -13,7 +13,7 @@ use TTBooking\WBEngine\ResultInterface;
 /**
  * @template TResult of ResultInterface
  *
- * @method static static customer(string $name, string $email, string $phone, string $defaultRegion = null)
+ * @method static static customer(string $name, string $email, string $phone)
  * @method static static passengers(Passenger ...$passengers)
  * @method static static tourCode(string $code, Carrier|string $carrier)
  * @method static static benefitCode(string $code, Carrier|string $carrier)
@@ -24,10 +24,10 @@ trait CreateBooking
     /** @use SelectFlight<TResult> */
     use SelectFlight;
 
-    public function customer(string $name, string $email, string $phone, string $defaultRegion = null): static
+    public function customer(string $name, string $email, string $phone): static
     {
         $this->parameters ??= an\entity(a\property_class(static::class, 'parameters'));
-        $this->parameters->customer = a\customer($name, $email, $phone, $defaultRegion);
+        $this->parameters->customer = a\customer($name, $email, $phone);
 
         return $this;
     }

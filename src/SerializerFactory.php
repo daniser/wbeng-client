@@ -28,6 +28,7 @@ use TTBooking\WBEngine\Serializers\Symfony\Normalizer\EmptyBookingFileDenormaliz
 use TTBooking\WBEngine\Serializers\Symfony\Normalizer\EmptyDateTimeDenormalizer;
 use TTBooking\WBEngine\Serializers\Symfony\Normalizer\FaresNormalizer;
 use TTBooking\WBEngine\Serializers\Symfony\Normalizer\LegacyNormalizer;
+use TTBooking\WBEngine\Serializers\Symfony\Normalizer\PersonPhoneNormalizer;
 use TTBooking\WBEngine\Serializers\Symfony\Normalizer\TerminalDenormalizer;
 use UnexpectedValueException;
 
@@ -75,6 +76,7 @@ final class SerializerFactory
                     new BackedEnumNormalizer,
                     new TerminalDenormalizer,
                     new EmptyBookingFileDenormalizer,
+                    new PersonPhoneNormalizer,
                     new FaresNormalizer,
                     new LegacyNormalizer,
                     $propertyNormalizer,

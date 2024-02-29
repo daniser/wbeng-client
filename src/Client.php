@@ -18,6 +18,9 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\EmailValidator;
+use Symfony\Component\Validator\ConstraintValidatorFactory;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -62,6 +65,9 @@ class Client implements ClientInterface
         $this->streamFactory = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
         $this->validator = $validator ?? Validation::createValidatorBuilder()
             ->enableAttributeMapping()
+            ->setConstraintValidatorFactory(new ConstraintValidatorFactory([
+                EmailValidator::class => new EmailValidator(Email::VALIDATION_MODE_STRICT),
+            ]))
             ->getValidator();
         $this->serializer = $serializer ?? SerializerFactory::discoverSerializer();
         $this->validate($defaultContext);

@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace TTBooking\WBEngine\Builders;
 
 use DateTimeInterface;
-use libphonenumber\PhoneNumberType;
 use TTBooking\WBEngine\DTO\Common\Carrier;
 use TTBooking\WBEngine\DTO\Common\Country;
 use TTBooking\WBEngine\DTO\Common\Passport;
 use TTBooking\WBEngine\DTO\Enums\DocumentType;
 use TTBooking\WBEngine\DTO\Enums\Gender;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
-use TTBooking\WBEngine\DTO\Enums\PhoneType;
-use TTBooking\WBEngine\Functional\do;
 use TTBooking\WBEngine\Functional\{ a, an };
 
 /**
@@ -54,7 +51,7 @@ use TTBooking\WBEngine\Functional\{ a, an };
  * @method static static birthDate(DateTimeInterface|string $date)
  * @method static static citizenship(Country|string $code, string $name = '')
  * @method static static document(DocumentType $type, string $number, DateTimeInterface|string $issued, DateTimeInterface|string $expired = null)
- * @method static static phone(string $phone, string $defaultRegion = null)
+ * @method static static phone(string $phone)
  * @method static static email(string|null $email)
  * @method static static withoutEmail(bool $refused = false)
  * @method static static loyaltyCard(string $id, Carrier|string $carrier)
@@ -274,18 +271,9 @@ trait Passenger
         return $this;
     }
 
-    public function phone(string $phone, string $defaultRegion = null): static
+    public function phone(string $phone): static
     {
-        [$numberType, $countryCode, $areaCode, $subscriberNumber] = do\parse_phone($phone, $defaultRegion);
-
-        $this->phoneType = match ($numberType) {
-            PhoneNumberType::MOBILE => PhoneType::Mobile,
-            default => PhoneType::Home,
-        };
-
-        $this->countryCode = (string) $countryCode;
-        $this->areaCode = $areaCode;
-        $this->phoneNumber = $subscriberNumber;
+        $this->phone = $phone;
 
         return $this;
     }

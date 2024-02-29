@@ -52,7 +52,6 @@ use TTBooking\WBEngine\DTO\Common\RouteSegment;
 use TTBooking\WBEngine\DTO\Common\Seat;
 use TTBooking\WBEngine\DTO\Common\TourCode;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
-use TTBooking\WBEngine\Functional\do;
 use TTBooking\WBEngine\Functional\{ an, is\rollin };
 
 /**
@@ -135,11 +134,9 @@ function disabled(int $count = 1): Seat
     return seat(PassengerType::Disabled, $count);
 }
 
-function customer(string $name, string $email, string $phone, string $defaultRegion = null): Customer
+function customer(string $name, string $email, string $phone): Customer
 {
-    [, $countryCode, $areaCode, $subscriberNumber] = do\parse_phone($phone, $defaultRegion);
-
-    return new Customer($name, $email, (string) $countryCode, $areaCode, $subscriberNumber);
+    return new Customer($name, $email, $phone);
 }
 
 function passenger(): Passenger
