@@ -30,7 +30,7 @@ class Passenger
 
         public string $railwayBonusCardNumber,
 
-        #[Assert\Email(mode: Assert\Email::VALIDATION_MODE_STRICT)]
+        #[Assert\Email]
         public ?string $email = null,
 
         public bool $isEmailRefused = false,

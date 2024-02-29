@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\DTO\CreateBooking;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use TTBooking\WBEngine\Attributes\Endpoint;
 use TTBooking\WBEngine\Attributes\ResultType;
 use TTBooking\WBEngine\Builders\CreateBooking;
@@ -23,6 +24,7 @@ class Query implements QueryInterface
     public function __construct(
         public Context $context,
 
+        #[Assert\Valid]
         public Query\Parameters $parameters,
 
         public ?string $provider = null,

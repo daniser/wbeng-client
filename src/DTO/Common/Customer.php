@@ -12,7 +12,7 @@ class Customer
     public function __construct(
         public string $name,
 
-        #[Assert\Email(mode: Assert\Email::VALIDATION_MODE_STRICT)]
+        #[Assert\Email]
         public string $email,
 
         #[AssertPhoneNumber]
