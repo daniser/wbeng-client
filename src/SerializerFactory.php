@@ -79,10 +79,10 @@ final class SerializerFactory
                     new PersonPhoneNormalizer,
                     new FaresNormalizer,
                     new LegacyNormalizer,
-                    $propertyNormalizer,
-                    new ArrayDenormalizer,
                     new EmptyDateTimeDenormalizer,
                     new DateTimeNormalizer,
+                    $propertyNormalizer,
+                    new ArrayDenormalizer,
                 ],
                 [new JsonEncoder]
             )

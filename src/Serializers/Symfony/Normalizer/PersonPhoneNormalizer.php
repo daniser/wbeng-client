@@ -61,6 +61,7 @@ final class PersonPhoneNormalizer implements NormalizerInterface, DenormalizerIn
             $data['countryCode'] = (string) $countryCode;
             $data['areaCode'] = $areaCode;
             $data['phoneNumber'] = $subscriberNumber;
+            unset($data['phone']);
         }
 
         return $data;
@@ -83,6 +84,7 @@ final class PersonPhoneNormalizer implements NormalizerInterface, DenormalizerIn
     {
         if (is_array($data) && isset($data['countryCode'], $data['areaCode'], $data['phoneNumber'])) {
             $data['phone'] = sprintf('+%d%s%s', $data['countryCode'], $data['areaCode'], $data['phoneNumber']);
+            unset($data['phoneType'], $data['countryCode'], $data['areaCode'], $data['phoneNumber']);
         }
 
         if (!$this->serializer instanceof DenormalizerInterface) {
