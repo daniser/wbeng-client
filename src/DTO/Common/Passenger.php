@@ -26,10 +26,6 @@ class Passenger
         #[AssertPhoneNumber]
         public string $phone,
 
-        public ?string $tariff,
-
-        public string $railwayBonusCardNumber,
-
         #[Assert\Email]
         public ?string $email = null,
 

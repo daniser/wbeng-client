@@ -14,6 +14,7 @@ use TTBooking\WBEngine\DTO\Enums\PassengerType;
 use TTBooking\WBEngine\Functional\{ a, an };
 
 /**
+ * @method static static token(string $token)
  * @method static static gender(Gender $gender)
  * @method static static sex(Gender $sex)
  * @method static static male()
@@ -50,6 +51,7 @@ use TTBooking\WBEngine\Functional\{ a, an };
  * @method static static patronymic(string|null $patronymic)
  * @method static static birthDate(DateTimeInterface|string $date)
  * @method static static citizenship(Country|string $code, string $name = '')
+ * @method static static issueCountry(Country|string $code, string $name = '')
  * @method static static document(DocumentType $type, string $number, DateTimeInterface|string $issued, DateTimeInterface|string $expired = null)
  * @method static static phone(string $phone)
  * @method static static email(string|null $email)
@@ -59,6 +61,13 @@ use TTBooking\WBEngine\Functional\{ a, an };
 trait Passenger
 {
     use StaticallyCallable;
+
+    public function token(string $token): static
+    {
+        $this->token = $token;
+
+        return $this;
+    }
 
     public function gender(Gender $gender): static
     {
@@ -256,6 +265,14 @@ trait Passenger
     {
         $this->passport ??= an\entity(Passport::class);
         $this->passport->citizenship = is_string($code) ? a\country($code, $name) : $code;
+
+        return $this;
+    }
+
+    public function issueCountry(Country|string $code, string $name = ''): static
+    {
+        $this->passport ??= an\entity(Passport::class);
+        $this->passport->issueCountry = is_string($code) ? a\country($code, $name) : $code;
 
         return $this;
     }

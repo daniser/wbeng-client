@@ -4,8 +4,35 @@ declare(strict_types=1);
 
 namespace TTBooking\WBEngine\Functional\is;
 
+use ReflectionObject;
+use ReflectionProperty;
 use TTBooking\WBEngine\DTO\Common\RouteSegment;
 use TTBooking\WBEngine\Functional\an;
+
+function complete(object $object): bool
+{
+    $refObject = new ReflectionObject($object);
+    $refProps = $refObject->getProperties(ReflectionProperty::IS_PUBLIC);
+
+    foreach ($refProps as $refProp) {
+        if (!$refProp->isInitialized($object)) {
+            return false;
+        }
+
+        $propValue = $refProp->getValue($object);
+        if (is_iterable($propValue)) {
+            foreach ($propValue as $item) {
+                if (is_object($item) && !complete($item)) {
+                    return false;
+                }
+            }
+        } elseif (is_object($propValue) && !complete($propValue)) {
+            return false;
+        }
+    }
+
+    return true;
+}
 
 function rollin(): RouteSegment
 {
@@ -52,7 +79,7 @@ use TTBooking\WBEngine\DTO\Common\RouteSegment;
 use TTBooking\WBEngine\DTO\Common\Seat;
 use TTBooking\WBEngine\DTO\Common\TourCode;
 use TTBooking\WBEngine\DTO\Enums\PassengerType;
-use TTBooking\WBEngine\Functional\{ an, is\rollin };
+use TTBooking\WBEngine\Functional\{an, is\rollin};
 
 /**
  * @param class-string|object $objectOrClass
