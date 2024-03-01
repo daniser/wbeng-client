@@ -9,7 +9,7 @@ use TTBooking\WBEngine\Functional\{an, is};
 /**
  * @method static bool isComplete()
  */
-trait StaticallyCallable
+trait Buildable
 {
     /**
      * @param list<mixed> $arguments

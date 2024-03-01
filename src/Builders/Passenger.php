@@ -60,7 +60,7 @@ use TTBooking\WBEngine\Functional\{ a, an };
  */
 trait Passenger
 {
-    use StaticallyCallable;
+    use Buildable;
 
     public function token(string $token): static
     {

@@ -20,7 +20,7 @@ use TTBooking\WBEngine\ResultInterface;
  */
 trait Query
 {
-    use StaticallyCallable;
+    use Buildable;
 
     public function withContext(Context $context): static
     {

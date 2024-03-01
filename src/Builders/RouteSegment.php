@@ -15,7 +15,7 @@ use TTBooking\WBEngine\Functional\a;
  */
 trait RouteSegment
 {
-    use StaticallyCallable;
+    use Buildable;
 
     public function from(Location|string $code, string $name = ''): static
     {
