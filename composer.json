@@ -30,7 +30,7 @@
         "symfony/validator": "^6.4 || ^7.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.40",
+        "friendsofphp/php-cs-fixer": "^3.57",
         "jms/serializer": "^3.27",
         "nyholm/psr7": "^1.0",
         "php-http/message": "^1.7",
