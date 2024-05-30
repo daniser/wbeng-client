@@ -277,7 +277,7 @@ trait Passenger
         return $this;
     }
 
-    public function document(DocumentType $type, string $number, DateTimeInterface|string $issued, DateTimeInterface|string $expired = null): static
+    public function document(DocumentType $type, string $number, DateTimeInterface|string $issued, null|DateTimeInterface|string $expired = null): static
     {
         $this->passport ??= an\entity(Passport::class);
         $this->passport->type = $type;

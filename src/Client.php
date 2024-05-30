@@ -51,12 +51,12 @@ class Client implements ClientInterface
         protected string $baseUri,
         protected Common\Query\Context $defaultContext,
         protected array $defaultAttributes = [],
-        HttpClientInterface $httpClient = null,
+        ?HttpClientInterface $httpClient = null,
         protected ?HttpAsyncClient $httpAsyncClient = null,
-        RequestFactoryInterface $requestFactory = null,
-        StreamFactoryInterface $streamFactory = null,
-        ValidatorInterface $validator = null,
-        SerializerInterface $serializer = null,
+        ?RequestFactoryInterface $requestFactory = null,
+        ?StreamFactoryInterface $streamFactory = null,
+        ?ValidatorInterface $validator = null,
+        ?SerializerInterface $serializer = null,
         protected ?ContainerInterface $container = null,
     ) {
         $this->baseUri = rtrim($baseUri, '/');
@@ -73,7 +73,7 @@ class Client implements ClientInterface
         $this->validate($defaultContext);
     }
 
-    public function continue(StateInterface $state = null): static
+    public function continue(?StateInterface $state = null): static
     {
         $client = clone $this;
 

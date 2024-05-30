@@ -26,7 +26,7 @@ final class LegacyNameConverter implements AdvancedNameConverterInterface
     /**
      * @param array<string, mixed> $context
      */
-    public function normalize(string $propertyName, string $class = null, string $format = null, array $context = []): string
+    public function normalize(string $propertyName, ?string $class = null, ?string $format = null, array $context = []): string
     {
         if (!isset($class) || true !== ($context[self::LEGACY] ?? false)) {
             return $propertyName;
@@ -42,7 +42,7 @@ final class LegacyNameConverter implements AdvancedNameConverterInterface
     /**
      * @param array<string, mixed> $context
      */
-    public function denormalize(string $propertyName, string $class = null, string $format = null, array $context = []): string
+    public function denormalize(string $propertyName, ?string $class = null, ?string $format = null, array $context = []): string
     {
         if (!isset($class) || true !== ($context[self::LEGACY] ?? false)) {
             return $propertyName;

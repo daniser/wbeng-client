@@ -21,7 +21,7 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
 
     private readonly PropertyAccessorInterface $propertyAccessor;
 
-    public function __construct(PropertyAccessorInterface $propertyAccessor = null)
+    public function __construct(?PropertyAccessorInterface $propertyAccessor = null)
     {
         $this->propertyAccessor = $propertyAccessor ?? PropertyAccess::createPropertyAccessor();
     }
@@ -37,7 +37,7 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
     /**
      * @param array<string, mixed> $context
      */
-    public function denormalize(mixed $data, string $type, string $format = null, array $context = []): mixed
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
         /** @var null|string $propertyPath */
         $propertyPath = $context[self::PATH];
@@ -61,7 +61,7 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
     /**
      * @param array<string, mixed> $context
      */
-    public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         return true === ($context[self::LEGACY] ?? false)
             && array_key_exists(self::PATH, $context);
@@ -72,7 +72,7 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
      *
      * @return null|array<string, mixed>
      */
-    public function normalize(mixed $object, string $format = null, array $context = []): ?array
+    public function normalize(mixed $object, ?string $format = null, array $context = []): ?array
     {
         /** @var null|string $propertyPath */
         $propertyPath = $context[self::PATH];
@@ -99,7 +99,7 @@ final class LegacyNormalizer implements DenormalizerInterface, NormalizerInterfa
     /**
      * @param array<string, mixed> $context
      */
-    public function supportsNormalization(mixed $data, string $format = null, array $context = []): bool
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return true === ($context[self::LEGACY] ?? false)
             && array_key_exists(self::PATH, $context);

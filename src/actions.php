@@ -28,7 +28,7 @@ function book(): CreateBooking
 /**
  * @return array{int, null|int, string, string}
  */
-function parse_phone(string $phone, string $defaultRegion = null): array
+function parse_phone(string $phone, ?string $defaultRegion = null): array
 {
     $defaultRegion = isset($defaultRegion) ? strtoupper($defaultRegion) : null;
     $phoneUtil = PhoneNumberUtil::getInstance();

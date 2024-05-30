@@ -34,7 +34,7 @@ use UnexpectedValueException;
 
 final class SerializerFactory
 {
-    public static function createSerializer(string $serializer = null): SerializerInterface
+    public static function createSerializer(?string $serializer = null): SerializerInterface
     {
         return match ($serializer) {
             'default', null => self::discoverSerializer(),

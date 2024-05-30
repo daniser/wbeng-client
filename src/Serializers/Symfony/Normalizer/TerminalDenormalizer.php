@@ -18,7 +18,7 @@ final class TerminalDenormalizer implements DenormalizerInterface, DenormalizerA
     /**
      * @param array<string, mixed> $context
      */
-    public function denormalize(mixed $data, string $type, string $format = null, array $context = []): mixed
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
         if (false === $data || '' === $data) {
             return null;
@@ -36,7 +36,7 @@ final class TerminalDenormalizer implements DenormalizerInterface, DenormalizerA
     /**
      * @param array<string, mixed> $context
      */
-    public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         return true === ($context[self::STRING_TERMINAL_TO_ARRAY] ?? false)
             && is_a($type, Terminal::class, true);

@@ -20,7 +20,7 @@ interface ClientInterface
      *
      * @return self<TState<TResult, TQuery>>
      */
-    public function continue(StateInterface $state = null): self;
+    public function continue(?StateInterface $state = null): self;
 
     /**
      * @template TResult of ResultInterface

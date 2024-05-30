@@ -18,7 +18,7 @@ final class EmptyDateTimeDenormalizer implements DenormalizerInterface, Denormal
     /**
      * @param array<string, mixed> $context
      */
-    public function denormalize(mixed $data, string $type, string $format = null, array $context = []): mixed
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
         if ('' === $data) {
             return null;
@@ -32,7 +32,7 @@ final class EmptyDateTimeDenormalizer implements DenormalizerInterface, Denormal
     /**
      * @param array<string, mixed> $context
      */
-    public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         return true === ($context[self::EMPTY_DATETIME_TO_NULL] ?? false)
             && is_a($type, DateTimeInterface::class, true);
